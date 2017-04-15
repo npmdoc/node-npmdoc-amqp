@@ -1,0 +1,1596 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/postwait/node-amqp#readme">amqp (v0.2.6)</a>
+</h1>
+<h4>AMQP driver for node</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.amqp">module amqp</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection">
+            function <span class="apidocSignatureSpan">amqp.</span>Connection
+            <span class="apidocSignatureSpan">(connectionArgs, options, readyCallback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.createConnection">
+            function <span class="apidocSignatureSpan">amqp.</span>createConnection
+            <span class="apidocSignatureSpan">(options, implOptions, readyCallback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">amqp.</span>Connection.prototype</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.amqp.Connection">module amqp.Connection</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.Connection">
+            function <span class="apidocSignatureSpan">amqp.</span>Connection
+            <span class="apidocSignatureSpan">(connectionArgs, options, readyCallback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.super_">
+            function <span class="apidocSignatureSpan">amqp.Connection.</span>super_
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.amqp.Connection.prototype">module amqp.Connection.prototype</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._bodyToBuffer">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_bodyToBuffer
+            <span class="apidocSignatureSpan">(body)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._chooseHost">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_chooseHost
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._createSocket">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_createSocket
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._getSSLOptions">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_getSSLOptions
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._inboundHeartbeatTimerReset">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_inboundHeartbeatTimerReset
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._onMethod">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_onMethod
+            <span class="apidocSignatureSpan">(channel, method, args)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._outboundHeartbeatTimerReset">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_outboundHeartbeatTimerReset
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._parseURLOptions">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_parseURLOptions
+            <span class="apidocSignatureSpan">(connectionString)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._saslResponse">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_saslResponse
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._sendBody">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_sendBody
+            <span class="apidocSignatureSpan">(channel, body, properties)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._sendHeader">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_sendHeader
+            <span class="apidocSignatureSpan">(channel, size, properties)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._sendMethod">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_sendMethod
+            <span class="apidocSignatureSpan">(channel, method, args)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype._startHandshake">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_startHandshake
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.addAllListeners">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>addAllListeners
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.connect">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>connect
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.disconnect">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>disconnect
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.end">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>end
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.exchange">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>exchange
+            <span class="apidocSignatureSpan">(name, options, openCallback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.exchangeClosed">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>exchangeClosed
+            <span class="apidocSignatureSpan">(name)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.generateChannelId">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>generateChannelId
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.heartbeat">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>heartbeat
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.publish">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>publish
+            <span class="apidocSignatureSpan">(routingKey, body, options, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.queue">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>queue
+            <span class="apidocSignatureSpan">(name)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.queueClosed">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>queueClosed
+            <span class="apidocSignatureSpan">(name)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.reconnect">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>reconnect
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.setImplOptions">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>setImplOptions
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.amqp.Connection.prototype.setOptions">
+            function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>setOptions
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.amqp" id="apidoc.module.amqp">module amqp</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection" id="apidoc.element.amqp.Connection">
+        function <span class="apidocSignatureSpan">amqp.</span>Connection
+        <span class="apidocSignatureSpan">(connectionArgs, options, readyCallback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function Connection(connectionArgs, options, readyCallback) {
+  EventEmitter.call(this);
+  this.setOptions(connectionArgs);
+  this.setImplOptions(options);
+
+  if (typeof readyCallback === 'function') {
+    this._readyCallback = readyCallback;
+  }
+
+  this.connectionAttemptScheduled = false;
+  this._defaultExchange = null;
+  this.channelCounter = 0;
+  this._sendBuffer = new Buffer(maxFrameBuffer);
+
+  this._blocked = false;
+  this._blockedReason = null;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+      });
+  });
+});
+```
+
+## Connection
+
+`new amqp.<span class="apidocCodeKeywordSpan">Connection</span>()` Instantiates a new connection. Use
+`connection.connect()` to connect to a server.
+
+`amqp.createConnection()` returns an instance of `amqp.Connection`, which contains
+an instance of `net.Socket` at its `socket` property. All events and methods which work on
+`net.Socket` can also be used on an `amqp.Connection` instance. (e.g., the
+events `'connect'` and `'close'`.)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.createConnection" id="apidoc.element.amqp.createConnection">
+        function <span class="apidocSignatureSpan">amqp.</span>createConnection
+        <span class="apidocSignatureSpan">(options, implOptions, readyCallback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">createConnection = function (options, implOptions, readyCallback) {
+  var c = new Connection(options, implOptions, readyCallback);
+  c.connect();
+  return c;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+IMPORTANT: This module only works with node v0.4.0 and later.
+
+An example of connecting to a server and listening on a queue.
+
+```javascript
+var amqp = require('amqp');
+
+var connection = amqp.<span class="apidocCodeKeywordSpan">createConnection</span>({ host: 'dev.rabbitmq.com' });
+
+// add this for better debuging
+connection.on('error', function(e) {
+  console.log("Error from amqp: ", e);
+});
+
+// Wait for connection to become established.
+...</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.amqp.Connection" id="apidoc.module.amqp.Connection">module amqp.Connection</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.Connection" id="apidoc.element.amqp.Connection.Connection">
+        function <span class="apidocSignatureSpan">amqp.</span>Connection
+        <span class="apidocSignatureSpan">(connectionArgs, options, readyCallback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function Connection(connectionArgs, options, readyCallback) {
+  EventEmitter.call(this);
+  this.setOptions(connectionArgs);
+  this.setImplOptions(options);
+
+  if (typeof readyCallback === 'function') {
+    this._readyCallback = readyCallback;
+  }
+
+  this.connectionAttemptScheduled = false;
+  this._defaultExchange = null;
+  this.channelCounter = 0;
+  this._sendBuffer = new Buffer(maxFrameBuffer);
+
+  this._blocked = false;
+  this._blockedReason = null;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+      });
+  });
+});
+```
+
+## Connection
+
+`new amqp.<span class="apidocCodeKeywordSpan">Connection</span>()` Instantiates a new connection. Use
+`connection.connect()` to connect to a server.
+
+`amqp.createConnection()` returns an instance of `amqp.Connection`, which contains
+an instance of `net.Socket` at its `socket` property. All events and methods which work on
+`net.Socket` can also be used on an `amqp.Connection` instance. (e.g., the
+events `'connect'` and `'close'`.)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.super_" id="apidoc.element.amqp.Connection.super_">
+        function <span class="apidocSignatureSpan">amqp.Connection.</span>super_
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function EventEmitter() {
+  EventEmitter.init.call(this);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.amqp.Connection.prototype" id="apidoc.module.amqp.Connection.prototype">module amqp.Connection.prototype</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._bodyToBuffer" id="apidoc.element.amqp.Connection.prototype._bodyToBuffer">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_bodyToBuffer
+        <span class="apidocSignatureSpan">(body)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_bodyToBuffer = function (body) {
+  // Handles 3 cases
+  // - body is utf8 string
+  // - body is instance of Buffer
+  // - body is an object and its JSON representation is sent
+  // Does not handle the case for streaming bodies.
+  // Returns buffer.
+  if (typeof(body) == 'string') {
+    return [null, new Buffer(body, 'utf8')];
+  } else if (body instanceof Buffer) {
+    return [null, body];
+  } else {
+    var jsonBody = JSON.stringify(body);
+
+    debug &amp;&amp; debug('sending json: ' + jsonBody);
+
+    var props = {contentType: 'application/json'};
+    return [props, new Buffer(jsonBody, 'utf8')];
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._chooseHost" id="apidoc.element.amqp.Connection.prototype._chooseHost">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_chooseHost
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_chooseHost = function () {
+  if(Array.isArray(this.options.host)){
+    if(this.hosti == null){
+      if(typeof this.options.hostPreference == 'number') {
+        this.hosti = (this.options.hostPreference &lt; this.options.host.length) ?
+          this.options.hostPreference : this.options.host.length-1;
+      } else {
+        this.hosti = parseInt(Math.random() * this.options.host.length, 10);
+      }
+    } else {
+      // If this is already set, it looks like we want to choose another one.
+      // Add one to hosti but don't overflow it.
+      this.hosti = (this.hosti + 1) % this.options.host.length;
+    }
+    return this.options.host[this.hosti];
+  } else {
+    return this.options.host;
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._createSocket" id="apidoc.element.amqp.Connection.prototype._createSocket">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_createSocket
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_createSocket = function () {
+  var hostName = this._chooseHost(), self = this, port = this.options.port;
+  var parsedHost = URL.parse(hostName);
+  if(parsedHost.port){
+    hostName = parsedHost.hostname;
+    port = parsedHost.port;
+  }
+
+  var options = {
+    port: port,
+    host: hostName
+  };
+
+  // Disable tcp nagle's algo
+  // Default: true, makes small messages faster
+  var noDelay = this.options.noDelay || true;
+
+  var resetConnectionTimeout = function () {
+    debug &amp;&amp; debug('connected so resetting connection timeout');
+    this.setTimeout(0);
+  };
+
+  // Connect socket
+  if (this.options.ssl.enabled) {
+    debug &amp;&amp; debug('making ssl connection');
+    options = _.assignIn(options, this._getSSLOptions());
+    this.socket = tls.connect(options, resetConnectionTimeout);
+  } else {
+    debug &amp;&amp; debug('making non-ssl connection');
+    this.socket = net.connect(options, resetConnectionTimeout);
+  }
+  var connTimeout = this.options.connectionTimeout;
+  if (connTimeout) {
+    debug &amp;&amp; debug('setting connection timeout to ' + connTimeout);
+    this.socket.setTimeout(connTimeout, function () {
+      debug &amp;&amp; debug('connection timeout');
+      this.destroy();
+      var e = new Error('connection timeout');
+      e.name = 'TimeoutError';
+      self.emit('error', e);
+    });
+  }
+
+  this.socket.setNoDelay(noDelay);
+
+  // Proxy events.
+  // Note that if we don't attach a 'data' event, no data will flow.
+  var events = ['close', 'connect', 'data', 'drain', 'error', 'end', 'secureConnect', 'timeout'];
+  _.forEach(events, function(event){
+    self.socket.on(event, self.emit.bind(self, event));
+  });
+
+  // Proxy a few methods that we use / previously used.
+  var methods = ['destroy', 'write', 'pause', 'resume', 'setEncoding', 'ref', 'unref', 'address'];
+  _.forEach(methods, function(method){
+    self[method] = function(){
+      self.socket[method].apply(self.socket, arguments);
+    };
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._getSSLOptions" id="apidoc.element.amqp.Connection.prototype._getSSLOptions">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_getSSLOptions
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_getSSLOptions = function () {
+  if (this.sslConnectionOptions) return this.sslConnectionOptions;
+  this.sslConnectionOptions = {};
+
+  if (this.options.ssl.pfxFile) {
+    this.sslConnectionOptions.pfx = fs.readFileSync(this.options.ssl.pfxFile);
+  }
+  if (this.options.ssl.keyFile) {
+    this.sslConnectionOptions.key = fs.readFileSync(this.options.ssl.keyFile);
+  }
+  if (this.options.ssl.certFile) {
+    this.sslConnectionOptions.cert = fs.readFileSync(this.options.ssl.certFile);
+  }
+  if (this.options.ssl.caFile) {
+    if (Array.isArray(this.options.ssl.caFile)) {
+      this.sslConnectionOptions.ca = this.options.ssl.caFile.map(function(f){
+        return fs.readFileSync(f);
+      });
+    } else {
+      this.sslConnectionOptions.ca = fs.readFileSync(this.options.ssl.caFile);
+    }
+  }
+
+  this.sslConnectionOptions.rejectUnauthorized = this.options.ssl.rejectUnauthorized;
+  this.sslConnectionOptions.passphrase = this.options.ssl.passphrase;
+
+  return this.sslConnectionOptions;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._inboundHeartbeatTimerReset" id="apidoc.element.amqp.Connection.prototype._inboundHeartbeatTimerReset">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_inboundHeartbeatTimerReset
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_inboundHeartbeatTimerReset = function () {
+  if (this._inboundHeartbeatTimer !== null) {
+    clearTimeout(this._inboundHeartbeatTimer);
+    this._inboundHeartbeatTimer = null;
+  }
+  if (this.options.heartbeat) {
+    var self = this;
+    var gracePeriod = 2 * this.options.heartbeat;
+    this._inboundHeartbeatTimer = setTimeout(function () {
+      if(self.socket.readable || self.options.heartbeatForceReconnect){
+        self.emit('error', new Error('no heartbeat or data in last ' + gracePeriod + ' seconds'));
+      }
+    }, gracePeriod * 1000);
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._onMethod" id="apidoc.element.amqp.Connection.prototype._onMethod">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_onMethod
+        <span class="apidocSignatureSpan">(channel, method, args)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_onMethod = function (channel, method, args) {
+  debug &amp;&amp; debug(channel + " &gt; " + method.name + " " + JSON.stringify(args));
+
+  // Channel 0 is the control channel. If not zero then delegate to
+  // one of the channel objects.
+
+  if (channel &gt; 0) {
+    if (!this.channels[channel]) {
+      debug &amp;&amp; debug("Received message on untracked channel.");
+      return;
+    }
+    if (!this.channels[channel]._onChannelMethod) {
+      throw new Error('Channel ' + channel + ' has no _onChannelMethod method.');
+    }
+    this.channels[channel]._onChannelMethod(channel, method, args);
+    return;
+  }
+
+  // channel 0
+
+  switch (method) {
+    // 2. The server responds, after the version string, with the
+    // 'connectionStart' method (contains various useless information)
+    case methods.connectionStart:
+      // We check that they're serving us AMQP 0-9
+      if (args.versionMajor !== 0 &amp;&amp; args.versionMinor != 9) {
+        this.socket.end();
+        this.emit('error', new Error("Bad server version"));
+        return;
+      }
+      this.serverProperties = args.serverProperties;
+      // 3. Then we reply with StartOk, containing our useless information.
+      this._sendMethod(0, methods.connectionStartOk, {
+        clientProperties: this.options.clientProperties,
+        mechanism: this.options.authMechanism,
+        response: this._saslResponse(),
+        locale: 'en_US'
+      });
+      break;
+
+    // 4. The server responds with a connectionTune request
+    case methods.connectionTune:
+      if (args.frameMax) {
+          debug &amp;&amp; debug("tweaking maxFrameBuffer to " + args.frameMax);
+          maxFrameBuffer = args.frameMax;
+          this._sendBuffer = new Buffer(maxFrameBuffer);
+          this.parser.setMaxFrameBuffer(maxFrameBuffer);
+      }
+      if (args.channelMax) {
+          debug &amp;&amp; debug("tweaking channelMax to " + args.channelMax);
+          channelMax = args.channelMax;
+      }
+      // 5. We respond with connectionTuneOk
+      this._sendMethod(0, methods.connectionTuneOk, {
+        channelMax: channelMax,
+        frameMax: maxFrameBuffer,
+        heartbeat: this.options.heartbeat || 0
+      });
+      // 6. Then we have to send a connectionOpen request
+      this._sendMethod(0, methods.connectionOpen, {
+        virtualHost: this.options.vhost
+        // , capabilities: ''
+        // , insist: true
+        ,
+        reserved1: '',
+        reserved2: true
+      });
+      break;
+
+
+    case methods.connectionOpenOk:
+      // 7. Finally they respond with connectionOpenOk
+      // Whew! That's why they call it the Advanced MQP.
+      if (this._readyCallback) {
+        this._readyCallback(this);
+        this._readyCallback = null;
+      }
+      this.emit('ready');
+      break;
+
+    case methods.connectionClose:
+      var e = new Error(args.replyText);
+      e.code = args.replyCode;
+      if (!this.listeners('close').length) {
+        console.log('Unhandled connection error: ' + args.replyText);
+      }
+      this.socket.destroy(e);
+      break;
+
+    case methods.connectionCloseOk:
+      debug &amp;&amp; debug("Received close-ok from server, closing socket");
+      this.socket.end();
+      break;
+
+    case methods.connectionBlocked:
+      debug &amp;&amp; debug('Received connection.blocked from server with reason: ' + args.reason);
+      this._blocked = true;
+      this._blockedReason = args.reason;
+      this.emit('blocked');
+      break;
+
+    case methods.connectionUnblocked:
+      debug &amp;&amp; debug('Received connection.unblocked from server');
+      this._blocked = false;
+      this._blockedReason = null;
+      this.emit('unblocked');
+      break;
+
+    default:
+      throw new Error("Uncaught method '" + method.name + "' with args " +
+          JSON.stringify(args));
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._outboundHeartbeatTimerReset" id="apidoc.element.amqp.Connection.prototype._outboundHeartbeatTimerReset">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_outboundHeartbeatTimerReset
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_outboundHeartbeatTimerReset = function () {
+  if (this._outboundHeartbeatTimer !== null) {
+    clearTimeout(this._outboundHeartbeatTimer);
+    this._outboundHeartbeatTimer = null;
+  }
+  if (this.socket.writable &amp;&amp; this.options.heartbeat) {
+    var self = this;
+    this._outboundHeartbeatTimer = setTimeout(function () {
+      self.heartbeat();
+      self._outboundHeartbeatTimerReset();
+    }, 1000 * this.options.heartbeat);
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._parseURLOptions" id="apidoc.element.amqp.Connection.prototype._parseURLOptions">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_parseURLOptions
+        <span class="apidocSignatureSpan">(connectionString)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_parseURLOptions = function (connectionString) {
+  var opts = {};
+  opts.ssl = {};
+  var url = URL.parse(connectionString);
+  var scheme = url.protocol.substring(0, url.protocol.lastIndexOf(':'));
+  if (scheme != 'amqp' &amp;&amp; scheme != 'amqps') {
+    throw new Error('Connection URI must use amqp or amqps scheme. ' +
+                    'For example, "amqp://bus.megacorp.internal:5766".');
+  }
+  opts.ssl.enabled = ('amqps' === scheme);
+  opts.host = url.hostname;
+  opts.port = url.port || defaultPorts[scheme];
+  if (url.auth) {
+    var auth = url.auth.split(':');
+    auth[0] &amp;&amp; (opts.login = auth[0]);
+    auth[1] &amp;&amp; (opts.password = auth[1]);
+  }
+  if (url.pathname) {
+    opts.vhost = unescape(url.pathname.substr(1));
+  }
+  return opts;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._saslResponse" id="apidoc.element.amqp.Connection.prototype._saslResponse">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_saslResponse
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_saslResponse = function () {
+  var response;
+  if (this.options.authMechanism == 'AMQPLAIN')
+    response = {
+      LOGIN: this.options.login,
+      PASSWORD: this.options.password
+    };
+  else if (this.options.authMechanism == 'PLAIN')
+    response = "\0" + this.options.login + "\0" + this.options.password;
+  else if (this.options.authMechanism == 'EXTERNAL')
+    response = "\0";
+  else if (this.options.authMechanism == 'ANONYMOUS')
+    response = "\0";
+  else
+    response = this.options.response;
+
+  return response;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._sendBody" id="apidoc.element.amqp.Connection.prototype._sendBody">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_sendBody
+        <span class="apidocSignatureSpan">(channel, body, properties)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_sendBody = function (channel, body, properties) {
+  var r = this._bodyToBuffer(body);
+  var props = r[0], buffer = r[1];
+
+  properties = _.assignIn(props || {}, properties);
+
+  this._sendHeader(channel, buffer.length, properties);
+
+  var pos = 0, len = buffer.length;
+  var metaSize = 8; // headerBytes = 7, frameEndBytes = 1
+  var maxBodySize = maxFrameBuffer - metaSize;
+
+  while (len &gt; 0) {
+    var bodySize = len &lt; maxBodySize ? len : maxBodySize;
+    var frameSize = bodySize + metaSize;
+
+    var b = new Buffer(frameSize);
+    b.used = 0;
+    b[b.used++] = 3; // constants.frameBody
+    serializer.serializeInt(b, 2, channel);
+    serializer.serializeInt(b, 4, bodySize);
+    buffer.copy(b, b.used, pos, pos+bodySize);
+    b.used += bodySize;
+    b[b.used++] = 206; // constants.frameEnd;
+    this.write(b);
+
+    len -= bodySize;
+    pos += bodySize;
+  }
+  return;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._sendHeader" id="apidoc.element.amqp.Connection.prototype._sendHeader">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_sendHeader
+        <span class="apidocSignatureSpan">(channel, size, properties)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_sendHeader = function (channel, size, properties) {
+  var b = new Buffer(maxFrameBuffer); // FIXME allocating too much.
+                                      // use freelist?
+  b.used = 0;
+
+  var classInfo = classes[60]; // always basic class.
+
+  // 7 OCTET FRAME HEADER
+
+  b[b.used++] = 2; // constants.frameHeader
+
+  serializer.serializeInt(b, 2, channel);
+
+  var lengthStart = b.used;
+
+  serializer.serializeInt(b, 4, 0 /*dummy*/); // length
+
+  var bodyStart = b.used;
+
+  // HEADER'S BODY
+
+  serializer.serializeInt(b, 2, classInfo.index);   // class 60 for Basic
+  serializer.serializeInt(b, 2, 0);                 // weight, always 0 for rabbitmq
+  serializer.serializeInt(b, 8, size);              // byte size of body
+
+  // properties - first propertyFlags
+  properties = _.defaults(properties || {}, {contentType: 'application/octet-stream'});
+  var propertyFlags = 0;
+  for (var i = 0; i &lt; classInfo.fields.length; i++) {
+    if (properties[classInfo.fields[i].name]) propertyFlags |= 1 &lt;&lt; (15-i);
+  }
+  serializer.serializeInt(b, 2, propertyFlags);
+  // now the actual properties.
+  serializer.serializeFields(b, classInfo.fields, properties, false);
+
+  //serializeTable(b, properties);
+
+  var bodyEnd = b.used;
+
+  // Go back to the header and write in the length now that we know it.
+  b.used = lengthStart;
+  serializer.serializeInt(b, 4, bodyEnd - bodyStart);
+  b.used = bodyEnd;
+
+  // 1 OCTET END
+
+  b[b.used++] = 206; // constants.frameEnd;
+
+  var s = new Buffer(b.used);
+  b.copy(s);
+
+  //debug &amp;&amp; debug('header sent: ' + JSON.stringify(s));
+
+  this.write(s);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._sendMethod" id="apidoc.element.amqp.Connection.prototype._sendMethod">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_sendMethod
+        <span class="apidocSignatureSpan">(channel, method, args)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_sendMethod = function (channel, method, args) {
+  debug &amp;&amp; debug(channel + " &lt; " + method.name + " " + JSON.stringify(args));
+  var b = this._sendBuffer;
+  b.used = 0;
+
+  b[b.used++] = 1; // constants.frameMethod
+
+  serializer.serializeInt(b, 2, channel);
+
+  var lengthIndex = b.used;
+
+  serializer.serializeInt(b, 4, 42); // replace with actual length.
+
+  var startIndex = b.used;
+
+
+  serializer.serializeInt(b, 2, method.classIndex); // short, classId
+  serializer.serializeInt(b, 2, method.methodIndex); // short, methodId
+
+  serializer.serializeFields(b, method.fields, args, true);
+
+  var endIndex = b.used;
+
+  // write in the frame length now that we know it.
+  b.used = lengthIndex;
+  serializer.serializeInt(b, 4, endIndex - startIndex);
+  b.used = endIndex;
+
+  b[b.used++] = 206; // constants.frameEnd;
+
+  var c = new Buffer(b.used);
+  b.copy(c);
+
+  debug &amp;&amp; debug("sending frame: " + c.toJSON());
+
+  this.write(c);
+
+  this._outboundHeartbeatTimerReset();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype._startHandshake" id="apidoc.element.amqp.Connection.prototype._startHandshake">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>_startHandshake
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_startHandshake = function () {
+  debug &amp;&amp; debug("Initiating handshake...");
+  this.write("AMQP" + String.fromCharCode(0,0,9,1));
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.addAllListeners" id="apidoc.element.amqp.Connection.prototype.addAllListeners">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>addAllListeners
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">addAllListeners = function () {
+  var self = this;
+  var connectEvent = this.options.ssl.enabled ? 'secureConnect' : 'connect';
+
+
+  self.addListener(connectEvent, function() {
+    // In the case where this is a reconnection, do not trample on the existing
+    // channels.
+    // For your reference, channel 0 is the control channel.
+    self.channels = self.channels || {0:self};
+    self.queues = self.queues || {};
+    self.exchanges = self.exchanges || {};
+
+    self.parser = new AMQPParser('0-9-1', 'client');
+
+    self.parser.onMethod = function (channel, method, args) {
+      self._onMethod(channel, method, args);
+    };
+
+    self.parser.onContent = function (channel, data) {
+      debug &amp;&amp; debug(channel + " &gt; content " + data.length);
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContent) {
+        self.channels[channel]._onContent(channel, data);
+      } else {
+        debug &amp;&amp; debug("unhandled content: " + data);
+      }
+    };
+
+    self.parser.onContentHeader = function (channel, classInfo, weight, properties, size) {
+      debug &amp;&amp; debug(channel + " &gt; content header " + JSON.stringify([classInfo.name, weight, properties, size]));
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContentHeader) {
+        self.channels[channel]._onContentHeader(channel, classInfo, weight, properties, size);
+      } else {
+        debug &amp;&amp; debug("unhandled content header");
+      }
+    };
+
+    self.parser.onHeartBeat = function () {
+      self.emit("heartbeat");
+      debug &amp;&amp; debug("heartbeat");
+    };
+
+    self.parser.onError = function (e) {
+      self.emit("error", e);
+      self.emit("close");
+    };
+
+    // Remove readyEmitted flag so we can detect an auth error.
+    self.readyEmitted = false;
+  });
+
+  self.addListener('data', function (data) {
+    if(self.parser != null){
+      try {
+        self.parser.execute(data);
+      } catch (exception) {
+        self.emit('error', exception);
+        return;
+      }
+    }
+    self._inboundHeartbeatTimerReset();
+  });
+
+  var backoffTime = null;
+  self.addListener('error', function backoff(e) {
+    if (self._inboundHeartbeatTimer !== null) {
+      clearTimeout(self._inboundHeartbeatTimer);
+      self._inboundHeartbeatTimer = null;
+    }
+    if (self._outboundHeartbeatTimer !== null) {
+      clearTimeout(self._outboundHeartbeatTimer);
+      self._outboundHeartbeatTimer = null;
+    }
+
+    if (!self.connectionAttemptScheduled) {
+      // Set to true, as we are presently in the process of scheduling one.
+      self.connectionAttemptScheduled = true;
+
+      // Kill the socket, if it hasn't been killed already.
+      self.socket.end();
+
+      // Reset parser state
+      self.parser = null;
+
+      // In order for our reconnection to be seamless, we have to notify the
+      // channels that they are no longer connected so that nobody attempts
+      // to send messages which would be doomed to fail.
+      for (var channel in self.channels) {
+        if (channel !== '0') {
+          self.channels[channel].state = 'closed';
+        }
+      }
+      // Queues are channels (so we have already marked them as closed), but
+      // queues have special needs, since the subscriptions will no longer
+      // be known to the server when we reconnect.  Mark the subscriptions as
+      // closed so that we can resubscribe them once we are reconnected.
+      for (var queue in self.queues) {
+        for (var index in self.queues[queue].consumerTagOptions) {
+          self.queues[queue].consumerTagOptions[index]['state'] = 'closed';
+        }
+      }
+
+      // Begin reconnection attempts
+      if (self.implOptions.reconnect) {
+        // Don't thrash, use a backoff strategy.
+        if (backoffTime === null) {
+          // This is the first time we've failed since a successful connection,
+          // so use the configured backoff time without any modification.
+          backoffTime = self.implOptions.reconnectBackoffTime;
+        } else if (self.implOptions.reconnectBackoffStrategy === 'exponential') {
+          // If you've configured exponential backoff, we'll double the
+          // backoff time each ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.connect" id="apidoc.element.amqp.Connection.prototype.connect">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>connect
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">connect = function () {
+  // If this is our first connection, add listeners.
+  if (!this.socket) this.addAllListeners();
+
+  this._createSocket();
+  this._startHandshake();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  });
+});
+```
+
+## Connection
+
+`new amqp.Connection()` Instantiates a new connection. Use
+`connection.<span class="apidocCodeKeywordSpan">connect</span>()` to connect to a server.
+
+`amqp.createConnection()` returns an instance of `amqp.Connection`, which contains
+an instance of `net.Socket` at its `socket` property. All events and methods which work on
+`net.Socket` can also be used on an `amqp.Connection` instance. (e.g., the
+events `'connect'` and `'close'`.)
+
+### Connection options and URL
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.disconnect" id="apidoc.element.amqp.Connection.prototype.disconnect">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>disconnect
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">disconnect = function () {
+  debug &amp;&amp; debug("Sending disconnect request to server");
+  this._sendMethod(0, methods.connectionClose, {
+    'replyText': 'client disconnect',
+    'replyCode': 200,
+    'classId': 0,
+    'methodId': 0
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+## Table of Contents
+
+- [Installation](#installation)
+- [Synopsis](#synopsis)
+- [Connection](#connection)
+- [Connection options and URL](#connection-options-and-url)
+- [connection.publish(routingKey, body, options, callback)](#connectionpublishroutingkey-body-options-callback)
+- [connection.<span class="apidocCodeKeywordSpan">disconnect</span>()](#connectiondisconnect)
+- [Queue](#queue)
+- [connection.queue(name[, options][, openCallback])](#connectionqueuename-options-opencallback)
+- [queue.subscribe([options,] listener)](#queuesubscribeoptions-listener)
+- [queue.subscribeRaw([options,] listener)](#queuesubscriberawoptions-listener)
+- [queue.unsubscribe(consumerTag)](#queueunsubscribeconsumertag)
+- [queue.shift([reject[, requeue]])](#queueshiftreject-requeue)
+- [queue.bind([exchange,] routing)](#queuebindexchange-routing-callback)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.end" id="apidoc.element.amqp.Connection.prototype.end">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>end
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">end = function () {
+  if (this.socket) {
+    this.socket.end();
+  }
+
+  this.options.heartbeat = false;
+
+  if (this._inboundHeartbeatTimer !== null) {
+    clearTimeout(this._inboundHeartbeatTimer);
+    this._inboundHeartbeatTimer = null;
+  }
+
+  if (this._outboundHeartbeatTimer !== null) {
+    clearTimeout(this._outboundHeartbeatTimer);
+    this._outboundHeartbeatTimer = null;
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.exchange" id="apidoc.element.amqp.Connection.prototype.exchange">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>exchange
+        <span class="apidocSignatureSpan">(name, options, openCallback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">exchange = function (name, options, openCallback) {
+  if (name === undefined) name = this.implOptions.defaultExchangeName;
+
+  if (!options) options = {};
+  if (name !== '' &amp;&amp; options.type === undefined) options.type = 'topic';
+
+  try{
+    var channel = this.generateChannelId();
+  }catch(exception){
+    this.emit("error", exception);
+    return;
+  }
+  var exchange = new Exchange(this, channel, name, options, openCallback);
+  this.channels[channel] = exchange;
+  this.exchanges[name] = exchange;
+  return exchange;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+- [queue.shift([reject[, requeue]])](#queueshiftreject-requeue)
+- [queue.bind([exchange,] routing)](#queuebindexchange-routing-callback)
+- [queue.unbind([exchange,] routing)](#queueunbindexchange-routing)
+- [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
+- [queue.destroy(options)](#queuedestroyoptions)
+- [Exchange](#exchange)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
+- [connection.<span class="apidocCodeKeywordSpan">exchange</span>()](#connectionexchange)
+- [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
+- [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
+- [exchange.destroy(ifUnused = true)](#exchangedestroyifunused--true)
+- [exchange.bind(srcExchange, routingKey [, callback])](#exchangebindsrcexchange-routingkey--callback)
+- [exchange.unbind(srcExchange, routingKey [, callback])](#exchangeunbindsrcexchange-routingkey--callback)
+- [exchange.bind_headers(exchange, routing [, bindCallback])](#exchangebind_headersexchange-routing--bindcallback)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.exchangeClosed" id="apidoc.element.amqp.Connection.prototype.exchangeClosed">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>exchangeClosed
+        <span class="apidocSignatureSpan">(name)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">exchangeClosed = function (name) {
+  if (this.exchanges[name]) delete this.exchanges[name];
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.generateChannelId" id="apidoc.element.amqp.Connection.prototype.generateChannelId">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>generateChannelId
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">generateChannelId = function () {
+  // start from the last used slot id
+  var channelId = this.channelCounter;
+  while(true){
+    // use values in range of 1..65535
+    channelId = channelId % channelMax + 1;
+    if(!this.channels[channelId]){
+      break;
+    }
+    // after a full loop throw an Error
+    if(channelId == this.channelCounter){
+      throw new Error("No valid Channel Id values available");
+    }
+  }
+  this.channelCounter = channelId;
+  return this.channelCounter;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.heartbeat" id="apidoc.element.amqp.Connection.prototype.heartbeat">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>heartbeat
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">heartbeat = function () {
+  if(this.socket.writable) this.write(new Buffer([8,0,0,0,0,0,0,206]));
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.publish" id="apidoc.element.amqp.Connection.prototype.publish">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>publish
+        <span class="apidocSignatureSpan">(routingKey, body, options, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">publish = function (routingKey, body, options, callback) {
+  if (!this._defaultExchange) {
+    this._defaultExchange = this.exchange();
+  }
+
+  var exchange = this._defaultExchange;
+  if (exchange.state === 'open') {
+    exchange.publish(routingKey, body, options, callback);
+  } else {
+    exchange.once('open', function() {
+      exchange.publish(routingKey, body, options, callback);
+    });
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Synopsis](#synopsis)
+- [Connection](#connection)
+- [Connection options and URL](#connection-options-and-url)
+- [connection.<span class="apidocCodeKeywordSpan">publish</span>(routingKey, body, options, callback)](#connectionpublishroutingkey
+-body-options-callback)
+- [connection.disconnect()](#connectiondisconnect)
+- [Queue](#queue)
+- [connection.queue(name[, options][, openCallback])](#connectionqueuename-options-opencallback)
+- [queue.subscribe([options,] listener)](#queuesubscribeoptions-listener)
+- [queue.subscribeRaw([options,] listener)](#queuesubscriberawoptions-listener)
+- [queue.unsubscribe(consumerTag)](#queueunsubscribeconsumertag)
+- [queue.shift([reject[, requeue]])](#queueshiftreject-requeue)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.queue" id="apidoc.element.amqp.Connection.prototype.queue">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>queue
+        <span class="apidocSignatureSpan">(name)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">queue = function (name) {
+  var options, callback;
+  if (typeof arguments[1] == 'object') {
+    options = arguments[1];
+    callback = arguments[2];
+  } else {
+    callback = arguments[1];
+  }
+
+  try{
+    var channel = this.generateChannelId();
+  }catch(exception){
+    this.emit("error", exception);
+    return;
+  }
+
+  var q = new Queue(this, channel, name, options, callback);
+  this.channels[channel] = q;
+  return q;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+- [Installation](#installation)
+- [Synopsis](#synopsis)
+- [Connection](#connection)
+- [Connection options and URL](#connection-options-and-url)
+- [connection.publish(routingKey, body, options, callback)](#connectionpublishroutingkey-body-options-callback)
+- [connection.disconnect()](#connectiondisconnect)
+- [Queue](#queue)
+- [connection.<span class="apidocCodeKeywordSpan">queue</span>(name[, options][, openCallback])](#connectionqueuename-options-opencallback
+)
+- [queue.subscribe([options,] listener)](#queuesubscribeoptions-listener)
+- [queue.subscribeRaw([options,] listener)](#queuesubscriberawoptions-listener)
+- [queue.unsubscribe(consumerTag)](#queueunsubscribeconsumertag)
+- [queue.shift([reject[, requeue]])](#queueshiftreject-requeue)
+- [queue.bind([exchange,] routing)](#queuebindexchange-routing-callback)
+- [queue.unbind([exchange,] routing)](#queueunbindexchange-routing)
+- [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.queueClosed" id="apidoc.element.amqp.Connection.prototype.queueClosed">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>queueClosed
+        <span class="apidocSignatureSpan">(name)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">queueClosed = function (name) {
+  if (this.queues[name]) delete this.queues[name];
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.reconnect" id="apidoc.element.amqp.Connection.prototype.reconnect">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>reconnect
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">reconnect = function () {
+  // Suspend activity on channels
+  for (var channel in this.channels) {
+    this.channels[channel].state = 'closed';
+  }
+  debug &amp;&amp; debug("Connection lost, reconnecting...");
+  // Terminate socket activity
+  if (this.socket) this.socket.end();
+  this.connect();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.setImplOptions" id="apidoc.element.amqp.Connection.prototype.setImplOptions">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>setImplOptions
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">setImplOptions = function (options) {
+  this.implOptions = _.assignIn({}, defaultImplOptions, options || {});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.amqp.Connection.prototype.setOptions" id="apidoc.element.amqp.Connection.prototype.setOptions">
+        function <span class="apidocSignatureSpan">amqp.Connection.prototype.</span>setOptions
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">setOptions = function (options) {
+  var urlo = (options &amp;&amp; options.url) ? this._parseURLOptions(options.url) : {};
+  var sslo = (options &amp;&amp; options.ssl &amp;&amp; options.ssl.enabled) ? defaultSslOptions : {};
+  this.options = _.assignIn({}, defaultOptions, sslo, urlo, options || {});
+  this.options.clientProperties =  _.assignIn({}, defaultClientProperties, (options &amp;&amp; options.clientProperties) || {});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
