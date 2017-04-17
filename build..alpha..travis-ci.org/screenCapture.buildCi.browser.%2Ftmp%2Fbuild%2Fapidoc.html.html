@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/postwait/node-amqp#readme"
-
-    >amqp (v0.2.6)</a>
+    <a href="https://github.com/postwait/node-amqp#readme">amqp (v0.2.6)</a>
 </h1>
 <h4>AMQP driver for node</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.amqp">module amqp</a><ol>
 
@@ -1702,7 +1695,7 @@
   this.setOptions(connectionArgs);
   this.setImplOptions(options);
 
-  if (typeof readyCallback === &#x27;function&#x27;) {
+  if (typeof readyCallback === 'function') {
     this._readyCallback = readyCallback;
   }
 
@@ -1728,7 +1721,7 @@
 `amqp.createConnection()` returns an instance of `amqp.Connection`, which contains
 an instance of `net.Socket` at its `socket` property. All events and methods which work on
 `net.Socket` can also be used on an `amqp.Connection` instance. (e.g., the
-events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
+events `'connect'` and `'close'`.)
 ...</pre></li>
     </ul>
 
@@ -1748,17 +1741,17 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   // - body is an object and its JSON representation is sent
   // Does not handle the case for streaming bodies.
   // Returns buffer.
-  if (typeof(body) == &#x27;string&#x27;) {
-    return [null, new Buffer(body, &#x27;utf8&#x27;)];
+  if (typeof(body) == 'string') {
+    return [null, new Buffer(body, 'utf8')];
   } else if (body instanceof Buffer) {
     return [null, body];
   } else {
     var jsonBody = JSON.stringify(body);
 
-    debug &#x26;&#x26; debug(&#x27;sending json: &#x27; + jsonBody);
+    debug &amp;&amp; debug('sending json: ' + jsonBody);
 
-    var props = {contentType: &#x27;application/json&#x27;};
-    return [props, new Buffer(jsonBody, &#x27;utf8&#x27;)];
+    var props = {contentType: 'application/json'};
+    return [props, new Buffer(jsonBody, 'utf8')];
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -1776,15 +1769,15 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype._chooseHost = function () {
   if(Array.isArray(this.options.host)){
     if(this.hosti == null){
-      if(typeof this.options.hostPreference == &#x27;number&#x27;) {
-        this.hosti = (this.options.hostPreference &#x3c; this.options.host.length) ?
+      if(typeof this.options.hostPreference == 'number') {
+        this.hosti = (this.options.hostPreference &lt; this.options.host.length) ?
           this.options.hostPreference : this.options.host.length-1;
       } else {
         this.hosti = parseInt(Math.random() * this.options.host.length, 10);
       }
     } else {
       // If this is already set, it looks like we want to choose another one.
-      // Add one to hosti but don&#x27;t overflow it.
+      // Add one to hosti but don't overflow it.
       this.hosti = (this.hosti + 1) % this.options.host.length;
     }
     return this.options.host[this.hosti];
@@ -1817,47 +1810,47 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     host: hostName
   };
 
-  // Disable tcp nagle&#x27;s algo
+  // Disable tcp nagle's algo
   // Default: true, makes small messages faster
   var noDelay = this.options.noDelay || true;
 
   var resetConnectionTimeout = function () {
-    debug &#x26;&#x26; debug(&#x27;connected so resetting connection timeout&#x27;);
+    debug &amp;&amp; debug('connected so resetting connection timeout');
     this.setTimeout(0);
   };
 
   // Connect socket
   if (this.options.ssl.enabled) {
-    debug &#x26;&#x26; debug(&#x27;making ssl connection&#x27;);
+    debug &amp;&amp; debug('making ssl connection');
     options = _.assignIn(options, this._getSSLOptions());
     this.socket = tls.connect(options, resetConnectionTimeout);
   } else {
-    debug &#x26;&#x26; debug(&#x27;making non-ssl connection&#x27;);
+    debug &amp;&amp; debug('making non-ssl connection');
     this.socket = net.connect(options, resetConnectionTimeout);
   }
   var connTimeout = this.options.connectionTimeout;
   if (connTimeout) {
-    debug &#x26;&#x26; debug(&#x27;setting connection timeout to &#x27; + connTimeout);
+    debug &amp;&amp; debug('setting connection timeout to ' + connTimeout);
     this.socket.setTimeout(connTimeout, function () {
-      debug &#x26;&#x26; debug(&#x27;connection timeout&#x27;);
+      debug &amp;&amp; debug('connection timeout');
       this.destroy();
-      var e = new Error(&#x27;connection timeout&#x27;);
-      e.name = &#x27;TimeoutError&#x27;;
-      self.emit(&#x27;error&#x27;, e);
+      var e = new Error('connection timeout');
+      e.name = 'TimeoutError';
+      self.emit('error', e);
     });
   }
 
   this.socket.setNoDelay(noDelay);
 
   // Proxy events.
-  // Note that if we don&#x27;t attach a &#x27;data&#x27; event, no data will flow.
-  var events = [&#x27;close&#x27;, &#x27;connect&#x27;, &#x27;data&#x27;, &#x27;drain&#x27;, &#x27;error&#x27;, &#x27;end&#x27;, &#x27;secureConnect&#x27;, &#x27;timeout&#x27;];
+  // Note that if we don't attach a 'data' event, no data will flow.
+  var events = ['close', 'connect', 'data', 'drain', 'error', 'end', 'secureConnect', 'timeout'];
   _.forEach(events, function(event){
     self.socket.on(event, self.emit.bind(self, event));
   });
 
   // Proxy a few methods that we use / previously used.
-  var methods = [&#x27;destroy&#x27;, &#x27;write&#x27;, &#x27;pause&#x27;, &#x27;resume&#x27;, &#x27;setEncoding&#x27;, &#x27;ref&#x27;, &#x27;unref&#x27;, &#x27;address&#x27;];
+  var methods = ['destroy', 'write', 'pause', 'resume', 'setEncoding', 'ref', 'unref', 'address'];
   _.forEach(methods, function(method){
     self[method] = function(){
       self.socket[method].apply(self.socket, arguments);
@@ -1926,7 +1919,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     var gracePeriod = 2 * this.options.heartbeat;
     this._inboundHeartbeatTimer = setTimeout(function () {
       if(self.socket.readable || self.options.heartbeatForceReconnect){
-        self.emit(&#x27;error&#x27;, new Error(&#x27;no heartbeat or data in last &#x27; + gracePeriod + &#x27; seconds&#x27;));
+        self.emit('error', new Error('no heartbeat or data in last ' + gracePeriod + ' seconds'));
       }
     }, gracePeriod * 1000);
   }
@@ -1944,18 +1937,18 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype._onMethod = function (channel, method, args) {
-  debug &#x26;&#x26; debug(channel + &#x22; &#x3e; &#x22; + method.name + &#x22; &#x22; + JSON.stringify(args));
+  debug &amp;&amp; debug(channel + " &gt; " + method.name + " " + JSON.stringify(args));
 
   // Channel 0 is the control channel. If not zero then delegate to
   // one of the channel objects.
 
-  if (channel &#x3e; 0) {
+  if (channel &gt; 0) {
     if (!this.channels[channel]) {
-      debug &#x26;&#x26; debug(&#x22;Received message on untracked channel.&#x22;);
+      debug &amp;&amp; debug("Received message on untracked channel.");
       return;
     }
     if (!this.channels[channel]._onChannelMethod) {
-      throw new Error(&#x27;Channel &#x27; + channel + &#x27; has no _onChannelMethod method.&#x27;);
+      throw new Error('Channel ' + channel + ' has no _onChannelMethod method.');
     }
     this.channels[channel]._onChannelMethod(channel, method, args);
     return;
@@ -1965,12 +1958,12 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
 
   switch (method) {
     // 2. The server responds, after the version string, with the
-    // &#x27;connectionStart&#x27; method (contains various useless information)
+    // 'connectionStart' method (contains various useless information)
     case methods.connectionStart:
-      // We check that they&#x27;re serving us AMQP 0-9
-      if (args.versionMajor !== 0 &#x26;&#x26; args.versionMinor != 9) {
+      // We check that they're serving us AMQP 0-9
+      if (args.versionMajor !== 0 &amp;&amp; args.versionMinor != 9) {
         this.socket.end();
-        this.emit(&#x27;error&#x27;, new Error(&#x22;Bad server version&#x22;));
+        this.emit('error', new Error("Bad server version"));
         return;
       }
       this.serverProperties = args.serverProperties;
@@ -1979,20 +1972,20 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
         clientProperties: this.options.clientProperties,
         mechanism: this.options.authMechanism,
         response: this._saslResponse(),
-        locale: &#x27;en_US&#x27;
+        locale: 'en_US'
       });
       break;
 
     // 4. The server responds with a connectionTune request
     case methods.connectionTune:
       if (args.frameMax) {
-          debug &#x26;&#x26; debug(&#x22;tweaking maxFrameBuffer to &#x22; + args.frameMax);
+          debug &amp;&amp; debug("tweaking maxFrameBuffer to " + args.frameMax);
           maxFrameBuffer = args.frameMax;
           this._sendBuffer = new Buffer(maxFrameBuffer);
           this.parser.setMaxFrameBuffer(maxFrameBuffer);
       }
       if (args.channelMax) {
-          debug &#x26;&#x26; debug(&#x22;tweaking channelMax to &#x22; + args.channelMax);
+          debug &amp;&amp; debug("tweaking channelMax to " + args.channelMax);
           channelMax = args.channelMax;
       }
       // 5. We respond with connectionTuneOk
@@ -2004,10 +1997,10 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
       // 6. Then we have to send a connectionOpen request
       this._sendMethod(0, methods.connectionOpen, {
         virtualHost: this.options.vhost
-        // , capabilities: &#x27;&#x27;
+        // , capabilities: ''
         // , insist: true
         ,
-        reserved1: &#x27;&#x27;,
+        reserved1: '',
         reserved2: true
       });
       break;
@@ -2015,44 +2008,44 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
 
     case methods.connectionOpenOk:
       // 7. Finally they respond with connectionOpenOk
-      // Whew! That&#x27;s why they call it the Advanced MQP.
+      // Whew! That's why they call it the Advanced MQP.
       if (this._readyCallback) {
         this._readyCallback(this);
         this._readyCallback = null;
       }
-      this.emit(&#x27;ready&#x27;);
+      this.emit('ready');
       break;
 
     case methods.connectionClose:
       var e = new Error(args.replyText);
       e.code = args.replyCode;
-      if (!this.listeners(&#x27;close&#x27;).length) {
-        console.log(&#x27;Unhandled connection error: &#x27; + args.replyText);
+      if (!this.listeners('close').length) {
+        console.log('Unhandled connection error: ' + args.replyText);
       }
       this.socket.destroy(e);
       break;
 
     case methods.connectionCloseOk:
-      debug &#x26;&#x26; debug(&#x22;Received close-ok from server, closing socket&#x22;);
+      debug &amp;&amp; debug("Received close-ok from server, closing socket");
       this.socket.end();
       break;
 
     case methods.connectionBlocked:
-      debug &#x26;&#x26; debug(&#x27;Received connection.blocked from server with reason: &#x27; + args.reason);
+      debug &amp;&amp; debug('Received connection.blocked from server with reason: ' + args.reason);
       this._blocked = true;
       this._blockedReason = args.reason;
-      this.emit(&#x27;blocked&#x27;);
+      this.emit('blocked');
       break;
 
     case methods.connectionUnblocked:
-      debug &#x26;&#x26; debug(&#x27;Received connection.unblocked from server&#x27;);
+      debug &amp;&amp; debug('Received connection.unblocked from server');
       this._blocked = false;
       this._blockedReason = null;
-      this.emit(&#x27;unblocked&#x27;);
+      this.emit('unblocked');
       break;
 
     default:
-      throw new Error(&#x22;Uncaught method &#x27;&#x22; + method.name + &#x22;&#x27; with args &#x22; +
+      throw new Error("Uncaught method '" + method.name + "' with args " +
           JSON.stringify(args));
   }
 }</pre></li>
@@ -2073,7 +2066,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     clearTimeout(this._outboundHeartbeatTimer);
     this._outboundHeartbeatTimer = null;
   }
-  if (this.socket.writable &#x26;&#x26; this.options.heartbeat) {
+  if (this.socket.writable &amp;&amp; this.options.heartbeat) {
     var self = this;
     this._outboundHeartbeatTimer = setTimeout(function () {
       self.heartbeat();
@@ -2097,18 +2090,18 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   var opts = {};
   opts.ssl = {};
   var url = URL.parse(connectionString);
-  var scheme = url.protocol.substring(0, url.protocol.lastIndexOf(&#x27;:&#x27;));
-  if (scheme != &#x27;amqp&#x27; &#x26;&#x26; scheme != &#x27;amqps&#x27;) {
-    throw new Error(&#x27;Connection URI must use amqp or amqps scheme. &#x27; +
-                    &#x27;For example, &#x22;amqp://bus.megacorp.internal:5766&#x22;.&#x27;);
+  var scheme = url.protocol.substring(0, url.protocol.lastIndexOf(':'));
+  if (scheme != 'amqp' &amp;&amp; scheme != 'amqps') {
+    throw new Error('Connection URI must use amqp or amqps scheme. ' +
+                    'For example, "amqp://bus.megacorp.internal:5766".');
   }
-  opts.ssl.enabled = (&#x27;amqps&#x27; === scheme);
+  opts.ssl.enabled = ('amqps' === scheme);
   opts.host = url.hostname;
   opts.port = url.port || defaultPorts[scheme];
   if (url.auth) {
-    var auth = url.auth.split(&#x27;:&#x27;);
-    auth[0] &#x26;&#x26; (opts.login = auth[0]);
-    auth[1] &#x26;&#x26; (opts.password = auth[1]);
+    var auth = url.auth.split(':');
+    auth[0] &amp;&amp; (opts.login = auth[0]);
+    auth[1] &amp;&amp; (opts.password = auth[1]);
   }
   if (url.pathname) {
     opts.vhost = unescape(url.pathname.substr(1));
@@ -2129,17 +2122,17 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype._saslResponse = function () {
   var response;
-  if (this.options.authMechanism == &#x27;AMQPLAIN&#x27;)
+  if (this.options.authMechanism == 'AMQPLAIN')
     response = {
       LOGIN: this.options.login,
       PASSWORD: this.options.password
     };
-  else if (this.options.authMechanism == &#x27;PLAIN&#x27;)
-    response = &#x22;\0&#x22; + this.options.login + &#x22;\0&#x22; + this.options.password;
-  else if (this.options.authMechanism == &#x27;EXTERNAL&#x27;)
-    response = &#x22;\0&#x22;;
-  else if (this.options.authMechanism == &#x27;ANONYMOUS&#x27;)
-    response = &#x22;\0&#x22;;
+  else if (this.options.authMechanism == 'PLAIN')
+    response = "\0" + this.options.login + "\0" + this.options.password;
+  else if (this.options.authMechanism == 'EXTERNAL')
+    response = "\0";
+  else if (this.options.authMechanism == 'ANONYMOUS')
+    response = "\0";
   else
     response = this.options.response;
 
@@ -2169,8 +2162,8 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   var metaSize = 8; // headerBytes = 7, frameEndBytes = 1
   var maxBodySize = maxFrameBuffer - metaSize;
 
-  while (len &#x3e; 0) {
-    var bodySize = len &#x3c; maxBodySize ? len : maxBodySize;
+  while (len &gt; 0) {
+    var bodySize = len &lt; maxBodySize ? len : maxBodySize;
     var frameSize = bodySize + metaSize;
 
     var b = new Buffer(frameSize);
@@ -2219,17 +2212,17 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
 
   var bodyStart = b.used;
 
-  // HEADER&#x27;S BODY
+  // HEADER'S BODY
 
   serializer.serializeInt(b, 2, classInfo.index);   // class 60 for Basic
   serializer.serializeInt(b, 2, 0);                 // weight, always 0 for rabbitmq
   serializer.serializeInt(b, 8, size);              // byte size of body
 
   // properties - first propertyFlags
-  properties = _.defaults(properties || {}, {contentType: &#x27;application/octet-stream&#x27;});
+  properties = _.defaults(properties || {}, {contentType: 'application/octet-stream'});
   var propertyFlags = 0;
-  for (var i = 0; i &#x3c; classInfo.fields.length; i++) {
-    if (properties[classInfo.fields[i].name]) propertyFlags |= 1 &#x3c;&#x3c; (15-i);
+  for (var i = 0; i &lt; classInfo.fields.length; i++) {
+    if (properties[classInfo.fields[i].name]) propertyFlags |= 1 &lt;&lt; (15-i);
   }
   serializer.serializeInt(b, 2, propertyFlags);
   // now the actual properties.
@@ -2251,7 +2244,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   var s = new Buffer(b.used);
   b.copy(s);
 
-  //debug &#x26;&#x26; debug(&#x27;header sent: &#x27; + JSON.stringify(s));
+  //debug &amp;&amp; debug('header sent: ' + JSON.stringify(s));
 
   this.write(s);
 }</pre></li>
@@ -2268,7 +2261,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype._sendMethod = function (channel, method, args) {
-  debug &#x26;&#x26; debug(channel + &#x22; &#x3c; &#x22; + method.name + &#x22; &#x22; + JSON.stringify(args));
+  debug &amp;&amp; debug(channel + " &lt; " + method.name + " " + JSON.stringify(args));
   var b = this._sendBuffer;
   b.used = 0;
 
@@ -2300,7 +2293,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   var c = new Buffer(b.used);
   b.copy(c);
 
-  debug &#x26;&#x26; debug(&#x22;sending frame: &#x22; + c.toJSON());
+  debug &amp;&amp; debug("sending frame: " + c.toJSON());
 
   this.write(c);
 
@@ -2319,8 +2312,8 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype._startHandshake = function () {
-  debug &#x26;&#x26; debug(&#x22;Initiating handshake...&#x22;);
-  this.write(&#x22;AMQP&#x22; + String.fromCharCode(0,0,9,1));
+  debug &amp;&amp; debug("Initiating handshake...");
+  this.write("AMQP" + String.fromCharCode(0,0,9,1));
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2336,7 +2329,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype.addAllListeners = function () {
   var self = this;
-  var connectEvent = this.options.ssl.enabled ? &#x27;secureConnect&#x27; : &#x27;connect&#x27;;
+  var connectEvent = this.options.ssl.enabled ? 'secureConnect' : 'connect';
 
 
   self.addListener(connectEvent, function() {
@@ -2347,50 +2340,50 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     self.queues = self.queues || {};
     self.exchanges = self.exchanges || {};
 
-    self.parser = new AMQPParser(&#x27;0-9-1&#x27;, &#x27;client&#x27;);
+    self.parser = new AMQPParser('0-9-1', 'client');
 
     self.parser.onMethod = function (channel, method, args) {
       self._onMethod(channel, method, args);
     };
 
     self.parser.onContent = function (channel, data) {
-      debug &#x26;&#x26; debug(channel + &#x22; &#x3e; content &#x22; + data.length);
-      if (self.channels[channel] &#x26;&#x26; self.channels[channel]._onContent) {
+      debug &amp;&amp; debug(channel + " &gt; content " + data.length);
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContent) {
         self.channels[channel]._onContent(channel, data);
       } else {
-        debug &#x26;&#x26; debug(&#x22;unhandled content: &#x22; + data);
+        debug &amp;&amp; debug("unhandled content: " + data);
       }
     };
 
     self.parser.onContentHeader = function (channel, classInfo, weight, properties, size) {
-      debug &#x26;&#x26; debug(channel + &#x22; &#x3e; content header &#x22; + JSON.stringify([classInfo.name, weight, properties, size]));
-      if (self.channels[channel] &#x26;&#x26; self.channels[channel]._onContentHeader) {
+      debug &amp;&amp; debug(channel + " &gt; content header " + JSON.stringify([classInfo.name, weight, properties, size]));
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContentHeader) {
         self.channels[channel]._onContentHeader(channel, classInfo, weight, properties, size);
       } else {
-        debug &#x26;&#x26; debug(&#x22;unhandled content header&#x22;);
+        debug &amp;&amp; debug("unhandled content header");
       }
     };
 
     self.parser.onHeartBeat = function () {
-      self.emit(&#x22;heartbeat&#x22;);
-      debug &#x26;&#x26; debug(&#x22;heartbeat&#x22;);
+      self.emit("heartbeat");
+      debug &amp;&amp; debug("heartbeat");
     };
 
     self.parser.onError = function (e) {
-      self.emit(&#x22;error&#x22;, e);
-      self.emit(&#x22;close&#x22;);
+      self.emit("error", e);
+      self.emit("close");
     };
 
     // Remove readyEmitted flag so we can detect an auth error.
     self.readyEmitted = false;
   });
 
-  self.addListener(&#x27;data&#x27;, function (data) {
+  self.addListener('data', function (data) {
     if(self.parser != null){
       try {
         self.parser.execute(data);
       } catch (exception) {
-        self.emit(&#x27;error&#x27;, exception);
+        self.emit('error', exception);
         return;
       }
     }
@@ -2398,7 +2391,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   });
 
   var backoffTime = null;
-  self.addListener(&#x27;error&#x27;, function backoff(e) {
+  self.addListener('error', function backoff(e) {
     if (self._inboundHeartbeatTimer !== null) {
       clearTimeout(self._inboundHeartbeatTimer);
       self._inboundHeartbeatTimer = null;
@@ -2412,7 +2405,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
       // Set to true, as we are presently in the process of scheduling one.
       self.connectionAttemptScheduled = true;
 
-      // Kill the socket, if it hasn&#x27;t been killed already.
+      // Kill the socket, if it hasn't been killed already.
       self.socket.end();
 
       // Reset parser state
@@ -2422,8 +2415,8 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
       // channels that they are no longer connected so that nobody attempts
       // to send messages which would be doomed to fail.
       for (var channel in self.channels) {
-        if (channel !== &#x27;0&#x27;) {
-          self.channels[channel].state = &#x27;closed&#x27;;
+        if (channel !== '0') {
+          self.channels[channel].state = 'closed';
         }
       }
       // Queues are channels (so we have already marked them as closed), but
@@ -2432,19 +2425,19 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
       // closed so that we can resubscribe them once we are reconnected.
       for (var queue in self.queues) {
         for (var index in self.queues[queue].consumerTagOptions) {
-          self.queues[queue].consumerTagOptions[index][&#x27;state&#x27;] = &#x27;closed&#x27;;
+          self.queues[queue].consumerTagOptions[index]['state'] = 'closed';
         }
       }
 
       // Begin reconnection attempts
       if (self.implOptions.reconnect) {
-        // Don&#x27;t thrash, use a backoff strategy.
+        // Don't thrash, use a backoff strategy.
         if (backoffTime === null) {
-          // This is the first time we&#x27;ve failed since a successful connection,
+          // This is the first time we've failed since a successful connection,
           // so use the configured backoff time without any modification.
           backoffTime = self.implOptions.reconnectBackoffTime;
-        } else if (self.implOptions.reconnectBackoffStrategy === &#x27;exponential&#x27;) {
-          // If you&#x27;ve configured exponential backoff, we&#x27;ll double the
+        } else if (self.implOptions.reconnectBackoffStrategy === 'exponential') {
+          // If you've configured exponential backoff, we'll double the
           // backoff time each ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2478,12 +2471,12 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype.disconnect = function () {
-  debug &#x26;&#x26; debug(&#x22;Sending disconnect request to server&#x22;);
+  debug &amp;&amp; debug("Sending disconnect request to server");
   this._sendMethod(0, methods.connectionClose, {
-    &#x27;replyText&#x27;: &#x27;client disconnect&#x27;,
-    &#x27;replyCode&#x27;: 200,
-    &#x27;classId&#x27;: 0,
-    &#x27;methodId&#x27;: 0
+    'replyText': 'client disconnect',
+    'replyCode': 200,
+    'classId': 0,
+    'methodId': 0
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2531,12 +2524,12 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   if (name === undefined) name = this.implOptions.defaultExchangeName;
 
   if (!options) options = {};
-  if (name !== &#x27;&#x27; &#x26;&#x26; options.type === undefined) options.type = &#x27;topic&#x27;;
+  if (name !== '' &amp;&amp; options.type === undefined) options.type = 'topic';
 
   try{
     var channel = this.generateChannelId();
   }catch(exception){
-    this.emit(&#x22;error&#x22;, exception);
+    this.emit("error", exception);
     return;
   }
   var exchange = new Exchange(this, channel, name, options, openCallback);
@@ -2582,7 +2575,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     }
     // after a full loop throw an Error
     if(channelId == this.channelCounter){
-      throw new Error(&#x22;No valid Channel Id values available&#x22;);
+      throw new Error("No valid Channel Id values available");
     }
   }
   this.channelCounter = channelId;
@@ -2621,10 +2614,10 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   }
 
   var exchange = this._defaultExchange;
-  if (exchange.state === &#x27;open&#x27;) {
+  if (exchange.state === 'open') {
     exchange.publish(routingKey, body, options, callback);
   } else {
-    exchange.once(&#x27;open&#x27;, function() {
+    exchange.once('open', function() {
       exchange.publish(routingKey, body, options, callback);
     });
   }
@@ -2643,7 +2636,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype.queue = function (name) {
   var options, callback;
-  if (typeof arguments[1] == &#x27;object&#x27;) {
+  if (typeof arguments[1] == 'object') {
     options = arguments[1];
     callback = arguments[2];
   } else {
@@ -2653,7 +2646,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   try{
     var channel = this.generateChannelId();
   }catch(exception){
-    this.emit(&#x22;error&#x22;, exception);
+    this.emit("error", exception);
     return;
   }
 
@@ -2691,9 +2684,9 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype.reconnect = function () {
   // Suspend activity on channels
   for (var channel in this.channels) {
-    this.channels[channel].state = &#x27;closed&#x27;;
+    this.channels[channel].state = 'closed';
   }
-  debug &#x26;&#x26; debug(&#x22;Connection lost, reconnecting...&#x22;);
+  debug &amp;&amp; debug("Connection lost, reconnecting...");
   // Terminate socket activity
   if (this.socket) this.socket.end();
   this.connect();
@@ -2726,10 +2719,10 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Connection.prototype.setOptions = function (options) {
-  var urlo = (options &#x26;&#x26; options.url) ? this._parseURLOptions(options.url) : {};
-  var sslo = (options &#x26;&#x26; options.ssl &#x26;&#x26; options.ssl.enabled) ? defaultSslOptions : {};
+  var urlo = (options &amp;&amp; options.url) ? this._parseURLOptions(options.url) : {};
+  var sslo = (options &amp;&amp; options.ssl &amp;&amp; options.ssl.enabled) ? defaultSslOptions : {};
   this.options = _.assignIn({}, defaultOptions, sslo, urlo, options || {});
-  this.options.clientProperties =  _.assignIn({}, defaultClientProperties, (options &#x26;&#x26; options.clientProperties) || {});
+  this.options.clientProperties =  _.assignIn({}, defaultClientProperties, (options &amp;&amp; options.clientProperties) || {});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2779,13 +2772,13 @@ IMPORTANT: This module only works with node v0.4.0 and later.
 An example of connecting to a server and listening on a queue.
 
 ```javascript
-var amqp = require(&#x27;amqp&#x27;);
+var amqp = require('amqp');
 
-var connection = amqp.<span class="apidocCodeKeywordSpan">createConnection</span>({ host: &#x27;dev.rabbitmq.com&#x27; });
+var connection = amqp.<span class="apidocCodeKeywordSpan">createConnection</span>({ host: 'dev.rabbitmq.com' });
 
 // add this for better debuging
-connection.on(&#x27;error&#x27;, function(e) {
-  console.log(&#x22;Error from amqp: &#x22;, e);
+connection.on('error', function(e) {
+  console.log("Error from amqp: ", e);
 });
 
 // Wait for connection to become established.
@@ -2821,7 +2814,7 @@ connection.on(&#x27;error&#x27;, function(e) {
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.<span class="apidocCodeKeywordSpan">exchange</span>()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -2854,7 +2847,7 @@ connection.on(&#x27;error&#x27;, function(e) {
   this.routingKey  = args.routingKey;
   this.consumerTag = args.consumerTag;
 
-  for (var i=0, l=msgProperties.length; i&#x3c;l; i++) {
+  for (var i=0, l=msgProperties.length; i&lt;l; i++) {
     if (args[msgProperties[i].name]) {
       this[msgProperties[i].name] = args[msgProperties[i].name];
     }
@@ -2873,11 +2866,11 @@ connection.on(&#x27;error&#x27;, function(e) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function AMQPParser(version, type) {
-  this.isClient = (type == &#x27;client&#x27;);
-  this.state = this.isClient ? &#x27;frameHeader&#x27; : &#x27;protocolHeader&#x27;;
+  this.isClient = (type == 'client');
+  this.state = this.isClient ? 'frameHeader' : 'protocolHeader';
   this.maxFrameBuffer = MAX_FRAME_BUFFER_DEFAULT;
 
-  if (version != &#x27;0-9-1&#x27;) this.throwError(&#x22;Unsupported protocol version&#x22;);
+  if (version != '0-9-1') this.throwError("Unsupported protocol version");
 
   var frameHeader = new Buffer(7);
   frameHeader.used = 0;
@@ -2890,14 +2883,14 @@ connection.on(&#x27;error&#x27;, function(e) {
     var needed = fh.length - fh.used;
     data.copy(fh, fh.used, 0, data.length);
     fh.used += data.length; // sloppy
-    if (fh.used &#x3e;= fh.length) {
+    if (fh.used &gt;= fh.length) {
       fh.read = 0;
       frameType = fh[fh.read++];
       frameChannel = parseInt(fh, 2);
       var frameSize = parseInt(fh, 4);
       fh.used = 0; // for reuse
-      if (frameSize &#x3e; self.maxFrameBuffer) {
-        self.throwError(&#x22;Oversized frame &#x22; + frameSize);
+      if (frameSize &gt; self.maxFrameBuffer) {
+        self.throwError("Oversized frame " + frameSize);
       }
       frameBuffer = new Buffer(frameSize);
       frameBuffer.used = 0;
@@ -2911,10 +2904,10 @@ connection.on(&#x27;error&#x27;, function(e) {
   function frame(data) {
     var fb = frameBuffer;
     var needed = fb.length - fb.used;
-    var sourceEnd = (fb.length &#x3e; data.length) ? data.length : fb.length;
+    var sourceEnd = (fb.length &gt; data.length) ? data.length : fb.length;
     data.copy(fb, fb.used, 0, sourceEnd);
     fb.used += data.length;
-    if (data.length &#x3e; needed) {
+    if (data.length &gt; needed) {
       return frameEnd(data.slice(needed));
     }
     else if (data.length == needed) {
@@ -2926,7 +2919,7 @@ connection.on(&#x27;error&#x27;, function(e) {
   }
 
   function frameEnd(data) {
-    if (data.length &#x3e; 0) {
+    if (data.length &gt; 0) {
       if (data[0] === Indicators.FRAME_END) {
         switch (frameType) {
         case FrameType.METHOD:
@@ -2941,17 +2934,17 @@ connection.on(&#x27;error&#x27;, function(e) {
           }
           break;
         case FrameType.HEARTBEAT:
-          debug &#x26;&#x26; debug(&#x22;heartbeat&#x22;);
+          debug &amp;&amp; debug("heartbeat");
           if (self.onHeartBeat) self.onHeartBeat();
           break;
         default:
-          self.throwError(&#x22;Unhandled frame type &#x22; + frameType);
+          self.throwError("Unhandled frame type " + frameType);
           break;
         }
         return header(data.slice(1));
       }
       else {
-        self.throwError(&#x22;Missing frame end marker&#x22;);
+        self.throwError("Missing frame end marker");
       }
     }
     else {
@@ -2983,8 +2976,8 @@ connection.on(&#x27;error&#x27;, function(e) {
   this.consumerTagOptions = {};
 
   // route messages to subscribers based on consumerTag
-  this.on(&#x27;rawMessage&#x27;, function(message) {
-    if (message.consumerTag &#x26;&#x26; self.consumerTagListeners[message.consumerTag]) {
+  this.on('rawMessage', function(message) {
+    if (message.consumerTag &amp;&amp; self.consumerTagListeners[message.consumerTag]) {
       self.consumerTagListeners[message.consumerTag](message);
     }
   });
@@ -3051,7 +3044,7 @@ connection.on(&#x27;error&#x27;, function(e) {
   this.setOptions(connectionArgs);
   this.setImplOptions(options);
 
-  if (typeof readyCallback === &#x27;function&#x27;) {
+  if (typeof readyCallback === 'function') {
     this._readyCallback = readyCallback;
   }
 
@@ -3077,7 +3070,7 @@ connection.on(&#x27;error&#x27;, function(e) {
 `amqp.createConnection()` returns an instance of `amqp.Connection`, which contains
 an instance of `net.Socket` at its `socket` property. All events and methods which work on
 `net.Socket` can also be used on an `amqp.Connection` instance. (e.g., the
-events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
+events `'connect'` and `'close'`.)
 ...</pre></li>
     </ul>
 
@@ -3117,17 +3110,17 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
   // - body is an object and its JSON representation is sent
   // Does not handle the case for streaming bodies.
   // Returns buffer.
-  if (typeof(body) == &#x27;string&#x27;) {
-    return [null, new Buffer(body, &#x27;utf8&#x27;)];
+  if (typeof(body) == 'string') {
+    return [null, new Buffer(body, 'utf8')];
   } else if (body instanceof Buffer) {
     return [null, body];
   } else {
     var jsonBody = JSON.stringify(body);
 
-    debug &#x26;&#x26; debug(&#x27;sending json: &#x27; + jsonBody);
+    debug &amp;&amp; debug('sending json: ' + jsonBody);
 
-    var props = {contentType: &#x27;application/json&#x27;};
-    return [props, new Buffer(jsonBody, &#x27;utf8&#x27;)];
+    var props = {contentType: 'application/json'};
+    return [props, new Buffer(jsonBody, 'utf8')];
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3145,15 +3138,15 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     <li>description and source-code<pre class="apidocCodePre">_chooseHost = function () {
   if(Array.isArray(this.options.host)){
     if(this.hosti == null){
-      if(typeof this.options.hostPreference == &#x27;number&#x27;) {
-        this.hosti = (this.options.hostPreference &#x3c; this.options.host.length) ?
+      if(typeof this.options.hostPreference == 'number') {
+        this.hosti = (this.options.hostPreference &lt; this.options.host.length) ?
           this.options.hostPreference : this.options.host.length-1;
       } else {
         this.hosti = parseInt(Math.random() * this.options.host.length, 10);
       }
     } else {
       // If this is already set, it looks like we want to choose another one.
-      // Add one to hosti but don&#x27;t overflow it.
+      // Add one to hosti but don't overflow it.
       this.hosti = (this.hosti + 1) % this.options.host.length;
     }
     return this.options.host[this.hosti];
@@ -3186,47 +3179,47 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     host: hostName
   };
 
-  // Disable tcp nagle&#x27;s algo
+  // Disable tcp nagle's algo
   // Default: true, makes small messages faster
   var noDelay = this.options.noDelay || true;
 
   var resetConnectionTimeout = function () {
-    debug &#x26;&#x26; debug(&#x27;connected so resetting connection timeout&#x27;);
+    debug &amp;&amp; debug('connected so resetting connection timeout');
     this.setTimeout(0);
   };
 
   // Connect socket
   if (this.options.ssl.enabled) {
-    debug &#x26;&#x26; debug(&#x27;making ssl connection&#x27;);
+    debug &amp;&amp; debug('making ssl connection');
     options = _.assignIn(options, this._getSSLOptions());
     this.socket = tls.connect(options, resetConnectionTimeout);
   } else {
-    debug &#x26;&#x26; debug(&#x27;making non-ssl connection&#x27;);
+    debug &amp;&amp; debug('making non-ssl connection');
     this.socket = net.connect(options, resetConnectionTimeout);
   }
   var connTimeout = this.options.connectionTimeout;
   if (connTimeout) {
-    debug &#x26;&#x26; debug(&#x27;setting connection timeout to &#x27; + connTimeout);
+    debug &amp;&amp; debug('setting connection timeout to ' + connTimeout);
     this.socket.setTimeout(connTimeout, function () {
-      debug &#x26;&#x26; debug(&#x27;connection timeout&#x27;);
+      debug &amp;&amp; debug('connection timeout');
       this.destroy();
-      var e = new Error(&#x27;connection timeout&#x27;);
-      e.name = &#x27;TimeoutError&#x27;;
-      self.emit(&#x27;error&#x27;, e);
+      var e = new Error('connection timeout');
+      e.name = 'TimeoutError';
+      self.emit('error', e);
     });
   }
 
   this.socket.setNoDelay(noDelay);
 
   // Proxy events.
-  // Note that if we don&#x27;t attach a &#x27;data&#x27; event, no data will flow.
-  var events = [&#x27;close&#x27;, &#x27;connect&#x27;, &#x27;data&#x27;, &#x27;drain&#x27;, &#x27;error&#x27;, &#x27;end&#x27;, &#x27;secureConnect&#x27;, &#x27;timeout&#x27;];
+  // Note that if we don't attach a 'data' event, no data will flow.
+  var events = ['close', 'connect', 'data', 'drain', 'error', 'end', 'secureConnect', 'timeout'];
   _.forEach(events, function(event){
     self.socket.on(event, self.emit.bind(self, event));
   });
 
   // Proxy a few methods that we use / previously used.
-  var methods = [&#x27;destroy&#x27;, &#x27;write&#x27;, &#x27;pause&#x27;, &#x27;resume&#x27;, &#x27;setEncoding&#x27;, &#x27;ref&#x27;, &#x27;unref&#x27;, &#x27;address&#x27;];
+  var methods = ['destroy', 'write', 'pause', 'resume', 'setEncoding', 'ref', 'unref', 'address'];
   _.forEach(methods, function(method){
     self[method] = function(){
       self.socket[method].apply(self.socket, arguments);
@@ -3295,7 +3288,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     var gracePeriod = 2 * this.options.heartbeat;
     this._inboundHeartbeatTimer = setTimeout(function () {
       if(self.socket.readable || self.options.heartbeatForceReconnect){
-        self.emit(&#x27;error&#x27;, new Error(&#x27;no heartbeat or data in last &#x27; + gracePeriod + &#x27; seconds&#x27;));
+        self.emit('error', new Error('no heartbeat or data in last ' + gracePeriod + ' seconds'));
       }
     }, gracePeriod * 1000);
   }
@@ -3313,18 +3306,18 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_onMethod = function (channel, method, args) {
-  debug &#x26;&#x26; debug(channel + &#x22; &#x3e; &#x22; + method.name + &#x22; &#x22; + JSON.stringify(args));
+  debug &amp;&amp; debug(channel + " &gt; " + method.name + " " + JSON.stringify(args));
 
   // Channel 0 is the control channel. If not zero then delegate to
   // one of the channel objects.
 
-  if (channel &#x3e; 0) {
+  if (channel &gt; 0) {
     if (!this.channels[channel]) {
-      debug &#x26;&#x26; debug(&#x22;Received message on untracked channel.&#x22;);
+      debug &amp;&amp; debug("Received message on untracked channel.");
       return;
     }
     if (!this.channels[channel]._onChannelMethod) {
-      throw new Error(&#x27;Channel &#x27; + channel + &#x27; has no _onChannelMethod method.&#x27;);
+      throw new Error('Channel ' + channel + ' has no _onChannelMethod method.');
     }
     this.channels[channel]._onChannelMethod(channel, method, args);
     return;
@@ -3334,12 +3327,12 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
 
   switch (method) {
     // 2. The server responds, after the version string, with the
-    // &#x27;connectionStart&#x27; method (contains various useless information)
+    // 'connectionStart' method (contains various useless information)
     case methods.connectionStart:
-      // We check that they&#x27;re serving us AMQP 0-9
-      if (args.versionMajor !== 0 &#x26;&#x26; args.versionMinor != 9) {
+      // We check that they're serving us AMQP 0-9
+      if (args.versionMajor !== 0 &amp;&amp; args.versionMinor != 9) {
         this.socket.end();
-        this.emit(&#x27;error&#x27;, new Error(&#x22;Bad server version&#x22;));
+        this.emit('error', new Error("Bad server version"));
         return;
       }
       this.serverProperties = args.serverProperties;
@@ -3348,20 +3341,20 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
         clientProperties: this.options.clientProperties,
         mechanism: this.options.authMechanism,
         response: this._saslResponse(),
-        locale: &#x27;en_US&#x27;
+        locale: 'en_US'
       });
       break;
 
     // 4. The server responds with a connectionTune request
     case methods.connectionTune:
       if (args.frameMax) {
-          debug &#x26;&#x26; debug(&#x22;tweaking maxFrameBuffer to &#x22; + args.frameMax);
+          debug &amp;&amp; debug("tweaking maxFrameBuffer to " + args.frameMax);
           maxFrameBuffer = args.frameMax;
           this._sendBuffer = new Buffer(maxFrameBuffer);
           this.parser.setMaxFrameBuffer(maxFrameBuffer);
       }
       if (args.channelMax) {
-          debug &#x26;&#x26; debug(&#x22;tweaking channelMax to &#x22; + args.channelMax);
+          debug &amp;&amp; debug("tweaking channelMax to " + args.channelMax);
           channelMax = args.channelMax;
       }
       // 5. We respond with connectionTuneOk
@@ -3373,10 +3366,10 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
       // 6. Then we have to send a connectionOpen request
       this._sendMethod(0, methods.connectionOpen, {
         virtualHost: this.options.vhost
-        // , capabilities: &#x27;&#x27;
+        // , capabilities: ''
         // , insist: true
         ,
-        reserved1: &#x27;&#x27;,
+        reserved1: '',
         reserved2: true
       });
       break;
@@ -3384,44 +3377,44 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
 
     case methods.connectionOpenOk:
       // 7. Finally they respond with connectionOpenOk
-      // Whew! That&#x27;s why they call it the Advanced MQP.
+      // Whew! That's why they call it the Advanced MQP.
       if (this._readyCallback) {
         this._readyCallback(this);
         this._readyCallback = null;
       }
-      this.emit(&#x27;ready&#x27;);
+      this.emit('ready');
       break;
 
     case methods.connectionClose:
       var e = new Error(args.replyText);
       e.code = args.replyCode;
-      if (!this.listeners(&#x27;close&#x27;).length) {
-        console.log(&#x27;Unhandled connection error: &#x27; + args.replyText);
+      if (!this.listeners('close').length) {
+        console.log('Unhandled connection error: ' + args.replyText);
       }
       this.socket.destroy(e);
       break;
 
     case methods.connectionCloseOk:
-      debug &#x26;&#x26; debug(&#x22;Received close-ok from server, closing socket&#x22;);
+      debug &amp;&amp; debug("Received close-ok from server, closing socket");
       this.socket.end();
       break;
 
     case methods.connectionBlocked:
-      debug &#x26;&#x26; debug(&#x27;Received connection.blocked from server with reason: &#x27; + args.reason);
+      debug &amp;&amp; debug('Received connection.blocked from server with reason: ' + args.reason);
       this._blocked = true;
       this._blockedReason = args.reason;
-      this.emit(&#x27;blocked&#x27;);
+      this.emit('blocked');
       break;
 
     case methods.connectionUnblocked:
-      debug &#x26;&#x26; debug(&#x27;Received connection.unblocked from server&#x27;);
+      debug &amp;&amp; debug('Received connection.unblocked from server');
       this._blocked = false;
       this._blockedReason = null;
-      this.emit(&#x27;unblocked&#x27;);
+      this.emit('unblocked');
       break;
 
     default:
-      throw new Error(&#x22;Uncaught method &#x27;&#x22; + method.name + &#x22;&#x27; with args &#x22; +
+      throw new Error("Uncaught method '" + method.name + "' with args " +
           JSON.stringify(args));
   }
 }</pre></li>
@@ -3430,7 +3423,7 @@ Channel.prototype._onChannelMethod = function(channel, method, args) {
 switch (method) {
   case methods.channelCloseOk:
     delete this.connection.channels[this.channel];
-    this.state = &#x27;closed&#x27;;
+    this.state = 'closed';
     // TODO should this be falling through?
   default:
     this.<span class="apidocCodeKeywordSpan">_onMethod</span>(channel, method, args);
@@ -3438,9 +3431,9 @@ switch (method) {
 };
 
 Channel.prototype.close = function(reason) {
-this.state = &#x27;closing&#x27;;
+this.state = 'closing';
 this.connection._sendMethod(this.channel, methods.channelClose,
-                            {&#x27;replyText&#x27;: reason ? reason : &#x27;Goodbye from node&#x27;,
+                            {'replyText': reason ? reason : 'Goodbye from node',
 ...</pre></li>
     </ul>
 
@@ -3458,7 +3451,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     clearTimeout(this._outboundHeartbeatTimer);
     this._outboundHeartbeatTimer = null;
   }
-  if (this.socket.writable &#x26;&#x26; this.options.heartbeat) {
+  if (this.socket.writable &amp;&amp; this.options.heartbeat) {
     var self = this;
     this._outboundHeartbeatTimer = setTimeout(function () {
       self.heartbeat();
@@ -3482,18 +3475,18 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var opts = {};
   opts.ssl = {};
   var url = URL.parse(connectionString);
-  var scheme = url.protocol.substring(0, url.protocol.lastIndexOf(&#x27;:&#x27;));
-  if (scheme != &#x27;amqp&#x27; &#x26;&#x26; scheme != &#x27;amqps&#x27;) {
-    throw new Error(&#x27;Connection URI must use amqp or amqps scheme. &#x27; +
-                    &#x27;For example, &#x22;amqp://bus.megacorp.internal:5766&#x22;.&#x27;);
+  var scheme = url.protocol.substring(0, url.protocol.lastIndexOf(':'));
+  if (scheme != 'amqp' &amp;&amp; scheme != 'amqps') {
+    throw new Error('Connection URI must use amqp or amqps scheme. ' +
+                    'For example, "amqp://bus.megacorp.internal:5766".');
   }
-  opts.ssl.enabled = (&#x27;amqps&#x27; === scheme);
+  opts.ssl.enabled = ('amqps' === scheme);
   opts.host = url.hostname;
   opts.port = url.port || defaultPorts[scheme];
   if (url.auth) {
-    var auth = url.auth.split(&#x27;:&#x27;);
-    auth[0] &#x26;&#x26; (opts.login = auth[0]);
-    auth[1] &#x26;&#x26; (opts.password = auth[1]);
+    var auth = url.auth.split(':');
+    auth[0] &amp;&amp; (opts.login = auth[0]);
+    auth[1] &amp;&amp; (opts.password = auth[1]);
   }
   if (url.pathname) {
     opts.vhost = unescape(url.pathname.substr(1));
@@ -3514,17 +3507,17 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_saslResponse = function () {
   var response;
-  if (this.options.authMechanism == &#x27;AMQPLAIN&#x27;)
+  if (this.options.authMechanism == 'AMQPLAIN')
     response = {
       LOGIN: this.options.login,
       PASSWORD: this.options.password
     };
-  else if (this.options.authMechanism == &#x27;PLAIN&#x27;)
-    response = &#x22;\0&#x22; + this.options.login + &#x22;\0&#x22; + this.options.password;
-  else if (this.options.authMechanism == &#x27;EXTERNAL&#x27;)
-    response = &#x22;\0&#x22;;
-  else if (this.options.authMechanism == &#x27;ANONYMOUS&#x27;)
-    response = &#x22;\0&#x22;;
+  else if (this.options.authMechanism == 'PLAIN')
+    response = "\0" + this.options.login + "\0" + this.options.password;
+  else if (this.options.authMechanism == 'EXTERNAL')
+    response = "\0";
+  else if (this.options.authMechanism == 'ANONYMOUS')
+    response = "\0";
   else
     response = this.options.response;
 
@@ -3554,8 +3547,8 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var metaSize = 8; // headerBytes = 7, frameEndBytes = 1
   var maxBodySize = maxFrameBuffer - metaSize;
 
-  while (len &#x3e; 0) {
-    var bodySize = len &#x3c; maxBodySize ? len : maxBodySize;
+  while (len &gt; 0) {
+    var bodySize = len &lt; maxBodySize ? len : maxBodySize;
     var frameSize = bodySize + metaSize;
 
     var b = new Buffer(frameSize);
@@ -3575,11 +3568,11 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     // This interface is probably not appropriate for streaming large files.
-    // (Of course it&#x27;s arguable about whether AMQP is the appropriate
+    // (Of course it's arguable about whether AMQP is the appropriate
     // transport for large files.) The content header wants to know the size
-    // of the data before sending it - so there&#x27;s no point in trying to have a
+    // of the data before sending it - so there's no point in trying to have a
     // general streaming interface - streaming messages of unknown size simply
-    // isn&#x27;t possible with AMQP. This is all to say, don&#x27;t send big messages.
+    // isn't possible with AMQP. This is all to say, don't send big messages.
     // If you need to stream something large, chunk it yourself.
     self.connection.<span class="apidocCodeKeywordSpan">_sendBody</span>(self.channel, data, options);
   });
@@ -3620,17 +3613,17 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 
   var bodyStart = b.used;
 
-  // HEADER&#x27;S BODY
+  // HEADER'S BODY
 
   serializer.serializeInt(b, 2, classInfo.index);   // class 60 for Basic
   serializer.serializeInt(b, 2, 0);                 // weight, always 0 for rabbitmq
   serializer.serializeInt(b, 8, size);              // byte size of body
 
   // properties - first propertyFlags
-  properties = _.defaults(properties || {}, {contentType: &#x27;application/octet-stream&#x27;});
+  properties = _.defaults(properties || {}, {contentType: 'application/octet-stream'});
   var propertyFlags = 0;
-  for (var i = 0; i &#x3c; classInfo.fields.length; i++) {
-    if (properties[classInfo.fields[i].name]) propertyFlags |= 1 &#x3c;&#x3c; (15-i);
+  for (var i = 0; i &lt; classInfo.fields.length; i++) {
+    if (properties[classInfo.fields[i].name]) propertyFlags |= 1 &lt;&lt; (15-i);
   }
   serializer.serializeInt(b, 2, propertyFlags);
   // now the actual properties.
@@ -3652,7 +3645,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var s = new Buffer(b.used);
   b.copy(s);
 
-  //debug &#x26;&#x26; debug(&#x27;header sent: &#x27; + JSON.stringify(s));
+  //debug &amp;&amp; debug('header sent: ' + JSON.stringify(s));
 
   this.write(s);
 }</pre></li>
@@ -3669,7 +3662,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_sendMethod = function (channel, method, args) {
-  debug &#x26;&#x26; debug(channel + &#x22; &#x3c; &#x22; + method.name + &#x22; &#x22; + JSON.stringify(args));
+  debug &amp;&amp; debug(channel + " &lt; " + method.name + " " + JSON.stringify(args));
   var b = this._sendBuffer;
   b.used = 0;
 
@@ -3701,7 +3694,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var c = new Buffer(b.used);
   b.copy(c);
 
-  debug &#x26;&#x26; debug(&#x22;sending frame: &#x22; + c.toJSON());
+  debug &amp;&amp; debug("sending frame: " + c.toJSON());
 
   this.write(c);
 
@@ -3715,12 +3708,12 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 util.inherits(Channel, events.EventEmitter);
 
 Channel.prototype.closeOK = function() {
-  this.connection.<span class="apidocCodeKeywordSpan">_sendMethod</span>(this.channel, methods.channelCloseOk, {reserved1: &#x22
-;&#x22;});
+  this.connection.<span class="apidocCodeKeywordSpan">_sendMethod</span>(this.channel, methods.channelCloseOk, {reserved1: "
+;"});
 };
 
 Channel.prototype.reconnect = function () {
-  this.connection._sendMethod(this.channel, methods.channelOpen, {reserved1: &#x22;&#x22;});
+  this.connection._sendMethod(this.channel, methods.channelOpen, {reserved1: ""});
 };
 
 Channel.prototype._taskPush = function (reply, cb) {
@@ -3737,8 +3730,8 @@ Channel.prototype._taskPush = function (reply, cb) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_startHandshake = function () {
-  debug &#x26;&#x26; debug(&#x22;Initiating handshake...&#x22;);
-  this.write(&#x22;AMQP&#x22; + String.fromCharCode(0,0,9,1));
+  debug &amp;&amp; debug("Initiating handshake...");
+  this.write("AMQP" + String.fromCharCode(0,0,9,1));
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -3754,7 +3747,7 @@ Channel.prototype._taskPush = function (reply, cb) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">addAllListeners = function () {
   var self = this;
-  var connectEvent = this.options.ssl.enabled ? &#x27;secureConnect&#x27; : &#x27;connect&#x27;;
+  var connectEvent = this.options.ssl.enabled ? 'secureConnect' : 'connect';
 
 
   self.addListener(connectEvent, function() {
@@ -3765,50 +3758,50 @@ Channel.prototype._taskPush = function (reply, cb) {
     self.queues = self.queues || {};
     self.exchanges = self.exchanges || {};
 
-    self.parser = new AMQPParser(&#x27;0-9-1&#x27;, &#x27;client&#x27;);
+    self.parser = new AMQPParser('0-9-1', 'client');
 
     self.parser.onMethod = function (channel, method, args) {
       self._onMethod(channel, method, args);
     };
 
     self.parser.onContent = function (channel, data) {
-      debug &#x26;&#x26; debug(channel + &#x22; &#x3e; content &#x22; + data.length);
-      if (self.channels[channel] &#x26;&#x26; self.channels[channel]._onContent) {
+      debug &amp;&amp; debug(channel + " &gt; content " + data.length);
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContent) {
         self.channels[channel]._onContent(channel, data);
       } else {
-        debug &#x26;&#x26; debug(&#x22;unhandled content: &#x22; + data);
+        debug &amp;&amp; debug("unhandled content: " + data);
       }
     };
 
     self.parser.onContentHeader = function (channel, classInfo, weight, properties, size) {
-      debug &#x26;&#x26; debug(channel + &#x22; &#x3e; content header &#x22; + JSON.stringify([classInfo.name, weight, properties, size]));
-      if (self.channels[channel] &#x26;&#x26; self.channels[channel]._onContentHeader) {
+      debug &amp;&amp; debug(channel + " &gt; content header " + JSON.stringify([classInfo.name, weight, properties, size]));
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContentHeader) {
         self.channels[channel]._onContentHeader(channel, classInfo, weight, properties, size);
       } else {
-        debug &#x26;&#x26; debug(&#x22;unhandled content header&#x22;);
+        debug &amp;&amp; debug("unhandled content header");
       }
     };
 
     self.parser.onHeartBeat = function () {
-      self.emit(&#x22;heartbeat&#x22;);
-      debug &#x26;&#x26; debug(&#x22;heartbeat&#x22;);
+      self.emit("heartbeat");
+      debug &amp;&amp; debug("heartbeat");
     };
 
     self.parser.onError = function (e) {
-      self.emit(&#x22;error&#x22;, e);
-      self.emit(&#x22;close&#x22;);
+      self.emit("error", e);
+      self.emit("close");
     };
 
     // Remove readyEmitted flag so we can detect an auth error.
     self.readyEmitted = false;
   });
 
-  self.addListener(&#x27;data&#x27;, function (data) {
+  self.addListener('data', function (data) {
     if(self.parser != null){
       try {
         self.parser.execute(data);
       } catch (exception) {
-        self.emit(&#x27;error&#x27;, exception);
+        self.emit('error', exception);
         return;
       }
     }
@@ -3816,7 +3809,7 @@ Channel.prototype._taskPush = function (reply, cb) {
   });
 
   var backoffTime = null;
-  self.addListener(&#x27;error&#x27;, function backoff(e) {
+  self.addListener('error', function backoff(e) {
     if (self._inboundHeartbeatTimer !== null) {
       clearTimeout(self._inboundHeartbeatTimer);
       self._inboundHeartbeatTimer = null;
@@ -3830,7 +3823,7 @@ Channel.prototype._taskPush = function (reply, cb) {
       // Set to true, as we are presently in the process of scheduling one.
       self.connectionAttemptScheduled = true;
 
-      // Kill the socket, if it hasn&#x27;t been killed already.
+      // Kill the socket, if it hasn't been killed already.
       self.socket.end();
 
       // Reset parser state
@@ -3840,8 +3833,8 @@ Channel.prototype._taskPush = function (reply, cb) {
       // channels that they are no longer connected so that nobody attempts
       // to send messages which would be doomed to fail.
       for (var channel in self.channels) {
-        if (channel !== &#x27;0&#x27;) {
-          self.channels[channel].state = &#x27;closed&#x27;;
+        if (channel !== '0') {
+          self.channels[channel].state = 'closed';
         }
       }
       // Queues are channels (so we have already marked them as closed), but
@@ -3850,19 +3843,19 @@ Channel.prototype._taskPush = function (reply, cb) {
       // closed so that we can resubscribe them once we are reconnected.
       for (var queue in self.queues) {
         for (var index in self.queues[queue].consumerTagOptions) {
-          self.queues[queue].consumerTagOptions[index][&#x27;state&#x27;] = &#x27;closed&#x27;;
+          self.queues[queue].consumerTagOptions[index]['state'] = 'closed';
         }
       }
 
       // Begin reconnection attempts
       if (self.implOptions.reconnect) {
-        // Don&#x27;t thrash, use a backoff strategy.
+        // Don't thrash, use a backoff strategy.
         if (backoffTime === null) {
-          // This is the first time we&#x27;ve failed since a successful connection,
+          // This is the first time we've failed since a successful connection,
           // so use the configured backoff time without any modification.
           backoffTime = self.implOptions.reconnectBackoffTime;
-        } else if (self.implOptions.reconnectBackoffStrategy === &#x27;exponential&#x27;) {
-          // If you&#x27;ve configured exponential backoff, we&#x27;ll double the
+        } else if (self.implOptions.reconnectBackoffStrategy === 'exponential') {
+          // If you've configured exponential backoff, we'll double the
           // backoff time each ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -3896,7 +3889,7 @@ Channel.prototype._taskPush = function (reply, cb) {
 `amqp.createConnection()` returns an instance of `amqp.Connection`, which contains
 an instance of `net.Socket` at its `socket` property. All events and methods which work on
 `net.Socket` can also be used on an `amqp.Connection` instance. (e.g., the
-events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
+events `'connect'` and `'close'`.)
 
 ### Connection options and URL
 ...</pre></li>
@@ -3912,12 +3905,12 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">disconnect = function () {
-  debug &#x26;&#x26; debug(&#x22;Sending disconnect request to server&#x22;);
+  debug &amp;&amp; debug("Sending disconnect request to server");
   this._sendMethod(0, methods.connectionClose, {
-    &#x27;replyText&#x27;: &#x27;client disconnect&#x27;,
-    &#x27;replyCode&#x27;: 200,
-    &#x27;classId&#x27;: 0,
-    &#x27;methodId&#x27;: 0
+    'replyText': 'client disconnect',
+    'replyCode': 200,
+    'classId': 0,
+    'methodId': 0
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -3969,7 +3962,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
 }
     });
 
-    m.addListener(&#x27;end&#x27;, function () {
+    m.addListener('end', function () {
 var json, deliveryInfo = {}, msgProperties = classes[60].fields, i, l;
 
 if (isJSON) {
@@ -3997,12 +3990,12 @@ if (isJSON) {
   if (name === undefined) name = this.implOptions.defaultExchangeName;
 
   if (!options) options = {};
-  if (name !== &#x27;&#x27; &#x26;&#x26; options.type === undefined) options.type = &#x27;topic&#x27;;
+  if (name !== '' &amp;&amp; options.type === undefined) options.type = 'topic';
 
   try{
     var channel = this.generateChannelId();
   }catch(exception){
-    this.emit(&#x22;error&#x22;, exception);
+    this.emit("error", exception);
     return;
   }
   var exchange = new Exchange(this, channel, name, options, openCallback);
@@ -4017,7 +4010,7 @@ if (isJSON) {
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.<span class="apidocCodeKeywordSpan">exchange</span>()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -4046,13 +4039,13 @@ if (isJSON) {
   break;
 
 case methods.channelClose:
-  this.state = &#x22;closed&#x22;;
+  this.state = "closed";
   this.closeOK();
   this.connection.<span class="apidocCodeKeywordSpan">exchangeClosed</span>(this.name);
   var e = new Error(args.replyText);
   e.code = args.replyCode;
-  this.emit(&#x27;error&#x27;, e);
-  this.emit(&#x27;close&#x27;);
+  this.emit('error', e);
+  this.emit('close');
   break;
 
 case methods.channelCloseOk:
@@ -4079,7 +4072,7 @@ case methods.channelCloseOk:
     }
     // after a full loop throw an Error
     if(channelId == this.channelCounter){
-      throw new Error(&#x22;No valid Channel Id values available&#x22;);
+      throw new Error("No valid Channel Id values available");
     }
   }
   this.channelCounter = channelId;
@@ -4118,10 +4111,10 @@ case methods.channelCloseOk:
   }
 
   var exchange = this._defaultExchange;
-  if (exchange.state === &#x27;open&#x27;) {
+  if (exchange.state === 'open') {
     exchange.publish(routingKey, body, options, callback);
   } else {
-    exchange.once(&#x27;open&#x27;, function() {
+    exchange.once('open', function() {
       exchange.publish(routingKey, body, options, callback);
     });
   }
@@ -4157,7 +4150,7 @@ case methods.channelCloseOk:
     <ul>
     <li>description and source-code<pre class="apidocCodePre">queue = function (name) {
   var options, callback;
-  if (typeof arguments[1] == &#x27;object&#x27;) {
+  if (typeof arguments[1] == 'object') {
     options = arguments[1];
     callback = arguments[2];
   } else {
@@ -4167,7 +4160,7 @@ case methods.channelCloseOk:
   try{
     var channel = this.generateChannelId();
   }catch(exception){
-    this.emit(&#x22;error&#x22;, exception);
+    this.emit("error", exception);
     return;
   }
 
@@ -4216,7 +4209,7 @@ var self = this;
 options = options || {};
 return this._taskPush(methods.queueDeleteOk, function () {
   self.connection.<span class="apidocCodeKeywordSpan">queueClosed</span>(self.name);
-  if (&#x27;exchange&#x27; in self) {
+  if ('exchange' in self) {
     self.exchange.binds--;
   }
   self.connection._sendMethod(self.channel, methods.queueDelete,
@@ -4238,9 +4231,9 @@ return this._taskPush(methods.queueDeleteOk, function () {
     <li>description and source-code<pre class="apidocCodePre">reconnect = function () {
   // Suspend activity on channels
   for (var channel in this.channels) {
-    this.channels[channel].state = &#x27;closed&#x27;;
+    this.channels[channel].state = 'closed';
   }
-  debug &#x26;&#x26; debug(&#x22;Connection lost, reconnecting...&#x22;);
+  debug &amp;&amp; debug("Connection lost, reconnecting...");
   // Terminate socket activity
   if (this.socket) this.socket.end();
   this.connect();
@@ -4258,7 +4251,7 @@ return this._taskPush(methods.queueDeleteOk, function () {
 util.inherits(Channel, events.EventEmitter);
 
 Channel.prototype.closeOK = function() {
-  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: &#x22;&#x22;});
+  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: ""});
 };
 ...</pre></li>
     </ul>
@@ -4288,10 +4281,10 @@ Channel.prototype.closeOK = function() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">setOptions = function (options) {
-  var urlo = (options &#x26;&#x26; options.url) ? this._parseURLOptions(options.url) : {};
-  var sslo = (options &#x26;&#x26; options.ssl &#x26;&#x26; options.ssl.enabled) ? defaultSslOptions : {};
+  var urlo = (options &amp;&amp; options.url) ? this._parseURLOptions(options.url) : {};
+  var sslo = (options &amp;&amp; options.ssl &amp;&amp; options.ssl.enabled) ? defaultSslOptions : {};
   this.options = _.assignIn({}, defaultOptions, sslo, urlo, options || {});
-  this.options.clientProperties =  _.assignIn({}, defaultClientProperties, (options &#x26;&#x26; options.clientProperties) || {});
+  this.options.clientProperties =  _.assignIn({}, defaultClientProperties, (options &amp;&amp; options.clientProperties) || {});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4317,17 +4310,17 @@ Channel.prototype.closeOK = function() {
   // - body is an object and its JSON representation is sent
   // Does not handle the case for streaming bodies.
   // Returns buffer.
-  if (typeof(body) == &#x27;string&#x27;) {
-    return [null, new Buffer(body, &#x27;utf8&#x27;)];
+  if (typeof(body) == 'string') {
+    return [null, new Buffer(body, 'utf8')];
   } else if (body instanceof Buffer) {
     return [null, body];
   } else {
     var jsonBody = JSON.stringify(body);
 
-    debug &#x26;&#x26; debug(&#x27;sending json: &#x27; + jsonBody);
+    debug &amp;&amp; debug('sending json: ' + jsonBody);
 
-    var props = {contentType: &#x27;application/json&#x27;};
-    return [props, new Buffer(jsonBody, &#x27;utf8&#x27;)];
+    var props = {contentType: 'application/json'};
+    return [props, new Buffer(jsonBody, 'utf8')];
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -4350,15 +4343,15 @@ Channel.prototype.closeOK = function() {
     <li>description and source-code<pre class="apidocCodePre">_chooseHost = function () {
   if(Array.isArray(this.options.host)){
     if(this.hosti == null){
-      if(typeof this.options.hostPreference == &#x27;number&#x27;) {
-        this.hosti = (this.options.hostPreference &#x3c; this.options.host.length) ?
+      if(typeof this.options.hostPreference == 'number') {
+        this.hosti = (this.options.hostPreference &lt; this.options.host.length) ?
           this.options.hostPreference : this.options.host.length-1;
       } else {
         this.hosti = parseInt(Math.random() * this.options.host.length, 10);
       }
     } else {
       // If this is already set, it looks like we want to choose another one.
-      // Add one to hosti but don&#x27;t overflow it.
+      // Add one to hosti but don't overflow it.
       this.hosti = (this.hosti + 1) % this.options.host.length;
     }
     return this.options.host[this.hosti];
@@ -4396,47 +4389,47 @@ Channel.prototype.closeOK = function() {
     host: hostName
   };
 
-  // Disable tcp nagle&#x27;s algo
+  // Disable tcp nagle's algo
   // Default: true, makes small messages faster
   var noDelay = this.options.noDelay || true;
 
   var resetConnectionTimeout = function () {
-    debug &#x26;&#x26; debug(&#x27;connected so resetting connection timeout&#x27;);
+    debug &amp;&amp; debug('connected so resetting connection timeout');
     this.setTimeout(0);
   };
 
   // Connect socket
   if (this.options.ssl.enabled) {
-    debug &#x26;&#x26; debug(&#x27;making ssl connection&#x27;);
+    debug &amp;&amp; debug('making ssl connection');
     options = _.assignIn(options, this._getSSLOptions());
     this.socket = tls.connect(options, resetConnectionTimeout);
   } else {
-    debug &#x26;&#x26; debug(&#x27;making non-ssl connection&#x27;);
+    debug &amp;&amp; debug('making non-ssl connection');
     this.socket = net.connect(options, resetConnectionTimeout);
   }
   var connTimeout = this.options.connectionTimeout;
   if (connTimeout) {
-    debug &#x26;&#x26; debug(&#x27;setting connection timeout to &#x27; + connTimeout);
+    debug &amp;&amp; debug('setting connection timeout to ' + connTimeout);
     this.socket.setTimeout(connTimeout, function () {
-      debug &#x26;&#x26; debug(&#x27;connection timeout&#x27;);
+      debug &amp;&amp; debug('connection timeout');
       this.destroy();
-      var e = new Error(&#x27;connection timeout&#x27;);
-      e.name = &#x27;TimeoutError&#x27;;
-      self.emit(&#x27;error&#x27;, e);
+      var e = new Error('connection timeout');
+      e.name = 'TimeoutError';
+      self.emit('error', e);
     });
   }
 
   this.socket.setNoDelay(noDelay);
 
   // Proxy events.
-  // Note that if we don&#x27;t attach a &#x27;data&#x27; event, no data will flow.
-  var events = [&#x27;close&#x27;, &#x27;connect&#x27;, &#x27;data&#x27;, &#x27;drain&#x27;, &#x27;error&#x27;, &#x27;end&#x27;, &#x27;secureConnect&#x27;, &#x27;timeout&#x27;];
+  // Note that if we don't attach a 'data' event, no data will flow.
+  var events = ['close', 'connect', 'data', 'drain', 'error', 'end', 'secureConnect', 'timeout'];
   _.forEach(events, function(event){
     self.socket.on(event, self.emit.bind(self, event));
   });
 
   // Proxy a few methods that we use / previously used.
-  var methods = [&#x27;destroy&#x27;, &#x27;write&#x27;, &#x27;pause&#x27;, &#x27;resume&#x27;, &#x27;setEncoding&#x27;, &#x27;ref&#x27;, &#x27;unref&#x27;, &#x27;address&#x27;];
+  var methods = ['destroy', 'write', 'pause', 'resume', 'setEncoding', 'ref', 'unref', 'address'];
   _.forEach(methods, function(method){
     self[method] = function(){
       self.socket[method].apply(self.socket, arguments);
@@ -4515,7 +4508,7 @@ Channel.prototype.closeOK = function() {
     var gracePeriod = 2 * this.options.heartbeat;
     this._inboundHeartbeatTimer = setTimeout(function () {
       if(self.socket.readable || self.options.heartbeatForceReconnect){
-        self.emit(&#x27;error&#x27;, new Error(&#x27;no heartbeat or data in last &#x27; + gracePeriod + &#x27; seconds&#x27;));
+        self.emit('error', new Error('no heartbeat or data in last ' + gracePeriod + ' seconds'));
       }
     }, gracePeriod * 1000);
   }
@@ -4538,18 +4531,18 @@ Channel.prototype.closeOK = function() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_onMethod = function (channel, method, args) {
-  debug &#x26;&#x26; debug(channel + &#x22; &#x3e; &#x22; + method.name + &#x22; &#x22; + JSON.stringify(args));
+  debug &amp;&amp; debug(channel + " &gt; " + method.name + " " + JSON.stringify(args));
 
   // Channel 0 is the control channel. If not zero then delegate to
   // one of the channel objects.
 
-  if (channel &#x3e; 0) {
+  if (channel &gt; 0) {
     if (!this.channels[channel]) {
-      debug &#x26;&#x26; debug(&#x22;Received message on untracked channel.&#x22;);
+      debug &amp;&amp; debug("Received message on untracked channel.");
       return;
     }
     if (!this.channels[channel]._onChannelMethod) {
-      throw new Error(&#x27;Channel &#x27; + channel + &#x27; has no _onChannelMethod method.&#x27;);
+      throw new Error('Channel ' + channel + ' has no _onChannelMethod method.');
     }
     this.channels[channel]._onChannelMethod(channel, method, args);
     return;
@@ -4559,12 +4552,12 @@ Channel.prototype.closeOK = function() {
 
   switch (method) {
     // 2. The server responds, after the version string, with the
-    // &#x27;connectionStart&#x27; method (contains various useless information)
+    // 'connectionStart' method (contains various useless information)
     case methods.connectionStart:
-      // We check that they&#x27;re serving us AMQP 0-9
-      if (args.versionMajor !== 0 &#x26;&#x26; args.versionMinor != 9) {
+      // We check that they're serving us AMQP 0-9
+      if (args.versionMajor !== 0 &amp;&amp; args.versionMinor != 9) {
         this.socket.end();
-        this.emit(&#x27;error&#x27;, new Error(&#x22;Bad server version&#x22;));
+        this.emit('error', new Error("Bad server version"));
         return;
       }
       this.serverProperties = args.serverProperties;
@@ -4573,20 +4566,20 @@ Channel.prototype.closeOK = function() {
         clientProperties: this.options.clientProperties,
         mechanism: this.options.authMechanism,
         response: this._saslResponse(),
-        locale: &#x27;en_US&#x27;
+        locale: 'en_US'
       });
       break;
 
     // 4. The server responds with a connectionTune request
     case methods.connectionTune:
       if (args.frameMax) {
-          debug &#x26;&#x26; debug(&#x22;tweaking maxFrameBuffer to &#x22; + args.frameMax);
+          debug &amp;&amp; debug("tweaking maxFrameBuffer to " + args.frameMax);
           maxFrameBuffer = args.frameMax;
           this._sendBuffer = new Buffer(maxFrameBuffer);
           this.parser.setMaxFrameBuffer(maxFrameBuffer);
       }
       if (args.channelMax) {
-          debug &#x26;&#x26; debug(&#x22;tweaking channelMax to &#x22; + args.channelMax);
+          debug &amp;&amp; debug("tweaking channelMax to " + args.channelMax);
           channelMax = args.channelMax;
       }
       // 5. We respond with connectionTuneOk
@@ -4598,10 +4591,10 @@ Channel.prototype.closeOK = function() {
       // 6. Then we have to send a connectionOpen request
       this._sendMethod(0, methods.connectionOpen, {
         virtualHost: this.options.vhost
-        // , capabilities: &#x27;&#x27;
+        // , capabilities: ''
         // , insist: true
         ,
-        reserved1: &#x27;&#x27;,
+        reserved1: '',
         reserved2: true
       });
       break;
@@ -4609,44 +4602,44 @@ Channel.prototype.closeOK = function() {
 
     case methods.connectionOpenOk:
       // 7. Finally they respond with connectionOpenOk
-      // Whew! That&#x27;s why they call it the Advanced MQP.
+      // Whew! That's why they call it the Advanced MQP.
       if (this._readyCallback) {
         this._readyCallback(this);
         this._readyCallback = null;
       }
-      this.emit(&#x27;ready&#x27;);
+      this.emit('ready');
       break;
 
     case methods.connectionClose:
       var e = new Error(args.replyText);
       e.code = args.replyCode;
-      if (!this.listeners(&#x27;close&#x27;).length) {
-        console.log(&#x27;Unhandled connection error: &#x27; + args.replyText);
+      if (!this.listeners('close').length) {
+        console.log('Unhandled connection error: ' + args.replyText);
       }
       this.socket.destroy(e);
       break;
 
     case methods.connectionCloseOk:
-      debug &#x26;&#x26; debug(&#x22;Received close-ok from server, closing socket&#x22;);
+      debug &amp;&amp; debug("Received close-ok from server, closing socket");
       this.socket.end();
       break;
 
     case methods.connectionBlocked:
-      debug &#x26;&#x26; debug(&#x27;Received connection.blocked from server with reason: &#x27; + args.reason);
+      debug &amp;&amp; debug('Received connection.blocked from server with reason: ' + args.reason);
       this._blocked = true;
       this._blockedReason = args.reason;
-      this.emit(&#x27;blocked&#x27;);
+      this.emit('blocked');
       break;
 
     case methods.connectionUnblocked:
-      debug &#x26;&#x26; debug(&#x27;Received connection.unblocked from server&#x27;);
+      debug &amp;&amp; debug('Received connection.unblocked from server');
       this._blocked = false;
       this._blockedReason = null;
-      this.emit(&#x27;unblocked&#x27;);
+      this.emit('unblocked');
       break;
 
     default:
-      throw new Error(&#x22;Uncaught method &#x27;&#x22; + method.name + &#x22;&#x27; with args &#x22; +
+      throw new Error("Uncaught method '" + method.name + "' with args " +
           JSON.stringify(args));
   }
 }</pre></li>
@@ -4655,7 +4648,7 @@ Channel.prototype._onChannelMethod = function(channel, method, args) {
 switch (method) {
   case methods.channelCloseOk:
     delete this.connection.channels[this.channel];
-    this.state = &#x27;closed&#x27;;
+    this.state = 'closed';
     // TODO should this be falling through?
   default:
     this.<span class="apidocCodeKeywordSpan">_onMethod</span>(channel, method, args);
@@ -4663,9 +4656,9 @@ switch (method) {
 };
 
 Channel.prototype.close = function(reason) {
-this.state = &#x27;closing&#x27;;
+this.state = 'closing';
 this.connection._sendMethod(this.channel, methods.channelClose,
-                            {&#x27;replyText&#x27;: reason ? reason : &#x27;Goodbye from node&#x27;,
+                            {'replyText': reason ? reason : 'Goodbye from node',
 ...</pre></li>
     </ul>
 
@@ -4688,7 +4681,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     clearTimeout(this._outboundHeartbeatTimer);
     this._outboundHeartbeatTimer = null;
   }
-  if (this.socket.writable &#x26;&#x26; this.options.heartbeat) {
+  if (this.socket.writable &amp;&amp; this.options.heartbeat) {
     var self = this;
     this._outboundHeartbeatTimer = setTimeout(function () {
       self.heartbeat();
@@ -4717,18 +4710,18 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var opts = {};
   opts.ssl = {};
   var url = URL.parse(connectionString);
-  var scheme = url.protocol.substring(0, url.protocol.lastIndexOf(&#x27;:&#x27;));
-  if (scheme != &#x27;amqp&#x27; &#x26;&#x26; scheme != &#x27;amqps&#x27;) {
-    throw new Error(&#x27;Connection URI must use amqp or amqps scheme. &#x27; +
-                    &#x27;For example, &#x22;amqp://bus.megacorp.internal:5766&#x22;.&#x27;);
+  var scheme = url.protocol.substring(0, url.protocol.lastIndexOf(':'));
+  if (scheme != 'amqp' &amp;&amp; scheme != 'amqps') {
+    throw new Error('Connection URI must use amqp or amqps scheme. ' +
+                    'For example, "amqp://bus.megacorp.internal:5766".');
   }
-  opts.ssl.enabled = (&#x27;amqps&#x27; === scheme);
+  opts.ssl.enabled = ('amqps' === scheme);
   opts.host = url.hostname;
   opts.port = url.port || defaultPorts[scheme];
   if (url.auth) {
-    var auth = url.auth.split(&#x27;:&#x27;);
-    auth[0] &#x26;&#x26; (opts.login = auth[0]);
-    auth[1] &#x26;&#x26; (opts.password = auth[1]);
+    var auth = url.auth.split(':');
+    auth[0] &amp;&amp; (opts.login = auth[0]);
+    auth[1] &amp;&amp; (opts.password = auth[1]);
   }
   if (url.pathname) {
     opts.vhost = unescape(url.pathname.substr(1));
@@ -4754,17 +4747,17 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_saslResponse = function () {
   var response;
-  if (this.options.authMechanism == &#x27;AMQPLAIN&#x27;)
+  if (this.options.authMechanism == 'AMQPLAIN')
     response = {
       LOGIN: this.options.login,
       PASSWORD: this.options.password
     };
-  else if (this.options.authMechanism == &#x27;PLAIN&#x27;)
-    response = &#x22;\0&#x22; + this.options.login + &#x22;\0&#x22; + this.options.password;
-  else if (this.options.authMechanism == &#x27;EXTERNAL&#x27;)
-    response = &#x22;\0&#x22;;
-  else if (this.options.authMechanism == &#x27;ANONYMOUS&#x27;)
-    response = &#x22;\0&#x22;;
+  else if (this.options.authMechanism == 'PLAIN')
+    response = "\0" + this.options.login + "\0" + this.options.password;
+  else if (this.options.authMechanism == 'EXTERNAL')
+    response = "\0";
+  else if (this.options.authMechanism == 'ANONYMOUS')
+    response = "\0";
   else
     response = this.options.response;
 
@@ -4799,8 +4792,8 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var metaSize = 8; // headerBytes = 7, frameEndBytes = 1
   var maxBodySize = maxFrameBuffer - metaSize;
 
-  while (len &#x3e; 0) {
-    var bodySize = len &#x3c; maxBodySize ? len : maxBodySize;
+  while (len &gt; 0) {
+    var bodySize = len &lt; maxBodySize ? len : maxBodySize;
     var frameSize = bodySize + metaSize;
 
     var b = new Buffer(frameSize);
@@ -4820,11 +4813,11 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     // This interface is probably not appropriate for streaming large files.
-    // (Of course it&#x27;s arguable about whether AMQP is the appropriate
+    // (Of course it's arguable about whether AMQP is the appropriate
     // transport for large files.) The content header wants to know the size
-    // of the data before sending it - so there&#x27;s no point in trying to have a
+    // of the data before sending it - so there's no point in trying to have a
     // general streaming interface - streaming messages of unknown size simply
-    // isn&#x27;t possible with AMQP. This is all to say, don&#x27;t send big messages.
+    // isn't possible with AMQP. This is all to say, don't send big messages.
     // If you need to stream something large, chunk it yourself.
     self.connection.<span class="apidocCodeKeywordSpan">_sendBody</span>(self.channel, data, options);
   });
@@ -4870,17 +4863,17 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 
   var bodyStart = b.used;
 
-  // HEADER&#x27;S BODY
+  // HEADER'S BODY
 
   serializer.serializeInt(b, 2, classInfo.index);   // class 60 for Basic
   serializer.serializeInt(b, 2, 0);                 // weight, always 0 for rabbitmq
   serializer.serializeInt(b, 8, size);              // byte size of body
 
   // properties - first propertyFlags
-  properties = _.defaults(properties || {}, {contentType: &#x27;application/octet-stream&#x27;});
+  properties = _.defaults(properties || {}, {contentType: 'application/octet-stream'});
   var propertyFlags = 0;
-  for (var i = 0; i &#x3c; classInfo.fields.length; i++) {
-    if (properties[classInfo.fields[i].name]) propertyFlags |= 1 &#x3c;&#x3c; (15-i);
+  for (var i = 0; i &lt; classInfo.fields.length; i++) {
+    if (properties[classInfo.fields[i].name]) propertyFlags |= 1 &lt;&lt; (15-i);
   }
   serializer.serializeInt(b, 2, propertyFlags);
   // now the actual properties.
@@ -4902,7 +4895,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var s = new Buffer(b.used);
   b.copy(s);
 
-  //debug &#x26;&#x26; debug(&#x27;header sent: &#x27; + JSON.stringify(s));
+  //debug &amp;&amp; debug('header sent: ' + JSON.stringify(s));
 
   this.write(s);
 }</pre></li>
@@ -4924,7 +4917,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_sendMethod = function (channel, method, args) {
-  debug &#x26;&#x26; debug(channel + &#x22; &#x3c; &#x22; + method.name + &#x22; &#x22; + JSON.stringify(args));
+  debug &amp;&amp; debug(channel + " &lt; " + method.name + " " + JSON.stringify(args));
   var b = this._sendBuffer;
   b.used = 0;
 
@@ -4956,7 +4949,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var c = new Buffer(b.used);
   b.copy(c);
 
-  debug &#x26;&#x26; debug(&#x22;sending frame: &#x22; + c.toJSON());
+  debug &amp;&amp; debug("sending frame: " + c.toJSON());
 
   this.write(c);
 
@@ -4970,12 +4963,12 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 util.inherits(Channel, events.EventEmitter);
 
 Channel.prototype.closeOK = function() {
-  this.connection.<span class="apidocCodeKeywordSpan">_sendMethod</span>(this.channel, methods.channelCloseOk, {reserved1: &#x22
-;&#x22;});
+  this.connection.<span class="apidocCodeKeywordSpan">_sendMethod</span>(this.channel, methods.channelCloseOk, {reserved1: "
+;"});
 };
 
 Channel.prototype.reconnect = function () {
-  this.connection._sendMethod(this.channel, methods.channelOpen, {reserved1: &#x22;&#x22;});
+  this.connection._sendMethod(this.channel, methods.channelOpen, {reserved1: ""});
 };
 
 Channel.prototype._taskPush = function (reply, cb) {
@@ -4997,8 +4990,8 @@ Channel.prototype._taskPush = function (reply, cb) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_startHandshake = function () {
-  debug &#x26;&#x26; debug(&#x22;Initiating handshake...&#x22;);
-  this.write(&#x22;AMQP&#x22; + String.fromCharCode(0,0,9,1));
+  debug &amp;&amp; debug("Initiating handshake...");
+  this.write("AMQP" + String.fromCharCode(0,0,9,1));
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5019,7 +5012,7 @@ Channel.prototype._taskPush = function (reply, cb) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">addAllListeners = function () {
   var self = this;
-  var connectEvent = this.options.ssl.enabled ? &#x27;secureConnect&#x27; : &#x27;connect&#x27;;
+  var connectEvent = this.options.ssl.enabled ? 'secureConnect' : 'connect';
 
 
   self.addListener(connectEvent, function() {
@@ -5030,50 +5023,50 @@ Channel.prototype._taskPush = function (reply, cb) {
     self.queues = self.queues || {};
     self.exchanges = self.exchanges || {};
 
-    self.parser = new AMQPParser(&#x27;0-9-1&#x27;, &#x27;client&#x27;);
+    self.parser = new AMQPParser('0-9-1', 'client');
 
     self.parser.onMethod = function (channel, method, args) {
       self._onMethod(channel, method, args);
     };
 
     self.parser.onContent = function (channel, data) {
-      debug &#x26;&#x26; debug(channel + &#x22; &#x3e; content &#x22; + data.length);
-      if (self.channels[channel] &#x26;&#x26; self.channels[channel]._onContent) {
+      debug &amp;&amp; debug(channel + " &gt; content " + data.length);
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContent) {
         self.channels[channel]._onContent(channel, data);
       } else {
-        debug &#x26;&#x26; debug(&#x22;unhandled content: &#x22; + data);
+        debug &amp;&amp; debug("unhandled content: " + data);
       }
     };
 
     self.parser.onContentHeader = function (channel, classInfo, weight, properties, size) {
-      debug &#x26;&#x26; debug(channel + &#x22; &#x3e; content header &#x22; + JSON.stringify([classInfo.name, weight, properties, size]));
-      if (self.channels[channel] &#x26;&#x26; self.channels[channel]._onContentHeader) {
+      debug &amp;&amp; debug(channel + " &gt; content header " + JSON.stringify([classInfo.name, weight, properties, size]));
+      if (self.channels[channel] &amp;&amp; self.channels[channel]._onContentHeader) {
         self.channels[channel]._onContentHeader(channel, classInfo, weight, properties, size);
       } else {
-        debug &#x26;&#x26; debug(&#x22;unhandled content header&#x22;);
+        debug &amp;&amp; debug("unhandled content header");
       }
     };
 
     self.parser.onHeartBeat = function () {
-      self.emit(&#x22;heartbeat&#x22;);
-      debug &#x26;&#x26; debug(&#x22;heartbeat&#x22;);
+      self.emit("heartbeat");
+      debug &amp;&amp; debug("heartbeat");
     };
 
     self.parser.onError = function (e) {
-      self.emit(&#x22;error&#x22;, e);
-      self.emit(&#x22;close&#x22;);
+      self.emit("error", e);
+      self.emit("close");
     };
 
     // Remove readyEmitted flag so we can detect an auth error.
     self.readyEmitted = false;
   });
 
-  self.addListener(&#x27;data&#x27;, function (data) {
+  self.addListener('data', function (data) {
     if(self.parser != null){
       try {
         self.parser.execute(data);
       } catch (exception) {
-        self.emit(&#x27;error&#x27;, exception);
+        self.emit('error', exception);
         return;
       }
     }
@@ -5081,7 +5074,7 @@ Channel.prototype._taskPush = function (reply, cb) {
   });
 
   var backoffTime = null;
-  self.addListener(&#x27;error&#x27;, function backoff(e) {
+  self.addListener('error', function backoff(e) {
     if (self._inboundHeartbeatTimer !== null) {
       clearTimeout(self._inboundHeartbeatTimer);
       self._inboundHeartbeatTimer = null;
@@ -5095,7 +5088,7 @@ Channel.prototype._taskPush = function (reply, cb) {
       // Set to true, as we are presently in the process of scheduling one.
       self.connectionAttemptScheduled = true;
 
-      // Kill the socket, if it hasn&#x27;t been killed already.
+      // Kill the socket, if it hasn't been killed already.
       self.socket.end();
 
       // Reset parser state
@@ -5105,8 +5098,8 @@ Channel.prototype._taskPush = function (reply, cb) {
       // channels that they are no longer connected so that nobody attempts
       // to send messages which would be doomed to fail.
       for (var channel in self.channels) {
-        if (channel !== &#x27;0&#x27;) {
-          self.channels[channel].state = &#x27;closed&#x27;;
+        if (channel !== '0') {
+          self.channels[channel].state = 'closed';
         }
       }
       // Queues are channels (so we have already marked them as closed), but
@@ -5115,19 +5108,19 @@ Channel.prototype._taskPush = function (reply, cb) {
       // closed so that we can resubscribe them once we are reconnected.
       for (var queue in self.queues) {
         for (var index in self.queues[queue].consumerTagOptions) {
-          self.queues[queue].consumerTagOptions[index][&#x27;state&#x27;] = &#x27;closed&#x27;;
+          self.queues[queue].consumerTagOptions[index]['state'] = 'closed';
         }
       }
 
       // Begin reconnection attempts
       if (self.implOptions.reconnect) {
-        // Don&#x27;t thrash, use a backoff strategy.
+        // Don't thrash, use a backoff strategy.
         if (backoffTime === null) {
-          // This is the first time we&#x27;ve failed since a successful connection,
+          // This is the first time we've failed since a successful connection,
           // so use the configured backoff time without any modification.
           backoffTime = self.implOptions.reconnectBackoffTime;
-        } else if (self.implOptions.reconnectBackoffStrategy === &#x27;exponential&#x27;) {
-          // If you&#x27;ve configured exponential backoff, we&#x27;ll double the
+        } else if (self.implOptions.reconnectBackoffStrategy === 'exponential') {
+          // If you've configured exponential backoff, we'll double the
           // backoff time each ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5166,7 +5159,7 @@ Channel.prototype._taskPush = function (reply, cb) {
 `amqp.createConnection()` returns an instance of `amqp.Connection`, which contains
 an instance of `net.Socket` at its `socket` property. All events and methods which work on
 `net.Socket` can also be used on an `amqp.Connection` instance. (e.g., the
-events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
+events `'connect'` and `'close'`.)
 
 ### Connection options and URL
 ...</pre></li>
@@ -5187,12 +5180,12 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">disconnect = function () {
-  debug &#x26;&#x26; debug(&#x22;Sending disconnect request to server&#x22;);
+  debug &amp;&amp; debug("Sending disconnect request to server");
   this._sendMethod(0, methods.connectionClose, {
-    &#x27;replyText&#x27;: &#x27;client disconnect&#x27;,
-    &#x27;replyCode&#x27;: 200,
-    &#x27;classId&#x27;: 0,
-    &#x27;methodId&#x27;: 0
+    'replyText': 'client disconnect',
+    'replyCode': 200,
+    'classId': 0,
+    'methodId': 0
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -5249,7 +5242,7 @@ events `&#x27;connect&#x27;` and `&#x27;close&#x27;`.)
 }
     });
 
-    m.addListener(&#x27;end&#x27;, function () {
+    m.addListener('end', function () {
 var json, deliveryInfo = {}, msgProperties = classes[60].fields, i, l;
 
 if (isJSON) {
@@ -5282,12 +5275,12 @@ if (isJSON) {
   if (name === undefined) name = this.implOptions.defaultExchangeName;
 
   if (!options) options = {};
-  if (name !== &#x27;&#x27; &#x26;&#x26; options.type === undefined) options.type = &#x27;topic&#x27;;
+  if (name !== '' &amp;&amp; options.type === undefined) options.type = 'topic';
 
   try{
     var channel = this.generateChannelId();
   }catch(exception){
-    this.emit(&#x22;error&#x22;, exception);
+    this.emit("error", exception);
     return;
   }
   var exchange = new Exchange(this, channel, name, options, openCallback);
@@ -5302,7 +5295,7 @@ if (isJSON) {
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.<span class="apidocCodeKeywordSpan">exchange</span>()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -5336,13 +5329,13 @@ if (isJSON) {
   break;
 
 case methods.channelClose:
-  this.state = &#x22;closed&#x22;;
+  this.state = "closed";
   this.closeOK();
   this.connection.<span class="apidocCodeKeywordSpan">exchangeClosed</span>(this.name);
   var e = new Error(args.replyText);
   e.code = args.replyCode;
-  this.emit(&#x27;error&#x27;, e);
-  this.emit(&#x27;close&#x27;);
+  this.emit('error', e);
+  this.emit('close');
   break;
 
 case methods.channelCloseOk:
@@ -5374,7 +5367,7 @@ case methods.channelCloseOk:
     }
     // after a full loop throw an Error
     if(channelId == this.channelCounter){
-      throw new Error(&#x22;No valid Channel Id values available&#x22;);
+      throw new Error("No valid Channel Id values available");
     }
   }
   this.channelCounter = channelId;
@@ -5423,10 +5416,10 @@ case methods.channelCloseOk:
   }
 
   var exchange = this._defaultExchange;
-  if (exchange.state === &#x27;open&#x27;) {
+  if (exchange.state === 'open') {
     exchange.publish(routingKey, body, options, callback);
   } else {
-    exchange.once(&#x27;open&#x27;, function() {
+    exchange.once('open', function() {
       exchange.publish(routingKey, body, options, callback);
     });
   }
@@ -5467,7 +5460,7 @@ case methods.channelCloseOk:
     <ul>
     <li>description and source-code<pre class="apidocCodePre">queue = function (name) {
   var options, callback;
-  if (typeof arguments[1] == &#x27;object&#x27;) {
+  if (typeof arguments[1] == 'object') {
     options = arguments[1];
     callback = arguments[2];
   } else {
@@ -5477,7 +5470,7 @@ case methods.channelCloseOk:
   try{
     var channel = this.generateChannelId();
   }catch(exception){
-    this.emit(&#x22;error&#x22;, exception);
+    this.emit("error", exception);
     return;
   }
 
@@ -5531,7 +5524,7 @@ var self = this;
 options = options || {};
 return this._taskPush(methods.queueDeleteOk, function () {
   self.connection.<span class="apidocCodeKeywordSpan">queueClosed</span>(self.name);
-  if (&#x27;exchange&#x27; in self) {
+  if ('exchange' in self) {
     self.exchange.binds--;
   }
   self.connection._sendMethod(self.channel, methods.queueDelete,
@@ -5558,9 +5551,9 @@ return this._taskPush(methods.queueDeleteOk, function () {
     <li>description and source-code<pre class="apidocCodePre">reconnect = function () {
   // Suspend activity on channels
   for (var channel in this.channels) {
-    this.channels[channel].state = &#x27;closed&#x27;;
+    this.channels[channel].state = 'closed';
   }
-  debug &#x26;&#x26; debug(&#x22;Connection lost, reconnecting...&#x22;);
+  debug &amp;&amp; debug("Connection lost, reconnecting...");
   // Terminate socket activity
   if (this.socket) this.socket.end();
   this.connect();
@@ -5578,7 +5571,7 @@ return this._taskPush(methods.queueDeleteOk, function () {
 util.inherits(Channel, events.EventEmitter);
 
 Channel.prototype.closeOK = function() {
-  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: &#x22;&#x22;});
+  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: ""});
 };
 ...</pre></li>
     </ul>
@@ -5618,10 +5611,10 @@ Channel.prototype.closeOK = function() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">setOptions = function (options) {
-  var urlo = (options &#x26;&#x26; options.url) ? this._parseURLOptions(options.url) : {};
-  var sslo = (options &#x26;&#x26; options.ssl &#x26;&#x26; options.ssl.enabled) ? defaultSslOptions : {};
+  var urlo = (options &amp;&amp; options.url) ? this._parseURLOptions(options.url) : {};
+  var sslo = (options &amp;&amp; options.ssl &amp;&amp; options.ssl.enabled) ? defaultSslOptions : {};
   this.options = _.assignIn({}, defaultOptions, sslo, urlo, options || {});
-  this.options.clientProperties =  _.assignIn({}, defaultClientProperties, (options &#x26;&#x26; options.clientProperties) || {});
+  this.options.clientProperties =  _.assignIn({}, defaultClientProperties, (options &amp;&amp; options.clientProperties) || {});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5688,7 +5681,7 @@ Channel.prototype.closeOK = function() {
     <li>description and source-code<pre class="apidocCodePre">_handleTaskReply = function (channel, method, args) {
   var task, i;
 
-  for (i = 0; i &#x3c; this._tasks.length; i++) {
+  for (i = 0; i &lt; this._tasks.length; i++) {
     if (this._tasks[i].reply == method) {
       task = this._tasks[i];
       this._tasks.splice(i, 1);
@@ -5716,7 +5709,7 @@ Channel.prototype.closeOK = function() {
   switch (method) {
     case methods.channelCloseOk:
       delete this.connection.channels[this.channel];
-      this.state = &#x27;closed&#x27;;
+      this.state = 'closed';
       // TODO should this be falling through?
     default:
       this._onMethod(channel, method, args);
@@ -5756,11 +5749,11 @@ options.reserved1  = 0;
 var task = this.<span class="apidocCodeKeywordSpan">_taskPush</span>(null, function () {
   self.connection._sendMethod(self.channel, methods.basicPublish, options);
   // This interface is probably not appropriate for streaming large files.
-  // (Of course it&#x27;s arguable about whether AMQP is the appropriate
+  // (Of course it's arguable about whether AMQP is the appropriate
   // transport for large files.) The content header wants to know the size
-  // of the data before sending it - so there&#x27;s no point in trying to have a
+  // of the data before sending it - so there's no point in trying to have a
   // general streaming interface - streaming messages of unknown size simply
-  // isn&#x27;t possible with AMQP. This is all to say, don&#x27;t send big messages.
+  // isn't possible with AMQP. This is all to say, don't send big messages.
 ...</pre></li>
     </ul>
 
@@ -5774,15 +5767,15 @@ var task = this.<span class="apidocCodeKeywordSpan">_taskPush</span>(null, funct
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_tasksFlush = function () {
-  if (this.state != &#x27;open&#x27;) return;
+  if (this.state != 'open') return;
 
-  for (var i = 0; i &#x3c; this._tasks.length; i++) {
+  for (var i = 0; i &lt; this._tasks.length; i++) {
     var task = this._tasks[i];
     if (task.sent) continue;
     task.cb();
     task.sent = true;
     if (!task.reply) {
-      // if we don&#x27;t expect a reply, just delete it now
+      // if we don't expect a reply, just delete it now
       this._tasks.splice(i, 1);
       i = i-1;
     }
@@ -5801,9 +5794,9 @@ return promise;
 };
 
 Channel.prototype._tasksFlush = function () {
-if (this.state != &#x27;open&#x27;) return;
+if (this.state != 'open') return;
 
-for (var i = 0; i &#x3c; this._tasks.length; i++) {
+for (var i = 0; i &lt; this._tasks.length; i++) {
 ...</pre></li>
     </ul>
 
@@ -5817,12 +5810,12 @@ for (var i = 0; i &#x3c; this._tasks.length; i++) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">close = function (reason) {
-  this.state = &#x27;closing&#x27;;
+  this.state = 'closing';
   this.connection._sendMethod(this.channel, methods.channelClose,
-                              {&#x27;replyText&#x27;: reason ? reason : &#x27;Goodbye from node&#x27;,
-                               &#x27;replyCode&#x27;: 200,
-                               &#x27;classId&#x27;: 0,
-                               &#x27;methodId&#x27;: 0});
+                              {'replyText': reason ? reason : 'Goodbye from node',
+                               'replyCode': 200,
+                               'classId': 0,
+                               'methodId': 0});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     self.connection._sendMethod(self.channel, methods.basicCancel,
@@ -5853,7 +5846,7 @@ Queue.prototype.subscribe = function (options, messageListener) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">closeOK = function () {
-  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: &#x22;&#x22;});
+  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: ""});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     this._openCallback(this);
@@ -5862,13 +5855,13 @@ Queue.prototype.subscribe = function (options, messageListener) {
   break;
 
 case methods.channelClose:
-  this.state = &#x22;closed&#x22;;
+  this.state = "closed";
   this.<span class="apidocCodeKeywordSpan">closeOK</span>();
   this.connection.exchangeClosed(this.name);
   var e = new Error(args.replyText);
   e.code = args.replyCode;
-  this.emit(&#x27;error&#x27;, e);
-  this.emit(&#x27;close&#x27;);
+  this.emit('error', e);
+  this.emit('close');
   break;
 ...</pre></li>
     </ul>
@@ -5883,7 +5876,7 @@ case methods.channelClose:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">reconnect = function () {
-  this.connection._sendMethod(this.channel, methods.channelOpen, {reserved1: &#x22;&#x22;});
+  this.connection._sendMethod(this.channel, methods.channelOpen, {reserved1: ""});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
   // 10 is far too low.
@@ -5898,7 +5891,7 @@ case methods.channelClose:
 util.inherits(Channel, events.EventEmitter);
 
 Channel.prototype.closeOK = function() {
-  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: &#x22;&#x22;});
+  this.connection._sendMethod(this.channel, methods.channelCloseOk, {reserved1: ""});
 };
 ...</pre></li>
     </ul>
@@ -5928,13 +5921,13 @@ IMPORTANT: This module only works with node v0.4.0 and later.
 An example of connecting to a server and listening on a queue.
 
 ```javascript
-var amqp = require(&#x27;amqp&#x27;);
+var amqp = require('amqp');
 
-var connection = amqp.<span class="apidocCodeKeywordSpan">createConnection</span>({ host: &#x27;dev.rabbitmq.com&#x27; });
+var connection = amqp.<span class="apidocCodeKeywordSpan">createConnection</span>({ host: 'dev.rabbitmq.com' });
 
 // add this for better debuging
-connection.on(&#x27;error&#x27;, function(e) {
-  console.log(&#x22;Error from amqp: &#x22;, e);
+connection.on('error', function(e) {
+  console.log("Error from amqp: ", e);
 });
 
 // Wait for connection to become established.
@@ -5975,7 +5968,7 @@ connection.on(&#x27;error&#x27;, function(e) {
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.<span class="apidocCodeKeywordSpan">exchange</span>()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -6028,32 +6021,32 @@ connection.on(&#x27;error&#x27;, function(e) {
     <li>description and source-code<pre class="apidocCodePre">function _awaitConfirm(task, callback) {
   if (!this._addedExchangeErrorHandler) {
     // if connection fails, we want to ack error all unacked publishes.
-    this.connection.on(&#x27;error&#x27;, createExchangeErrorHandlerFor(this));
-    this.on(&#x27;error&#x27;, createExchangeErrorHandlerFor(this));
+    this.connection.on('error', createExchangeErrorHandlerFor(this));
+    this.on('error', createExchangeErrorHandlerFor(this));
     this._addedExchangeErrorHandler = true;
   }
 
-  debug &#x26;&#x26; debug(&#x27;awaiting confirmation for &#x27; + this._sequence);
+  debug &amp;&amp; debug('awaiting confirmation for ' + this._sequence);
   task.sequence = this._sequence;
   this._unAcked[this._sequence] = task;
   this._sequence++;
 
-  if (&#x27;function&#x27; != typeof callback) return;
+  if ('function' != typeof callback) return;
 
-  task.once(&#x27;ack error&#x27;, function (err) {
+  task.once('ack error', function (err) {
     task.removeAllListeners();
     callback(true, err);
   });
 
-  task.once(&#x27;ack&#x27;, function () {
+  task.once('ack', function () {
     task.removeAllListeners();
     callback(false);
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  // of the data before sending it - so there&#x27;s no point in trying to have a
+  // of the data before sending it - so there's no point in trying to have a
   // general streaming interface - streaming messages of unknown size simply
-  // isn&#x27;t possible with AMQP. This is all to say, don&#x27;t send big messages.
+  // isn't possible with AMQP. This is all to say, don't send big messages.
   // If you need to stream something large, chunk it yourself.
   self.connection._sendBody(self.channel, data, options);
 });
@@ -6085,7 +6078,7 @@ if (!this._addedExchangeErrorHandler) {
 this._addedExchangeErrorHandler = true;
       }
 
-      // Pre-baked exchanges don&#x27;t need to be declared
+      // Pre-baked exchanges don't need to be declared
       if (/^$|(amq\.)/.test(this.name)) {
 //If confirm mode is specified we have to set it no matter the exchange.
 if (this.options.confirm) {
@@ -6093,7 +6086,7 @@ if (this.options.confirm) {
   return;
 }
 
-this.state = &#x27;open&#x27;;
+this.state = 'open';
 // - issue #33 fix
 if (this._openCallback) {
  this._openCallback(this);
@@ -6123,12 +6116,12 @@ if (this._openCallback) {
 
       if (!this._addedExchangeErrorHandler) {
         var errorHandler = createExchangeErrorHandlerFor(this);
-        this.connection.on(&#x27;error&#x27;, errorHandler);
-        this.on(&#x27;error&#x27;, errorHandler);
+        this.connection.on('error', errorHandler);
+        this.on('error', errorHandler);
         this._addedExchangeErrorHandler = true;
       }
 
-      // Pre-baked exchanges don&#x27;t need to be declared
+      // Pre-baked exchanges don't need to be declared
       if (/^$|(amq\.)/.test(this.name)) {
         //If confirm mode is specified we have to set it no matter the exchange.
         if (this.options.confirm) {
@@ -6136,28 +6129,28 @@ if (this._openCallback) {
           return;
         }
 
-        this.state = &#x27;open&#x27;;
+        this.state = 'open';
         // - issue #33 fix
         if (this._openCallback) {
          this._openCallback(this);
          this._openCallback = null;
         }
         // --
-        this.emit(&#x27;open&#x27;);
+        this.emit('open');
 
       // For if we want to delete a exchange,
       // we dont care if all of the options match.
       } else if (this.options.noDeclare) {
         if (this.options.confirm) {
           this._confirmSelect(channel);
-          this.state = &#x27;open&#x27;;
+          this.state = 'open';
 
           if (this._openCallback) {
            this._openCallback(this);
            this._openCallback = null;
           }
 
-          this.emit(&#x27;open&#x27;);
+          this.emit('open');
         }
       } else {
         this.connection._sendMethod(channel, methods.exchangeDeclare,
@@ -6165,15 +6158,15 @@ if (this._openCallback) {
             , reserved2:  false
             , reserved3:  false
             , exchange:   this.name
-            , type:       this.options.type || &#x27;topic&#x27;
+            , type:       this.options.type || 'topic'
             , passive:    !!this.options.passive
             , durable:    !!this.options.durable
             , autoDelete: !!this.options.autoDelete
             , internal:   !!this.options.internal
             , noWait:     false
-            , &#x22;arguments&#x22;:this.options.arguments || {}
+            , "arguments":this.options.arguments || {}
             });
-        this.state = &#x27;declaring&#x27;;
+        this.state = 'declaring';
       }
       break;
 
@@ -6182,8 +6175,8 @@ if (this._openCallback) {
         this._confirmSelect(channel);
       } else {
 
-        this.state = &#x27;open&#x27;;
-        this.emit(&#x27;open&#x27;);
+        this.state = 'open';
+        this.emit('open');
         if (this._openCallback) {
           this._openCallback(this);
           this._openCallback = null;
@@ -6194,8 +6187,8 @@ if (this._openCallback) {
     case methods.confirmSelectOk:
       this._sequence = 1;
 
-      this.state = &#x27;open&#x27;;
-      this.emit(&#x27;open&#x27;);
+      this.state = 'open';
+      this.emit('open');
       if (this._openCallback) {
         this._openCallback(this);
         this._openCallback = null;
@@ -6203,49 +6196,49 @@ if (this._openCallback) {
       break;
 
     case methods.channelClose:
-      this.state = &#x22;closed&#x22;;
+      this.state = "closed";
       this.closeOK();
       this.connection.exchangeClosed(this.name);
       var e = new Error(args.replyText);
       e.code = args.replyCode;
-      this.emit(&#x27;error&#x27;, e);
-      this.emit(&#x27;close&#x27;);
+      this.emit('error', e);
+      this.emit('close');
       break;
 
     case methods.channelCloseOk:
       this.connection.exchangeClosed(this.name);
-      this.emit(&#x27;close&#x27;);
+      this.emit('close');
       break;
 
 
     case methods.basicAck:
-      this.emit(&#x27;basic-ack&#x27;, args);
+      this.emit('basic-ack', args);
       var sequenceNumber = args.deliveryTag.readUInt32BE(4), tag;
-      debug &#x26;&#x26; debug(&#x22;basic-ack, sequence: &#x22;, sequenceNumber);
+      debug &amp;&amp; debug("basic-ack, sequence: ", sequenceNumber);
 
-      if (sequenceNumber === 0 &#x26;&#x26; args.multiple === true) {
+      if (sequenceNumber === 0 &amp;&amp; args.multiple === true) {
         // we must ack everything
         for (tag in this._unAcked) {
-          this._unAcked[tag].emit(&#x27;ack&#x27;);
+          this._unAcked[tag].emit('ack');
           delete this._unAcked[tag];
         }
-      } else if (sequenceNumber !== 0 &#x26;&#x26; args.multiple === true) {
+      } else if (sequenceNumber !== 0 &amp;&amp; args.multiple === true) {
         // we must ack everything before the delivery tag
         for (tag in this._unAcked) {
-          if (tag &#x3c;= sequenceNumber) {
-            this._unAcked[tag].emit(&#x27;ack&#x27;);
+          if (tag &lt;= sequenceNumber) {
+            this._unAcked[tag].emit('ack');
             delete this._unAcked[tag];
           }
         }
-      } else if (this._unAcked[sequenceNumber] &#x26;&#x26; args.multiple === false) {
+      } else if (this._unAcked[sequenceNumber] &amp;&amp; args.multiple === false) {
         // simple single ack
-        this._unAcked[sequenceNumber].emit(&#x27;ack&#x27;);
+        this._unAcked[sequenceNumber].emit('ack');
         delete this._unAcked[sequenceNumber];
       }
       break;
 
     case methods.basicReturn:
-      this.emit(&#x27;basic-return&#x27;, args);
+      this.emit('basic-return', args);
       break;
 
     case methods.exchangeBindOk:
@@ -6256,7 +6249,7 @@ Channel.prototype._onChannelMethod = function(channel, method, args) {
 switch (method) {
   case methods.channelCloseOk:
     delete this.connection.channels[this.channel];
-    this.state = &#x27;closed&#x27;;
+    this.state = 'closed';
     // TODO should this be falling through?
   default:
     this.<span class="apidocCodeKeywordSpan">_onMethod</span>(channel, method, args);
@@ -6264,9 +6257,9 @@ switch (method) {
 };
 
 Channel.prototype.close = function(reason) {
-this.state = &#x27;closing&#x27;;
+this.state = 'closing';
 this.connection._sendMethod(this.channel, methods.channelClose,
-                            {&#x27;replyText&#x27;: reason ? reason : &#x27;Goodbye from node&#x27;,
+                            {'replyText': reason ? reason : 'Goodbye from node',
 ...</pre></li>
     </ul>
 
@@ -6285,13 +6278,13 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     <li>example usage<pre class="apidocCodePre">...
 }
 
-if (this.state !== &#x27;open&#x27;) {
+if (this.state !== 'open') {
   this._sequence = null;
-  return callback(true, new Error(&#x27;Can not publish: exchange is not open&#x27;));
+  return callback(true, new Error('Can not publish: exchange is not open'));
 }
 
-if (this.options.confirm &#x26;&#x26; !this.<span class="apidocCodeKeywordSpan">_readyToPublishWithConfirms</span>()) {
-  return callback(true, new Error(&#x27;Not yet ready to publish with confirms&#x27;));
+if (this.options.confirm &amp;&amp; !this.<span class="apidocCodeKeywordSpan">_readyToPublishWithConfirms</span>()) {
+  return callback(true, new Error('Not yet ready to publish with confirms'));
 }
 
 options = _.assignIn({}, options || {});
@@ -6337,7 +6330,7 @@ options.mandatory  = options.mandatory ? true : false;
       , source: source
       , routingKey: routingKey
       , noWait: false
-      , &#x22;arguments&#x22;: {}
+      , "arguments": {}
       });
 
 }</pre></li>
@@ -6354,7 +6347,7 @@ options.mandatory  = options.mandatory ? true : false;
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 ...</pre></li>
@@ -6394,9 +6387,9 @@ options.mandatory  = options.mandatory ? true : false;
     { reserved1: 0
         , destination: destination
         , source: source
-        , routingKey: &#x27;&#x27;
+        , routingKey: ''
         , noWait: false
-        , &#x22;arguments&#x22;: routing
+        , "arguments": routing
     });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -6410,7 +6403,7 @@ options.mandatory  = options.mandatory ? true : false;
 - [queue.<span class="apidocCodeKeywordSpan">bind_headers</span>([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -6428,7 +6421,7 @@ options.mandatory  = options.mandatory ? true : false;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">cleanup = function () {
-  if (this.binds === 0) { // don&#x27;t keep reference open if unused
+  if (this.binds === 0) { // don't keep reference open if unused
     this.connection.exchangeClosed(this.name);
   }
 }</pre></li>
@@ -6466,7 +6459,7 @@ options.mandatory  = options.mandatory ? true : false;
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.<span class="apidocCodeKeywordSpan">destroy</span>(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -6489,16 +6482,16 @@ options.mandatory  = options.mandatory ? true : false;
   callback = callback || function() {};
 
   if (this.connection._blocked) {
-    return callback(true, new Error(&#x27;Connection is blocked, server reason: &#x27; + this.connection._blockedReason));
+    return callback(true, new Error('Connection is blocked, server reason: ' + this.connection._blockedReason));
   }
 
-  if (this.state !== &#x27;open&#x27;) {
+  if (this.state !== 'open') {
     this._sequence = null;
-    return callback(true, new Error(&#x27;Can not publish: exchange is not open&#x27;));
+    return callback(true, new Error('Can not publish: exchange is not open'));
   }
 
-  if (this.options.confirm &#x26;&#x26; !this._readyToPublishWithConfirms()) {
-    return callback(true, new Error(&#x27;Not yet ready to publish with confirms&#x27;));
+  if (this.options.confirm &amp;&amp; !this._readyToPublishWithConfirms()) {
+    return callback(true, new Error('Not yet ready to publish with confirms'));
   }
 
   options = _.assignIn({}, options || {});
@@ -6511,11 +6504,11 @@ options.mandatory  = options.mandatory ? true : false;
   var task = this._taskPush(null, function () {
     self.connection._sendMethod(self.channel, methods.basicPublish, options);
     // This interface is probably not appropriate for streaming large files.
-    // (Of course it&#x27;s arguable about whether AMQP is the appropriate
+    // (Of course it's arguable about whether AMQP is the appropriate
     // transport for large files.) The content header wants to know the size
-    // of the data before sending it - so there&#x27;s no point in trying to have a
+    // of the data before sending it - so there's no point in trying to have a
     // general streaming interface - streaming messages of unknown size simply
-    // isn&#x27;t possible with AMQP. This is all to say, don&#x27;t send big messages.
+    // isn't possible with AMQP. This is all to say, don't send big messages.
     // If you need to stream something large, chunk it yourself.
     self.connection._sendBody(self.channel, data, options);
   });
@@ -6580,7 +6573,7 @@ options.mandatory  = options.mandatory ? true : false;
         , source: source
         , routingKey: routingKey
         , noWait: false
-        , &#x22;arguments&#x22;: {}
+        , "arguments": {}
         });
   });
 }</pre></li>
@@ -6596,7 +6589,7 @@ options.mandatory  = options.mandatory ? true : false;
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -6650,7 +6643,7 @@ options.mandatory  = options.mandatory ? true : false;
   this.routingKey  = args.routingKey;
   this.consumerTag = args.consumerTag;
 
-  for (var i=0, l=msgProperties.length; i&#x3c;l; i++) {
+  for (var i=0, l=msgProperties.length; i&lt;l; i++) {
     if (args[msgProperties[i].name]) {
       this[msgProperties[i].name] = args[msgProperties[i].name];
     }
@@ -6708,7 +6701,7 @@ function should take four parameters `(message, headers, deliveryInfo, ack)` and
 The `routingKeyInPayload` and `deliveryKeyInPayload` options determine
 if the reception process will inject the routingKey and deliveryKey,
 respectively, into the JSON payload received.  These default to unset
-thus adopting the parent connection&#x27;s values (which default to false).
+thus adopting the parent connection's values (which default to false).
 Setting these to true provide backward compatibility for older
 applications.
 ...</pre></li>
@@ -6762,11 +6755,11 @@ Queue.prototype.shift = function (reject, requeue) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function AMQPParser(version, type) {
-  this.isClient = (type == &#x27;client&#x27;);
-  this.state = this.isClient ? &#x27;frameHeader&#x27; : &#x27;protocolHeader&#x27;;
+  this.isClient = (type == 'client');
+  this.state = this.isClient ? 'frameHeader' : 'protocolHeader';
   this.maxFrameBuffer = MAX_FRAME_BUFFER_DEFAULT;
 
-  if (version != &#x27;0-9-1&#x27;) this.throwError(&#x22;Unsupported protocol version&#x22;);
+  if (version != '0-9-1') this.throwError("Unsupported protocol version");
 
   var frameHeader = new Buffer(7);
   frameHeader.used = 0;
@@ -6779,14 +6772,14 @@ Queue.prototype.shift = function (reject, requeue) {
     var needed = fh.length - fh.used;
     data.copy(fh, fh.used, 0, data.length);
     fh.used += data.length; // sloppy
-    if (fh.used &#x3e;= fh.length) {
+    if (fh.used &gt;= fh.length) {
       fh.read = 0;
       frameType = fh[fh.read++];
       frameChannel = parseInt(fh, 2);
       var frameSize = parseInt(fh, 4);
       fh.used = 0; // for reuse
-      if (frameSize &#x3e; self.maxFrameBuffer) {
-        self.throwError(&#x22;Oversized frame &#x22; + frameSize);
+      if (frameSize &gt; self.maxFrameBuffer) {
+        self.throwError("Oversized frame " + frameSize);
       }
       frameBuffer = new Buffer(frameSize);
       frameBuffer.used = 0;
@@ -6800,10 +6793,10 @@ Queue.prototype.shift = function (reject, requeue) {
   function frame(data) {
     var fb = frameBuffer;
     var needed = fb.length - fb.used;
-    var sourceEnd = (fb.length &#x3e; data.length) ? data.length : fb.length;
+    var sourceEnd = (fb.length &gt; data.length) ? data.length : fb.length;
     data.copy(fb, fb.used, 0, sourceEnd);
     fb.used += data.length;
-    if (data.length &#x3e; needed) {
+    if (data.length &gt; needed) {
       return frameEnd(data.slice(needed));
     }
     else if (data.length == needed) {
@@ -6815,7 +6808,7 @@ Queue.prototype.shift = function (reject, requeue) {
   }
 
   function frameEnd(data) {
-    if (data.length &#x3e; 0) {
+    if (data.length &gt; 0) {
       if (data[0] === Indicators.FRAME_END) {
         switch (frameType) {
         case FrameType.METHOD:
@@ -6830,17 +6823,17 @@ Queue.prototype.shift = function (reject, requeue) {
           }
           break;
         case FrameType.HEARTBEAT:
-          debug &#x26;&#x26; debug(&#x22;heartbeat&#x22;);
+          debug &amp;&amp; debug("heartbeat");
           if (self.onHeartBeat) self.onHeartBeat();
           break;
         default:
-          self.throwError(&#x22;Unhandled frame type &#x22; + frameType);
+          self.throwError("Unhandled frame type " + frameType);
           break;
         }
         return header(data.slice(1));
       }
       else {
-        self.throwError(&#x22;Missing frame end marker&#x22;);
+        self.throwError("Missing frame end marker");
       }
     }
     else {
@@ -6876,17 +6869,17 @@ Queue.prototype.shift = function (reject, requeue) {
 
   var classInfo = classes[classIndex];
 
-  if (classInfo.fields.length &#x3e; 15) {
-    this.throwError(&#x22;TODO: support more than 15 properties&#x22;);
+  if (classInfo.fields.length &gt; 15) {
+    this.throwError("TODO: support more than 15 properties");
   }
 
   var propertyFlags = parseInt(buffer, 2);
 
   var fields = [];
-  for (var i = 0; i &#x3c; classInfo.fields.length; i++) {
+  for (var i = 0; i &lt; classInfo.fields.length; i++) {
     var field = classInfo.fields[i];
     // groan.
-    if (propertyFlags &#x26; (1 &#x3c;&#x3c; (15-i))) fields.push(field);
+    if (propertyFlags &amp; (1 &lt;&lt; (15-i))) fields.push(field);
   }
 
   var properties = parseFields(buffer, fields);
@@ -6896,7 +6889,7 @@ Queue.prototype.shift = function (reject, requeue) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-    if (data.length &#x3e; 0) {
+    if (data.length &gt; 0) {
 if (data[0] === Indicators.FRAME_END) {
   switch (frameType) {
   case FrameType.METHOD:
@@ -6930,18 +6923,18 @@ if (data[0] === Indicators.FRAME_END) {
 
   // Make sure that this is a method that we understand.
   if (!methodTable[classId] || !methodTable[classId][methodId]) {
-    this.throwError(&#x22;Received unknown [classId, methodId] pair [&#x22; +
-               classId + &#x22;, &#x22; + methodId + &#x22;]&#x22;);
+    this.throwError("Received unknown [classId, methodId] pair [" +
+               classId + ", " + methodId + "]");
   }
 
   var method = methodTable[classId][methodId];
 
-  if (!method) this.throwError(&#x22;bad method?&#x22;);
+  if (!method) this.throwError("bad method?");
 
   var args = parseFields(buffer, method.fields);
 
   if (this.onMethod) {
-    debug &#x26;&#x26; debug(&#x22;Executing method&#x22;, channel, method, args);
+    debug &amp;&amp; debug("Executing method", channel, method, args);
     this.onMethod(channel, method, args);
   }
 }</pre></li>
@@ -6949,7 +6942,7 @@ if (data[0] === Indicators.FRAME_END) {
 }
 
 function frameEnd(data) {
-  if (data.length &#x3e; 0) {
+  if (data.length &gt; 0) {
     if (data[0] === Indicators.FRAME_END) {
       switch (frameType) {
       case FrameType.METHOD:
@@ -6976,7 +6969,7 @@ function frameEnd(data) {
     <li>description and source-code<pre class="apidocCodePre">execute = function (data) {
   // This function only deals with dismantling and buffering the frames.
   // It delegates to other functions for parsing the frame-body.
-  debug &#x26;&#x26; debug(&#x27;execute: &#x27; + data.toString(&#x27;hex&#x27;));
+  debug &amp;&amp; debug('execute: ' + data.toString('hex'));
   this.parse = this.parse(data);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -7014,11 +7007,11 @@ function frameEnd(data) {
 // of emitting the callbacks. Since this is an internal class, that should
 // be fine.
 var AMQPParser = module.exports = function AMQPParser (version, type) {
-this.isClient = (type == &#x27;client&#x27;);
-this.state = this.isClient ? &#x27;frameHeader&#x27; : &#x27;protocolHeader&#x27;;
+this.isClient = (type == 'client');
+this.state = this.isClient ? 'frameHeader' : 'protocolHeader';
 this.maxFrameBuffer = MAX_FRAME_BUFFER_DEFAULT;
 
-if (version != &#x27;0-9-1&#x27;) this.<span class="apidocCodeKeywordSpan">throwError</span>(&#x22;Unsupported protocol version&#
+if (version != '0-9-1') this.<span class="apidocCodeKeywordSpan">throwError</span>("Unsupported protocol version&amp;#
 x22;);
 
 var frameHeader = new Buffer(7);
@@ -7077,8 +7070,8 @@ var self = this;
   this.consumerTagOptions = {};
 
   // route messages to subscribers based on consumerTag
-  this.on(&#x27;rawMessage&#x27;, function(message) {
-    if (message.consumerTag &#x26;&#x26; self.consumerTagListeners[message.consumerTag]) {
+  this.on('rawMessage', function(message) {
+    if (message.consumerTag &amp;&amp; self.consumerTagListeners[message.consumerTag]) {
       self.consumerTagListeners[message.consumerTag](message);
     }
   });
@@ -7149,9 +7142,9 @@ var self = this;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_onContent = function (channel, data) {
   this.currentMessage.read += data.length;
-  this.currentMessage.emit(&#x27;data&#x27;, data);
+  this.currentMessage.emit('data', data);
   if (this.currentMessage.read == this.currentMessage.size) {
-    this.currentMessage.emit(&#x27;end&#x27;);
+    this.currentMessage.emit('end');
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -7171,10 +7164,10 @@ var self = this;
   this.currentMessage.read = 0;
   this.currentMessage.size = size;
 
-  this.emit(&#x27;rawMessage&#x27;, this.currentMessage);
+  this.emit('rawMessage', this.currentMessage);
   if (size === 0) {
-    // If the message has no body, directly emit &#x27;end&#x27;
-    this.currentMessage.emit(&#x27;end&#x27;);
+    // If the message has no body, directly emit 'end'
+    this.currentMessage.emit('end');
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -7197,17 +7190,17 @@ var self = this;
   switch (method) {
     case methods.channelOpenOk:
       if (this.options.noDeclare) {
-        this.state = &#x27;open&#x27;;
+        this.state = 'open';
 
         if (this._openCallback) {
          this._openCallback(this);
          this._openCallback = null;
         }
 
-        this.emit(&#x27;open&#x27;);
+        this.emit('open');
       } else {
-        if (this.name.indexOf(&#x27;amq.&#x27;) == 0) {
-          this.name = &#x27;&#x27;;
+        if (this.name.indexOf('amq.') == 0) {
+          this.name = '';
         }
         this.connection._sendMethod(channel, methods.queueDeclare,
             { reserved1: 0
@@ -7217,14 +7210,14 @@ var self = this;
             , exclusive: !!this.options.exclusive
             , autoDelete: !!this.options.autoDelete
             , noWait: false
-            , &#x22;arguments&#x22;: this.options.arguments || {}
+            , "arguments": this.options.arguments || {}
             });
-        this.state = &#x22;declare queue&#x22;;
+        this.state = "declare queue";
       }
       break;
 
     case methods.queueDeclareOk:
-      this.state = &#x27;open&#x27;;
+      this.state = 'open';
       this.name = args.queue;
       this.connection.queues[this.name] = this;
 
@@ -7245,13 +7238,13 @@ var self = this;
       }
 
       // TODO this is legacy interface, remove me
-      this.emit(&#x27;open&#x27;, args.queue, args.messageCount, args.consumerCount);
+      this.emit('open', args.queue, args.messageCount, args.consumerCount);
 
       // If this is a reconnect, we must re-subscribe our queue listeners.
       var consumerTags = Object.keys(this.consumerTagListeners);
       for (var index in consumerTags) {
         if (consumerTags.hasOwnProperty(index)) {
-          if (this.consumerTagOptions[consumerTags[index]][&#x27;state&#x27;] === &#x27;closed&#x27;) {
+          if (this.consumerTagOptions[consumerTags[index]]['state'] === 'closed') {
             this.subscribeRaw(this.consumerTagOptions[consumerTags[index]], this.consumerTagListeners[consumerTags[index]]);
             // Having called subscribeRaw, we are now a new consumer with a new consumerTag.
             delete this.consumerTagListeners[consumerTags[index]];
@@ -7262,7 +7255,7 @@ var self = this;
       break;
 
     case methods.basicConsumeOk:
-      debug &#x26;&#x26; debug(&#x27;basicConsumeOk&#x27;, util.inspect(args, null));
+      debug &amp;&amp; debug('basicConsumeOk', util.inspect(args, null));
       break;
 
     case methods.queueBindOk:
@@ -7287,18 +7280,18 @@ var self = this;
       break;
 
     case methods.channelClose:
-      this.state = &#x22;closed&#x22;;
+      this.state = "closed";
       this.closeOK();
       this.connection.queueClosed(this.name);
       var e = new Error(args.replyText);
       e.code = args.replyCode;
-      this.emit(&#x27;error&#x27;, e);
-      this.emit(&#x27;close&#x27;);
+      this.emit('error', e);
+      this.emit('close');
       break;
 
     case methods.channelCloseOk:
       this.connection.queueClosed(this.name);
-      this.emit(&#x27;close&#x27;);
+      this.emit('close');
       break;
 
     case methods.basicDeliver:
@@ -7309,18 +7302,18 @@ var self = this;
       break;
 
     case methods.basicCancel:
-      this.close(&#x22;Closed due to basicCancel received on consumer (&#x22; + args.consumerTag + &#x22;)&#x22;);
+      this.close("Closed due to basicCancel received on consumer (" + args.consumerTag + ")");
       break;
 
     default:
-      throw new Error(&#x22;Uncaught method &#x27;&#x22; + method.name + &#x22;&#x27; with args &#x22; +
-          JSON.stringify(args) + &#x22;; tasks = &#x22; + JSON.stringify(this._ ...</pre></li>
+      throw new Error("Uncaught method '" + method.name + "' with args " +
+          JSON.stringify(args) + "; tasks = " + JSON.stringify(this._ ...</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 Channel.prototype._onChannelMethod = function(channel, method, args) {
 switch (method) {
   case methods.channelCloseOk:
     delete this.connection.channels[this.channel];
-    this.state = &#x27;closed&#x27;;
+    this.state = 'closed';
     // TODO should this be falling through?
   default:
     this.<span class="apidocCodeKeywordSpan">_onMethod</span>(channel, method, args);
@@ -7328,9 +7321,9 @@ switch (method) {
 };
 
 Channel.prototype.close = function(reason) {
-this.state = &#x27;closing&#x27;;
+this.state = 'closing';
 this.connection._sendMethod(this.channel, methods.channelClose,
-                            {&#x27;replyText&#x27;: reason ? reason : &#x27;Goodbye from node&#x27;,
+                            {'replyText': reason ? reason : 'Goodbye from node',
 ...</pre></li>
     </ul>
 
@@ -7347,12 +7340,12 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var self = this;
 
   // The first argument, exchange is optional.
-  // If not supplied the connection will use the &#x27;amq.topic&#x27;
+  // If not supplied the connection will use the 'amq.topic'
   // exchange.
   if (routingKey === undefined || _.isFunction(routingKey)) {
     callback = routingKey;
     routingKey = exchange;
-    exchange = &#x27;amq.topic&#x27;;
+    exchange = 'amq.topic';
   }
 
   if (_.isFunction(callback)) this._bindCallback = callback;
@@ -7381,7 +7374,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
       , exchange: exchangeName
       , routingKey: routingKey
       , noWait: false
-      , &#x22;arguments&#x22;: {}
+      , "arguments": {}
       });
 
 }</pre></li>
@@ -7398,7 +7391,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 ...</pre></li>
@@ -7417,7 +7410,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var self = this;
 
   // The first argument, exchange is optional.
-  // If not supplied the connection will use the default &#x27;amq.headers&#x27;
+  // If not supplied the connection will use the default 'amq.headers'
   // exchange.
 
   var exchange, matchingPairs;
@@ -7426,7 +7419,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     exchange = arguments[0];
     matchingPairs = arguments[1];
   } else {
-    exchange = &#x27;amq.headers&#x27;;
+    exchange = 'amq.headers';
     matchingPairs = arguments[0];
   }
 
@@ -7437,9 +7430,9 @@ this.connection._sendMethod(this.channel, methods.channelClose,
         { reserved1: 0
         , queue: self.name
         , exchange: exchangeName
-        , routingKey: &#x27;&#x27;
+        , routingKey: ''
         , noWait: false
-        , &#x22;arguments&#x22;: matchingPairs
+        , "arguments": matchingPairs
         });
   });
 }</pre></li>
@@ -7454,7 +7447,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 - [queue.<span class="apidocCodeKeywordSpan">bind_headers</span>([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -7477,7 +7470,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   options = options || {};
   return this._taskPush(methods.queueDeleteOk, function () {
     self.connection.queueClosed(self.name);
-    if (&#x27;exchange&#x27; in self) {
+    if ('exchange' in self) {
       self.exchange.binds--;
     }
     self.connection._sendMethod(self.channel, methods.queueDelete,
@@ -7486,7 +7479,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
         , ifUnused: options.ifUnused ? true : false
         , ifEmpty: options.ifEmpty ? true : false
         , noWait: false
-        , &#x22;arguments&#x22;: {}
+        , "arguments": {}
     });
   });
 }</pre></li>
@@ -7500,7 +7493,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.<span class="apidocCodeKeywordSpan">destroy</span>(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -7521,7 +7514,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     <li>description and source-code<pre class="apidocCodePre">flow = function (active) {
   var self = this;
   return this._taskPush(methods.channelFlowOk, function () {
-    self.connection._sendMethod(self.channel, methods.channelFlow, {&#x27;active&#x27;: active });
+    self.connection._sendMethod(self.channel, methods.channelFlow, {'active': active });
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -7581,7 +7574,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 ...</pre></li>
     </ul>
@@ -7599,7 +7592,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var self = this;
 
   // Optional options
-  if (typeof options === &#x22;function&#x22;) {
+  if (typeof options === "function") {
     messageListener = options;
     options = {};
   }
@@ -7618,24 +7611,24 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   };
 
   if (options.ack) {
-    rawOptions[&#x27;prefetchCount&#x27;] = options.prefetchCount;
+    rawOptions['prefetchCount'] = options.prefetchCount;
   }
 
   return this.subscribeRaw(rawOptions, function (m) {
     var contentType = m.contentType;
-    var decoder = new StringDecoder(&#x27;utf8&#x27;);
+    var decoder = new StringDecoder('utf8');
 
-    if (contentType == null &#x26;&#x26; m.headers &#x26;&#x26; m.headers.properties) {
+    if (contentType == null &amp;&amp; m.headers &amp;&amp; m.headers.properties) {
       contentType = m.headers.properties.content_type;
     }
 
-    var isJSON = contentType == &#x27;text/json&#x27; ||
-                 contentType == &#x27;application/json&#x27;;
+    var isJSON = contentType == 'text/json' ||
+                 contentType == 'application/json';
 
     var buffer;
 
     if (isJSON) {
-      buffer = &#x22;&#x22;;
+      buffer = "";
     } else {
       buffer = new Buffer(m.size);
       buffer.used = 0;
@@ -7643,7 +7636,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 
     self._lastMessage = m;
 
-    m.addListener(&#x27;data&#x27;, function (d) {
+    m.addListener('data', function (d) {
       if (isJSON) {
         buffer += decoder.write(d);
       } else {
@@ -7652,7 +7645,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
       }
     });
 
-    m.addListener(&#x27;end&#x27;, function () {
+    m.addListener('end', function () {
       var json, deliveryInfo = {}, msgProperties = classes[60].fields, i, l;
 
       if (isJSON) {
@@ -7668,7 +7661,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
         json = { data: buffer, contentType: m.contentType };
       }
 
-      for (i = 0, l = msgProperties.length; i&#x3c;l; i++) {
+      for (i = 0, l = msgProperties.length; i&lt;l; i++) {
         if (m[msgProperties[i].name]) {
           deliveryInfo[msgProperties[i].name] = m[msgProperties[i].name];
         }
@@ -7696,7 +7689,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
       }
 
       if (messageListener) messageListener(json, headers, deliveryInfo, m);
-      self.emit(&#x27;message&#x27;, json, headers, deliveryInfo, m);
+      self.emit('message', json, headers, deliveryInfo, m);
     });
   });
 }</pre></li>
@@ -7732,7 +7725,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var self = this;
 
   // Optional options
-  if (typeof options === &#x22;function&#x22;) {
+  if (typeof options === "function") {
     messageListener = options;
     options = {};
   }
@@ -7751,24 +7744,24 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   };
 
   if (options.ack) {
-    rawOptions[&#x27;prefetchCount&#x27;] = options.prefetchCount;
+    rawOptions['prefetchCount'] = options.prefetchCount;
   }
 
   return this.subscribeRaw(rawOptions, function (m) {
     var contentType = m.contentType;
-    var decoder = new StringDecoder(&#x27;utf8&#x27;);
+    var decoder = new StringDecoder('utf8');
 
-    if (contentType == null &#x26;&#x26; m.headers &#x26;&#x26; m.headers.properties) {
+    if (contentType == null &amp;&amp; m.headers &amp;&amp; m.headers.properties) {
       contentType = m.headers.properties.content_type;
     }
 
-    var isJSON = contentType == &#x27;text/json&#x27; ||
-                 contentType == &#x27;application/json&#x27;;
+    var isJSON = contentType == 'text/json' ||
+                 contentType == 'application/json';
 
     var buffer;
 
     if (isJSON) {
-      buffer = &#x22;&#x22;;
+      buffer = "";
     } else {
       buffer = new Buffer(m.size);
       buffer.used = 0;
@@ -7776,7 +7769,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 
     self._lastMessage = m;
 
-    m.addListener(&#x27;data&#x27;, function (d) {
+    m.addListener('data', function (d) {
       if (isJSON) {
         buffer += decoder.write(d);
       } else {
@@ -7785,7 +7778,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
       }
     });
 
-    m.addListener(&#x27;end&#x27;, function () {
+    m.addListener('end', function () {
       var json, deliveryInfo = {}, msgProperties = classes[60].fields, i, l;
 
       if (isJSON) {
@@ -7801,7 +7794,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
         json = { data: buffer, contentType: m.contentType };
       }
 
-      for (i = 0, l = msgProperties.length; i&#x3c;l; i++) {
+      for (i = 0, l = msgProperties.length; i&lt;l; i++) {
         if (m[msgProperties[i].name]) {
           deliveryInfo[msgProperties[i].name] = m[msgProperties[i].name];
         }
@@ -7829,7 +7822,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
       }
 
       if (messageListener) messageListener(json, headers, deliveryInfo, m);
-      self.emit(&#x27;message&#x27;, json, headers, deliveryInfo, m);
+      self.emit('message', json, headers, deliveryInfo, m);
     });
   });
 }</pre></li>
@@ -7849,16 +7842,16 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var self = this;
 
   // multiple method signatures
-  if (typeof options === &#x22;function&#x22;) {
+  if (typeof options === "function") {
     messageListener = options;
     options = {};
   }
 
-  var consumerTag = &#x27;node-amqp-&#x27; + process.pid + &#x27;-&#x27; + Math.random();
+  var consumerTag = 'node-amqp-' + process.pid + '-' + Math.random();
   this.consumerTagListeners[consumerTag] = messageListener;
 
   options = options || {};
-  options[&#x27;state&#x27;] = &#x27;opening&#x27;;
+  options['state'] = 'opening';
   this.consumerTagOptions[consumerTag] = options;
   if (options.prefetchCount !== undefined) {
     self.connection._sendMethod(self.channel, methods.basicQos,
@@ -7878,9 +7871,9 @@ this.connection._sendMethod(this.channel, methods.channelClose,
         , noAck: !!options.noAck
         , exclusive: !!options.exclusive
         , noWait: false
-        , &#x22;arguments&#x22;: {}
+        , "arguments": {}
         });
-    self.consumerTagOptions[consumerTag][&#x27;state&#x27;] = &#x27;open&#x27;;
+    self.consumerTagOptions[consumerTag]['state'] = 'open';
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -7915,11 +7908,11 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var self = this;
 
   // The first argument, exchange is optional.
-  // If not supplied the connection will use the default &#x27;amq.topic&#x27;
+  // If not supplied the connection will use the default 'amq.topic'
   // exchange.
   if (routingKey === undefined) {
     routingKey = exchange;
-    exchange = &#x27;amq.topic&#x27;;
+    exchange = 'amq.topic';
   }
 
   var exchangeName = exchange instanceof Exchange ? exchange.name : exchange;
@@ -7942,7 +7935,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
         , exchange: exchangeName
         , routingKey: routingKey
         , noWait: false
-        , &#x22;arguments&#x22;: {}
+        , "arguments": {}
         });
   });
 }</pre></li>
@@ -7958,7 +7951,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 - [connection.exchange()](#connectionexchange)
 - [connection.exchange(name, options={}, openCallback)](#connectionexchangename-options-opencallback)
 - [exchange.publish(routingKey, message, options, callback)](#exchangepublishroutingkey-message-options-callback)
@@ -7978,7 +7971,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
   var self = this;
 
   // The first argument, exchange is optional.
-  // If not supplied the connection will use the default &#x27;amq.topic&#x27;
+  // If not supplied the connection will use the default 'amq.topic'
   // exchange.
 
   var exchange, matchingPairs;
@@ -7987,7 +7980,7 @@ this.connection._sendMethod(this.channel, methods.channelClose,
     exchange = arguments[0];
     matchingPairs = arguments[1];
   } else {
-    exchange = &#x27;amq.headers&#x27;;
+    exchange = 'amq.headers';
     matchingPairs = arguments[0];
   }
 
@@ -7997,26 +7990,26 @@ this.connection._sendMethod(this.channel, methods.channelClose,
         { reserved1: 0
         , queue: self.name
         , exchange: exchangeName
-        , routingKey: &#x27;&#x27;
+        , routingKey: ''
         , noWait: false
-        , &#x22;arguments&#x22;: matchingPairs
+        , "arguments": matchingPairs
         });
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 bound it will not receive any messages.
 
-This method is to be used on an &#x22;headers&#x22;-type exchange. The routing
+This method is to be used on an "headers"-type exchange. The routing
 argument must contain the routing keys and the `x-match` value (`all` or `any`).
 
-If the `exchange` argument is left out `&#x27;amq.headers&#x27;` will be used.
+If the `exchange` argument is left out `'amq.headers'` will be used.
 
 ### queue.<span class="apidocCodeKeywordSpan">unbind_headers</span>([exchange,] routing)
 
 This method unbinds a queue from an exchange.  Whilst a queue is
 bound it will continue receive messages that have matching headers.
 
-This method is to be used on an &#x22;headers&#x22;-type exchange. The routing
+This method is to be used on an "headers"-type exchange. The routing
 argument must contain the routing keys and the `x-match` value (`all` or `any`).
 ...</pre></li>
     </ul>
@@ -8061,7 +8054,7 @@ argument must contain the routing keys and the `x-match` value (`all` or `any`).
 - [queue.bind_headers([exchange,] routing)](#queuebind_headersexchange-routing)
 - [queue.destroy(options)](#queuedestroyoptions)
 - [Exchange](#exchange)
-- [exchange.on(&#x27;open&#x27;, callback)](#exchangeonopen-callback)
+- [exchange.on('open', callback)](#exchangeonopen-callback)
 ...</pre></li>
     </ul>
 
@@ -8080,7 +8073,7 @@ argument must contain the routing keys and the `x-match` value (`all` or `any`).
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">getCode = function (dec) {
-  var hexArray = &#x22;0123456789ABCDEF&#x22;.split(&#x27;&#x27;);
+  var hexArray = "0123456789ABCDEF".split('');
   var code1 = Math.floor(dec / 16);
   var code2 = dec - code1 * 16;
   return hexArray[code2];
@@ -8098,23 +8091,23 @@ argument must contain the routing keys and the `x-match` value (`all` or `any`).
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">isBigInt = function (value) {
-  return value &#x3e; 0xffffffff;
+  return value &gt; 0xffffffff;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-case &#x27;string&#x27;:
-  b[b.used++] = &#x27;S&#x27;.charCodeAt(0);
+case 'string':
+  b[b.used++] = 'S'.charCodeAt(0);
   serializer.serializeLongString(b, value);
   break;
 
-case &#x27;number&#x27;:
+case 'number':
   if (!serializer.isFloat(value)) {
     if (serializer.<span class="apidocCodeKeywordSpan">isBigInt</span>(value)) {
       // 64-bit uint
-      b[b.used++] = &#x27;l&#x27;.charCodeAt(0);
+      b[b.used++] = 'l'.charCodeAt(0);
       serializer.serializeInt(b, 8, value);
     } else {
       //32-bit uint
-      b[b.used++] = &#x27;I&#x27;.charCodeAt(0);
+      b[b.used++] = 'I'.charCodeAt(0);
       serializer.serializeInt(b, 4, value);
 ...</pre></li>
     </ul>
@@ -8129,24 +8122,24 @@ case &#x27;number&#x27;:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">isFloat = function (value){
-  return value === +value &#x26;&#x26; value !== (value|0);
+  return value === +value &amp;&amp; value !== (value|0);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     switch (typeof(value)) {
-case &#x27;string&#x27;:
-  b[b.used++] = &#x27;S&#x27;.charCodeAt(0);
+case 'string':
+  b[b.used++] = 'S'.charCodeAt(0);
   serializer.serializeLongString(b, value);
   break;
 
-case &#x27;number&#x27;:
+case 'number':
   if (!serializer.<span class="apidocCodeKeywordSpan">isFloat</span>(value)) {
     if (serializer.isBigInt(value)) {
       // 64-bit uint
-      b[b.used++] = &#x27;l&#x27;.charCodeAt(0);
+      b[b.used++] = 'l'.charCodeAt(0);
       serializer.serializeInt(b, 8, value);
     } else {
       //32-bit uint
-      b[b.used++] = &#x27;I&#x27;.charCodeAt(0);
+      b[b.used++] = 'I'.charCodeAt(0);
 ...</pre></li>
     </ul>
 
@@ -8167,7 +8160,7 @@ case &#x27;number&#x27;:
   var startIndex = b.used;
 
   var len = arr.length;
-  for (var i = 0; i &#x3c; len; i++) {
+  for (var i = 0; i &lt; len; i++) {
     serializer.serializeValue(b, arr[i]);
   }
 
@@ -8177,19 +8170,19 @@ case &#x27;number&#x27;:
   b.used = endIndex;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-      b[b.used++] = &#x27;T&#x27;.charCodeAt(0);
+      b[b.used++] = 'T'.charCodeAt(0);
       serializer.serializeDate(b, value);
     } else if (value instanceof Buffer) {
-      b[b.used++] = &#x27;x&#x27;.charCodeAt(0);
+      b[b.used++] = 'x'.charCodeAt(0);
       serializer.serializeBuffer(b, value);
     } else if (Array.isArray(value)) {
-      b[b.used++] = &#x27;A&#x27;.charCodeAt(0);
+      b[b.used++] = 'A'.charCodeAt(0);
       serializer.<span class="apidocCodeKeywordSpan">serializeArray</span>(b, value);
-    } else if (typeof(value) === &#x27;object&#x27;) {
-      b[b.used++] = &#x27;F&#x27;.charCodeAt(0);
+    } else if (typeof(value) === 'object') {
+      b[b.used++] = 'F'.charCodeAt(0);
       serializer.serializeTable(b, value);
     } else {
-      throw new Error(&#x22;unsupported type in amqp table: &#x22; + typeof(value));
+      throw new Error("unsupported type in amqp table: " + typeof(value));
     }
 }
 ...</pre></li>
@@ -8205,7 +8198,7 @@ case &#x27;number&#x27;:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">serializeBase64 = function (b, buffer) {
-  serializer.serializeLongString(b, buffer.toString(&#x27;base64&#x27;));
+  serializer.serializeLongString(b, buffer.toString('base64'));
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -8228,16 +8221,16 @@ case &#x27;number&#x27;:
 
       default:
 if (value instanceof Date) {
-  b[b.used++] = &#x27;T&#x27;.charCodeAt(0);
+  b[b.used++] = 'T'.charCodeAt(0);
   serializer.serializeDate(b, value);
 } else if (value instanceof Buffer) {
-  b[b.used++] = &#x27;x&#x27;.charCodeAt(0);
+  b[b.used++] = 'x'.charCodeAt(0);
   serializer.<span class="apidocCodeKeywordSpan">serializeBuffer</span>(b, value);
 } else if (Array.isArray(value)) {
-  b[b.used++] = &#x27;A&#x27;.charCodeAt(0);
+  b[b.used++] = 'A'.charCodeAt(0);
   serializer.serializeArray(b, value);
-} else if (typeof(value) === &#x27;object&#x27;) {
-  b[b.used++] = &#x27;F&#x27;.charCodeAt(0);
+} else if (typeof(value) === 'object') {
+  b[b.used++] = 'F'.charCodeAt(0);
   serializer.serializeTable(b, value);
 } else {
 ...</pre></li>
@@ -8256,21 +8249,21 @@ if (value instanceof Date) {
   serializer.serializeInt(b, 8, date.valueOf() / 1000);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  b[b.used++] = &#x27;t&#x27;.charCodeAt(0);
+  b[b.used++] = 't'.charCodeAt(0);
   b[b.used++] = value;
   break;
 
 default:
   if (value instanceof Date) {
-    b[b.used++] = &#x27;T&#x27;.charCodeAt(0);
+    b[b.used++] = 'T'.charCodeAt(0);
     serializer.<span class="apidocCodeKeywordSpan">serializeDate</span>(b, value);
   } else if (value instanceof Buffer) {
-    b[b.used++] = &#x27;x&#x27;.charCodeAt(0);
+    b[b.used++] = 'x'.charCodeAt(0);
     serializer.serializeBuffer(b, value);
   } else if (Array.isArray(value)) {
-    b[b.used++] = &#x27;A&#x27;.charCodeAt(0);
+    b[b.used++] = 'A'.charCodeAt(0);
     serializer.serializeArray(b, value);
-  } else if (typeof(value) === &#x27;object&#x27;) {
+  } else if (typeof(value) === 'object') {
 ...</pre></li>
     </ul>
 
@@ -8286,91 +8279,91 @@ default:
     <li>description and source-code<pre class="apidocCodePre">serializeFields = function (buffer, fields, args, strict) {
   var bitField = 0;
   var bitIndex = 0;
-  for (var i = 0; i &#x3c; fields.length; i++) {
+  for (var i = 0; i &lt; fields.length; i++) {
     var field = fields[i];
     var domain = field.domain;
     if (!(field.name in args)) {
       if (strict) {
-        throw new Error(&#x22;Missing field &#x27;&#x22; + field.name + &#x22;&#x27; of type &#x27;&#x22; + domain + &#x22;&#x27; while executing AMQP method &#x27;&#x22; +
-          arguments.callee.caller.arguments[1].name + &#x22;&#x27;&#x22;);
+        throw new Error("Missing field '" + field.name + "' of type '" + domain + "' while executing AMQP method '" +
+          arguments.callee.caller.arguments[1].name + "'");
       }
       continue;
     }
 
     var param = args[field.name];
 
-    //debug(&#x22;domain: &#x22; + domain + &#x22; param: &#x22; + param);
+    //debug("domain: " + domain + " param: " + param);
 
     switch (domain) {
-      case &#x27;bit&#x27;:
-        if (typeof(param) != &#x22;boolean&#x22;) {
-          throw new Error(&#x22;Unmatched field &#x22; + JSON.stringify(field));
+      case 'bit':
+        if (typeof(param) != "boolean") {
+          throw new Error("Unmatched field " + JSON.stringify(field));
         }
 
-        if (param) bitField |= (1 &#x3c;&#x3c; bitIndex);
+        if (param) bitField |= (1 &lt;&lt; bitIndex);
         bitIndex++;
 
-        if (!fields[i+1] || fields[i+1].domain != &#x27;bit&#x27;) {
-          //debug(&#x27;SET bit field &#x27; + field.name + &#x27; 0x&#x27; + bitField.toString(16));
+        if (!fields[i+1] || fields[i+1].domain != 'bit') {
+          //debug('SET bit field ' + field.name + ' 0x' + bitField.toString(16));
           buffer[buffer.used++] = bitField;
           bitField = 0;
           bitIndex = 0;
         }
         break;
 
-      case &#x27;octet&#x27;:
-        if (typeof(param) != &#x22;number&#x22; || param &#x3e; 0xFF) {
-          throw new Error(&#x22;Unmatched field &#x22; + JSON.stringify(field));
+      case 'octet':
+        if (typeof(param) != "number" || param &gt; 0xFF) {
+          throw new Error("Unmatched field " + JSON.stringify(field));
         }
         buffer[buffer.used++] = param;
         break;
 
-      case &#x27;short&#x27;:
-        if (typeof(param) != &#x22;number&#x22; || param &#x3e; 0xFFFF) {
-          throw new Error(&#x22;Unmatched field &#x22; + JSON.stringify(field));
+      case 'short':
+        if (typeof(param) != "number" || param &gt; 0xFFFF) {
+          throw new Error("Unmatched field " + JSON.stringify(field));
         }
         serializer.serializeInt(buffer, 2, param);
         break;
 
-      case &#x27;long&#x27;:
-        if (typeof(param) != &#x22;number&#x22; || param &#x3e; 0xFFFFFFFF) {
-          throw new Error(&#x22;Unmatched field &#x22; + JSON.stringify(field));
+      case 'long':
+        if (typeof(param) != "number" || param &gt; 0xFFFFFFFF) {
+          throw new Error("Unmatched field " + JSON.stringify(field));
         }
         serializer.serializeInt(buffer, 4, param);
         break;
 
-      // In a previous version this shared code with &#x27;longlong&#x27;, which caused problems when passed Date
-      // integers. Nobody expects to pass a Buffer here, 53 bits is still 28 million years after 1970, we&#x27;ll be fine.
-      case &#x27;timestamp&#x27;:
+      // In a previous version this shared code with 'longlong', which caused problems when passed Date
+      // integers. Nobody expects to pass a Buffer here, 53 bits is still 28 million years after 1970, we'll be fine.
+      case 'timestamp':
         serializer.serializeInt(buffer, 8, param);
         break;
 
-      case &#x27;longlong&#x27;:
-        for (var j = 0; j &#x3c; 8; j++) {
+      case 'longlong':
+        for (var j = 0; j &lt; 8; j++) {
           buffer[buffer.used++] = param[j];
         }
         break;
 
-      case &#x27;shortstr&#x27;:
-        if (typeof(param) != &#x22;string&#x22; || param.length &#x3e; 0xFF) {
-          throw new Error(&#x22;Unmatched field &#x22; + JSON.stringify(field));
+      case 'shortstr':
+        if (typeof(param) != "string" || param.length &gt; 0xFF) {
+          throw new Error("Unmatched field " + JSON.stringify(field));
         }
         serializer.serializeShortString(buffer, param);
         break;
 
-      case &#x27;longstr&#x27;:
+      case 'longstr':
         serializer.serializeLongString(buffer, param);
         break;
 
-      case &#x27;table&#x27;:
-        if (typeof(param) != &#x22;object&#x22;) {
-          throw new Error(&#x22;Unmatched field &#x22; + JSON.stringify(field));
+      case 'table':
+        if (typeof(param) != "object") {
+          throw new Error("Unmatched field " + JSON.stringify(field));
         }
         serializer.serializeTable(buffer, param);
         break;
 
       default:
-        throw new Error(&#x22;Unknown domain value type &#x22; + domain);
+        throw new Error("Unknown domain value type " + domain);
     }
   }
 }</pre></li>
@@ -8391,35 +8384,35 @@ default:
 
   switch(size) {
     case 4:
-      var x = jp.Pack(&#x27;f&#x27;, [value]);
-      for (var i = 0; i &#x3c; x.length; ++i)
+      var x = jp.Pack('f', [value]);
+      for (var i = 0; i &lt; x.length; ++i)
         b[b.used++] = x[i];
       break;
 
     case 8:
-      var x = jp.Pack(&#x27;d&#x27;, [value]);
-      for (var i = 0; i &#x3c; x.length; ++i)
+      var x = jp.Pack('d', [value]);
+      for (var i = 0; i &lt; x.length; ++i)
         b[b.used++] = x[i];
       break;
 
     default:
-      throw new Error(&#x22;Unknown floating point size&#x22;);
+      throw new Error("Unknown floating point size");
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
       //32-bit uint
-      b[b.used++] = &#x27;I&#x27;.charCodeAt(0);
+      b[b.used++] = 'I'.charCodeAt(0);
       serializer.serializeInt(b, 4, value);
     }
   } else {
     //64-bit float
-    b[b.used++] = &#x27;d&#x27;.charCodeAt(0);
+    b[b.used++] = 'd'.charCodeAt(0);
     serializer.<span class="apidocCodeKeywordSpan">serializeFloat</span>(b, 8, value);
   }
   break;
 
-case &#x27;boolean&#x27;:
-  b[b.used++] = &#x27;t&#x27;.charCodeAt(0);
+case 'boolean':
+  b[b.used++] = 't'.charCodeAt(0);
   b[b.used++] = value;
   break;
 ...</pre></li>
@@ -8435,8 +8428,8 @@ case &#x27;boolean&#x27;:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">serializeInt = function (b, size, int) {
-  if (b.used + size &#x3e; b.length) {
-    throw new Error(&#x22;write out of bounds&#x22;);
+  if (b.used + size &gt; b.length) {
+    throw new Error("write out of bounds");
   }
 
   // Only 4 cases - just going to be explicit instead of looping.
@@ -8449,33 +8442,33 @@ case &#x27;boolean&#x27;:
 
     // short
     case 2:
-      b[b.used++] = (int &#x26; 0xFF00) &#x3e;&#x3e; 8;
-      b[b.used++] = (int &#x26; 0x00FF) &#x3e;&#x3e; 0;
+      b[b.used++] = (int &amp; 0xFF00) &gt;&gt; 8;
+      b[b.used++] = (int &amp; 0x00FF) &gt;&gt; 0;
       break;
 
     // long
     case 4:
-      b[b.used++] = (int &#x26; 0xFF000000) &#x3e;&#x3e; 24;
-      b[b.used++] = (int &#x26; 0x00FF0000) &#x3e;&#x3e; 16;
-      b[b.used++] = (int &#x26; 0x0000FF00) &#x3e;&#x3e; 8;
-      b[b.used++] = (int &#x26; 0x000000FF) &#x3e;&#x3e; 0;
+      b[b.used++] = (int &amp; 0xFF000000) &gt;&gt; 24;
+      b[b.used++] = (int &amp; 0x00FF0000) &gt;&gt; 16;
+      b[b.used++] = (int &amp; 0x0000FF00) &gt;&gt; 8;
+      b[b.used++] = (int &amp; 0x000000FF) &gt;&gt; 0;
       break;
 
 
     // long long
     case 8:
-      b[b.used++] = (int &#x26; 0xFF00000000000000) &#x3e;&#x3e; 56;
-      b[b.used++] = (int &#x26; 0x00FF000000000000) &#x3e;&#x3e; 48;
-      b[b.used++] = (int &#x26; 0x0000FF0000000000) &#x3e;&#x3e; 40;
-      b[b.used++] = (int &#x26; 0x000000FF00000000) &#x3e;&#x3e; 32;
-      b[b.used++] = (int &#x26; 0x00000000FF000000) &#x3e;&#x3e; 24;
-      b[b.used++] = (int &#x26; 0x0000000000FF0000) &#x3e;&#x3e; 16;
-      b[b.used++] = (int &#x26; 0x000000000000FF00) &#x3e;&#x3e; 8;
-      b[b.used++] = (int &#x26; 0x00000000000000FF) &#x3e;&#x3e; 0;
+      b[b.used++] = (int &amp; 0xFF00000000000000) &gt;&gt; 56;
+      b[b.used++] = (int &amp; 0x00FF000000000000) &gt;&gt; 48;
+      b[b.used++] = (int &amp; 0x0000FF0000000000) &gt;&gt; 40;
+      b[b.used++] = (int &amp; 0x000000FF00000000) &gt;&gt; 32;
+      b[b.used++] = (int &amp; 0x00000000FF000000) &gt;&gt; 24;
+      b[b.used++] = (int &amp; 0x0000000000FF0000) &gt;&gt; 16;
+      b[b.used++] = (int &amp; 0x000000000000FF00) &gt;&gt; 8;
+      b[b.used++] = (int &amp; 0x00000000000000FF) &gt;&gt; 0;
       break;
 
     default:
-      throw new Error(&#x22;Bad size&#x22;);
+      throw new Error("Bad size");
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -8484,12 +8477,12 @@ case &#x27;boolean&#x27;:
 serializeLongString: function(b, string) {
   // we accept string, object, or buffer for this parameter.
   // in the case of string we serialize it to utf8.
-  if (typeof(string) == &#x27;string&#x27;) {
-    var byteLength = Buffer.byteLength(string, &#x27;utf8&#x27;);
+  if (typeof(string) == 'string') {
+    var byteLength = Buffer.byteLength(string, 'utf8');
     serializer.<span class="apidocCodeKeywordSpan">serializeInt</span>(b, 4, byteLength);
-    b.write(string, b.used, &#x27;utf8&#x27;);
+    b.write(string, b.used, 'utf8');
     b.used += byteLength;
-  } else if (typeof(string) == &#x27;object&#x27;) {
+  } else if (typeof(string) == 'object') {
     serializer.serializeTable(b, string);
   } else {
     // data is Buffer
@@ -8509,12 +8502,12 @@ serializeLongString: function(b, string) {
     <li>description and source-code<pre class="apidocCodePre">serializeLongString = function (b, string) {
   // we accept string, object, or buffer for this parameter.
   // in the case of string we serialize it to utf8.
-  if (typeof(string) == &#x27;string&#x27;) {
-    var byteLength = Buffer.byteLength(string, &#x27;utf8&#x27;);
+  if (typeof(string) == 'string') {
+    var byteLength = Buffer.byteLength(string, 'utf8');
     serializer.serializeInt(b, 4, byteLength);
-    b.write(string, b.used, &#x27;utf8&#x27;);
+    b.write(string, b.used, 'utf8');
     b.used += byteLength;
-  } else if (typeof(string) == &#x27;object&#x27;) {
+  } else if (typeof(string) == 'object') {
     serializer.serializeTable(b, string);
   } else {
     // data is Buffer
@@ -8532,11 +8525,11 @@ serializeBuffer: function(b, buffer) {
 },
 
 serializeBase64: function(b, buffer) {
-  serializer.<span class="apidocCodeKeywordSpan">serializeLongString</span>(b, buffer.toString(&#x27;base64&#x27;));
+  serializer.<span class="apidocCodeKeywordSpan">serializeLongString</span>(b, buffer.toString('base64'));
 },
 
 isBigInt: function(value) {
-  return value &#x3e; 0xffffffff;
+  return value &gt; 0xffffffff;
 },
 
 getCode: function(dec) {
@@ -8553,18 +8546,18 @@ getCode: function(dec) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">serializeShortString = function (b, string) {
-  if (typeof(string) != &#x22;string&#x22;) {
-    throw new Error(&#x22;param must be a string&#x22;);
+  if (typeof(string) != "string") {
+    throw new Error("param must be a string");
   }
-  var byteLength = Buffer.byteLength(string, &#x27;utf8&#x27;);
-  if (byteLength &#x3e; 0xFF) {
-    throw new Error(&#x22;String too long for &#x27;shortstr&#x27; parameter&#x22;);
+  var byteLength = Buffer.byteLength(string, 'utf8');
+  if (byteLength &gt; 0xFF) {
+    throw new Error("String too long for 'shortstr' parameter");
   }
-  if (1 + byteLength + b.used &#x3e;= b.length) {
-    throw new Error(&#x22;Not enough space in buffer for &#x27;shortstr&#x27;&#x22;);
+  if (1 + byteLength + b.used &gt;= b.length) {
+    throw new Error("Not enough space in buffer for 'shortstr'");
   }
   b[b.used++] = byteLength;
-  b.write(string, b.used, &#x27;utf8&#x27;);
+  b.write(string, b.used, 'utf8');
   b.used += byteLength;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -8596,8 +8589,8 @@ b.used = endIndex;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">serializeTable = function (b, object) {
-  if (typeof(object) != &#x22;object&#x22;) {
-    throw new Error(&#x22;param must be an object&#x22;);
+  if (typeof(object) != "object") {
+    throw new Error("param must be an object");
   }
 
   // Save our position so that we can go back and write the length of this table
@@ -8619,12 +8612,12 @@ b.used = endIndex;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // in the case of string we serialize it to utf8.
-if (typeof(string) == &#x27;string&#x27;) {
-  var byteLength = Buffer.byteLength(string, &#x27;utf8&#x27;);
+if (typeof(string) == 'string') {
+  var byteLength = Buffer.byteLength(string, 'utf8');
   serializer.serializeInt(b, 4, byteLength);
-  b.write(string, b.used, &#x27;utf8&#x27;);
+  b.write(string, b.used, 'utf8');
   b.used += byteLength;
-} else if (typeof(string) == &#x27;object&#x27;) {
+} else if (typeof(string) == 'object') {
   serializer.<span class="apidocCodeKeywordSpan">serializeTable</span>(b, string);
 } else {
   // data is Buffer
@@ -8647,49 +8640,49 @@ if (typeof(string) == &#x27;string&#x27;) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">serializeValue = function (b, value) {
   switch (typeof(value)) {
-    case &#x27;string&#x27;:
-      b[b.used++] = &#x27;S&#x27;.charCodeAt(0);
+    case 'string':
+      b[b.used++] = 'S'.charCodeAt(0);
       serializer.serializeLongString(b, value);
       break;
 
-    case &#x27;number&#x27;:
+    case 'number':
       if (!serializer.isFloat(value)) {
         if (serializer.isBigInt(value)) {
           // 64-bit uint
-          b[b.used++] = &#x27;l&#x27;.charCodeAt(0);
+          b[b.used++] = 'l'.charCodeAt(0);
           serializer.serializeInt(b, 8, value);
         } else {
           //32-bit uint
-          b[b.used++] = &#x27;I&#x27;.charCodeAt(0);
+          b[b.used++] = 'I'.charCodeAt(0);
           serializer.serializeInt(b, 4, value);
         }
       } else {
         //64-bit float
-        b[b.used++] = &#x27;d&#x27;.charCodeAt(0);
+        b[b.used++] = 'd'.charCodeAt(0);
         serializer.serializeFloat(b, 8, value);
       }
       break;
 
-    case &#x27;boolean&#x27;:
-      b[b.used++] = &#x27;t&#x27;.charCodeAt(0);
+    case 'boolean':
+      b[b.used++] = 't'.charCodeAt(0);
       b[b.used++] = value;
       break;
 
     default:
       if (value instanceof Date) {
-        b[b.used++] = &#x27;T&#x27;.charCodeAt(0);
+        b[b.used++] = 'T'.charCodeAt(0);
         serializer.serializeDate(b, value);
       } else if (value instanceof Buffer) {
-        b[b.used++] = &#x27;x&#x27;.charCodeAt(0);
+        b[b.used++] = 'x'.charCodeAt(0);
         serializer.serializeBuffer(b, value);
       } else if (Array.isArray(value)) {
-        b[b.used++] = &#x27;A&#x27;.charCodeAt(0);
+        b[b.used++] = 'A'.charCodeAt(0);
         serializer.serializeArray(b, value);
-      } else if (typeof(value) === &#x27;object&#x27;) {
-        b[b.used++] = &#x27;F&#x27;.charCodeAt(0);
+      } else if (typeof(value) === 'object') {
+        b[b.used++] = 'F'.charCodeAt(0);
         serializer.serializeTable(b, value);
       } else {
-        throw new Error(&#x22;unsupported type in amqp table: &#x22; + typeof(value));
+        throw new Error("unsupported type in amqp table: " + typeof(value));
       }
   }
 }</pre></li>
@@ -8721,3 +8714,4 @@ if (typeof(string) == &#x27;string&#x27;) {
     ]
 </div>
 </div>
+</body></html>
