@@ -1,4 +1,7 @@
-# api documentation for  [amqp (v0.2.6)](https://github.com/postwait/node-amqp#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-amqp.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-amqp) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-amqp.svg)](https://travis-ci.org/npmdoc/node-npmdoc-amqp)
+# npmdoc-amqp
+
+#### basic api documentation for  [amqp (v0.2.6)](https://github.com/postwait/node-amqp#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-amqp.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-amqp) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-amqp.svg)](https://travis-ci.org/npmdoc/node-npmdoc-amqp)
+
 #### AMQP driver for node
 
 [![NPM](https://nodei.co/npm/amqp.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/amqp)
@@ -113,7 +116,8 @@
     "scripts": {
         "test": "make test"
     },
-    "version": "0.2.6"
+    "version": "0.2.6",
+    "bin": {}
 }
 ```
 
